@@ -778,7 +778,7 @@
       const newUser = {
         id: Date.now(),
         name,
-        email: email || null, // Store email if provided, otherwise null
+        email: email || null,
         phone,
         password,
         balance: 1260,
@@ -847,37 +847,19 @@
       modal.show();
     }
 
+    // Update hidden username field when modal opens
+    document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
+      document.getElementById('hiddenUsername').value = document.getElementById('dashboardUsername').textContent;
+    });
+
+    // Handle method selection display
     document.querySelectorAll('input[name="method"]').forEach(el => {
       el.addEventListener('change', () => {
         const selected = document.querySelector('input[name="method"]:checked').value;
-        document.getElementById('bankFields').style.display = selected === 'bank' ? 'block' : 'none';
-        document.getElementById('upiField').style.display = selected === 'upi' ? 'block' : 'none';
-        document.getElementById('qrField').style.display = selected === 'qr' ? 'block' : 'none';
+        document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+        document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+        document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
       });
-    });
-
-    document.getElementById('withdrawForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const method = document.querySelector('input[name="method"]:checked').value;
-      const amount = document.getElementById('amount').value;
-
-      let message = `Withdrawal Request:\nAmount: ₹${amount}\n`;
-
-      if (method === 'bank') {
-        message += `Account No: ${document.getElementById('accountNumber').value}\nIFSC: ${document.getElementById('ifsc').value}`;
-      } else if (method === 'upi') {
-        message += `UPI ID: ${document.getElementById('upiId').value}`;
-      } else if (method === 'qr') {
-        const fileInput = document.getElementById('qrUpload');
-        if (fileInput.files.length > 0) {
-          message += `QR Code uploaded: ${fileInput.files[0].name}`;
-        } else {
-          message += `No QR Code uploaded`;
-        }
-      }
-
-      alert(message);
     });
     
     // Copy referral link functionality
@@ -898,6 +880,6 @@
         this.classList.add('btn-light');
       }, 2000);
     });
-  </script>
+</script>
 </body>
 </html>
