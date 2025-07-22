@@ -1820,78 +1820,61 @@
     });
 
     // Handle method selection display
-    document.querySelectorAll('input[name="method"]').forEach(el => {
-      el.addEventListener('change', () => {
-        const selected = document.querySelector('input[name="method"]:checked').value;
-        document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
-        document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
-        document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
-      });
-    });
+// Handle method selection display and validation
+document.querySelectorAll('input[name="method"]').forEach(el => {
+  el.addEventListener('change', () => {
+    const selected = document.querySelector('input[name="method"]:checked').value;
     
-    // Copy referral link functionality
-    document.getElementById('copyButton').addEventListener('click', function() {
-      const referralInput = document.getElementById('referralLink');
-      referralInput.select();
-      document.execCommand('copy');
-      
-      // Visual feedback
-      const originalText = this.innerHTML;
-      this.innerHTML = '<i class="fas fa-check me-1"></i> Copied!';
-      this.classList.add('btn-success');
-      this.classList.remove('btn-light');
-      
-      setTimeout(() => {
-        this.innerHTML = originalText;
-        this.classList.remove('btn-success');
-        this.classList.add('btn-light');
-      }, 2000);
-    });
+    // Show/hide fields based on selection
+    document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+    document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+    document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
     
-    // Sidebar collapse/expand
-    document.getElementById('sidebarToggle').addEventListener('click', function() {
-      document.getElementById('sidebarMenu').classList.toggle('collapsed');
-    });
+    // Clear required attributes when switching methods
+    document.getElementById('accountNumber').removeAttribute('required');
+    document.getElementById('ifscCode').removeAttribute('required');
+    document.getElementById('upiId').removeAttribute('required');
+    document.getElementById('qrUpload').removeAttribute('required');
+    document.getElementById('qrData').removeAttribute('required');
     
-    // Mobile menu toggle
-    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-      document.getElementById('sidebarMenu').classList.toggle('show');
-      document.querySelector('.sidebar-overlay').classList.toggle('show');
-    });
+    // Set required fields based on selected method
+    if (selected === 'Bank Transfer') {
+      document.getElementById('accountNumber').setAttribute('required', 'true');
+      document.getElementById('ifscCode').setAttribute('required', 'true');
+    } else if (selected === 'UPI') {
+      document.getElementById('upiId').setAttribute('required', 'true');
+    } else if (selected === 'QR Code') {
+      // Either QR image or data is required (handled in form validation)
+    }
+  });
+});
+
+// Form validation for QR Code (either image or data required)
+document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
+  const selectedMethod = document.querySelector('input[name="method"]:checked').value;
+  
+  if (selectedMethod === 'QR Code') {
+    const qrUpload = document.getElementById('qrUpload').value;
+    const qrData = document.getElementById('qrData').value;
     
-    // Close sidebar when clicking overlay
-    document.querySelector('.sidebar-overlay').addEventListener('click', function() {
-      document.getElementById('sidebarMenu').classList.remove('show');
-      this.classList.remove('show');
-    });
-    
-    // Page switching logic
-    document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Hide all pages
-        document.querySelectorAll('.dashboard-page').forEach(function(page) {
-          page.style.display = 'none';
-        });
-        // Show the selected page
-        const pageId = 'page-' + link.getAttribute('data-page');
-        const pageDiv = document.getElementById(pageId);
-        if (pageDiv) {
-          pageDiv.style.display = 'block';
-        }
-        // Active state styling
-        document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
-          nav.classList.remove('active');
-        });
-        link.classList.add('active');
-        
-        // Close sidebar on mobile after selection
-        if (window.innerWidth < 992) {
-          document.getElementById('sidebarMenu').classList.remove('show');
-          document.querySelector('.sidebar-overlay').classList.remove('show');
-        }
-      });
-    });
+    if (!qrUpload && !qrData) {
+      e.preventDefault();
+      alert('Please either upload a QR Code image or enter QR Code data');
+      return false;
+    }
+  }
+  
+  // Additional validation can be added here if needed
+  return true;
+});
+
+// Initialize method display on modal open
+document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
+  document.getElementById('hiddenUsername').value = document.getElementById('dashboardUsername').textContent;
+  // Trigger change event to set initial state
+  document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
+  });
+});
     
     // Initialize method display
     document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
