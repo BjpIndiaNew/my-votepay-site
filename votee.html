@@ -1542,83 +1542,88 @@
     </div>
 
     <!-- Withdraw Modal -->
-    <div class="modal fade" id="withdrawModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title">Withdraw Funds</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+   <!-- Withdraw Modal -->
+<div class="modal fade" id="withdrawModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Withdraw Funds</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="withdrawalForm" action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" value="New Withdrawal Request!">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
+          
+          <div class="mb-3">
+            <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+            <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
           </div>
-          <div class="modal-body">
-            <form action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="_subject" value="New Withdrawal Request!">
-              <input type="hidden" name="_template" value="table">
-              <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
-              
-              <div class="mb-3">
-                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
-                <input type="number" class="form-control" name="amount" placeholder="Enter amount" required>
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label">Select Withdrawal Method:</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-                  <label class="form-check-label" for="methodBank">
-                    Bank Account (Account No + IFSC)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-                  <label class="form-check-label" for="methodUPI">
-                    UPI ID
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-                  <label class="form-check-label" for="methodQR">
-                    Upload QR Code
-                  </label>
-                </div>
-              </div>
-
-              <!-- BANK DETAILS -->
-              <div id="bankFields">
-                <div class="mb-3">
-                  <label for="accountNumber" class="form-label">Account Number</label>
-                  <input type="text" class="form-control" name="accountNumber" placeholder="Enter account number">
-                </div>
-                <div class="mb-3">
-                  <label for="ifsc" class="form-label">IFSC Code</label>
-                  <input type="text" class="form-control" name="ifsc" placeholder="Enter IFSC code">
-                </div>
-              </div>
-
-              <!-- UPI DETAILS -->
-              <div id="upiField" style="display: none;">
-                <div class="mb-3">
-                  <label for="upiId" class="form-label">UPI ID</label>
-                  <input type="text" class="form-control" name="upiId" placeholder="Enter UPI ID">
-                </div>
-              </div>
-
-              <!-- QR UPLOAD -->
-              <div id="qrField" style="display: none;">
-                <div class="mb-3">
-                  <label for="qrUpload" class="form-label">Upload QR Code</label>
-                  <input type="file" class="form-control" name="qrUpload" accept="image/*">
-                </div>
-              </div>
-
-              <!-- Hidden username field -->
-              <input type="hidden" name="username" id="hiddenUsername">
-
-              <button type="submit" class="btn btn-success">Submit Withdrawal</button>
-            </form>
+          <div class="mb-3">
+            <label class="form-label">Select Withdrawal Method:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
+              <label class="form-check-label" for="methodBank">
+                Bank Account (Account No + IFSC)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
+              <label class="form-check-label" for="methodUPI">
+                UPI ID
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
+              <label class="form-check-label" for="methodQR">
+                Upload QR Code
+              </label>
+            </div>
           </div>
-        </div>
+
+          <!-- BANK DETAILS -->
+          <div id="bankFields">
+            <div class="mb-3">
+              <label for="accountNumber" class="form-label">Account Number</label>
+              <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
+            </div>
+            <div class="mb-3">
+              <label for="ifsc" class="form-label">IFSC Code</label>
+              <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
+            </div>
+          </div>
+
+          <!-- UPI DETAILS -->
+          <div id="upiField" style="display: none;">
+            <div class="mb-3">
+              <label for="upiId" class="form-label">UPI ID</label>
+              <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
+            </div>
+          </div>
+
+          <!-- QR UPLOAD -->
+          <div id="qrField" style="display: none;">
+            <div class="mb-3">
+              <label for="qrUpload" class="form-label">Upload QR Code</label>
+              <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
+            </div>
+            <div class="mb-3">
+              <label for="qrData" class="form-label">OR Enter QR Code Data</label>
+              <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
+            </div>
+          </div>
+
+          <!-- Hidden username field -->
+          <input type="hidden" name="username" id="hiddenUsername">
+
+          <button type="submit" class="btn btn-success" id="submitWithdrawal">Submit Withdrawal</button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Buy Votes Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1">
