@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VotePay - User Portal</title>
+  <title>VotePay - Voting & Payment Platform</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -19,6 +19,7 @@
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
     }
     
     .auth-container {
@@ -127,6 +128,7 @@
     /* Dashboard styles */
     #dashboard {
       display: none;
+      position: relative;
     }
     
     .balance-card {
@@ -264,6 +266,209 @@
       padding: 60px 0;
       border-radius: 0 0 20px 20px;
       margin-bottom: 40px;
+    }
+    
+    /* Sidebar styles */
+    #sidebarMenu {
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      height: calc(100vh - 40px);
+      position: fixed;
+      overflow-y: auto;
+    }
+    
+    #sidebarMenu.collapsed {
+      transform: translateX(-100%);
+    }
+    
+    .dashboard-page {
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    
+    #sidebarMenu .nav-link.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+    
+    @media (max-width: 992px) {
+      #sidebarMenu {
+        position: fixed;
+        width: 280px;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        transform: translateX(-100%);
+      }
+      
+      #sidebarMenu.show {
+        transform: translateX(0);
+      }
+      
+      .dashboard-page {
+        margin-left: 0 !important;
+        width: 100%;
+      }
+      
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+        display: none;
+      }
+      
+      .sidebar-overlay.show {
+        display: block;
+      }
+    }
+    
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1020;
+      display: none;
+      background: var(--primary);
+      color: white;
+    }
+    
+    @media (max-width: 992px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+    
+    /* Mission card styling */
+    .mission-card {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .mission-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .mission-header {
+      padding: 15px 20px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .mission-content {
+      padding: 20px;
+      background: white;
+    }
+    
+    .mission-reward {
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .progress {
+      height: 10px;
+      border-radius: 5px;
+    }
+    
+    /* Marketplace styling */
+    .product-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .product-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .product-info {
+      padding: 15px;
+      background: white;
+    }
+    
+    .product-price {
+      font-weight: bold;
+      color: var(--primary-dark);
+      font-size: 1.2rem;
+    }
+    
+    /* VIP styling */
+    .vip-tier {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      transition: all 0.3s;
+    }
+    
+    .vip-tier:hover {
+      transform: translateY(-5px);
+    }
+    
+    .vip-header {
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    
+    .vip-benefits {
+      padding: 20px;
+      background: white;
+    }
+    
+    .vip-benefits li {
+      margin-bottom: 10px;
+    }
+    
+    /* Admin panel styling */
+    .admin-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    .admin-stats {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    /* Account page styling */
+    .profile-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--primary);
+      margin: 0 auto 20px;
     }
     
     /* Deployment instructions */
@@ -457,158 +662,879 @@
   
   <!-- Dashboard Section -->
   <section id="dashboard">
-    <div class="welcome-header">
-      <div class="container text-center">
-        <h1>Welcome, <span id="username">John</span>!</h1>
-        <p class="lead">Your VotePay Dashboard</p>
-        <button class="btn btn-outline-light mt-3" id="logoutBtn">
-          <i class="fas fa-sign-out-alt me-2"></i>Logout
-        </button>
-      </div>
-    </div>
+    <!-- Mobile Menu Button -->
+    <button class="btn btn-primary mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
     
-    <div class="container mt-5">
-      <h3>Hello, <span id="dashboardUsername">John</span>! <span class="badge bg-info text-dark">Level 2</span></h3>
+    <!-- Sidebar Overlay (for mobile) -->
+    <div class="sidebar-overlay"></div>
+    
+    <!-- Sidebar Navigation -->
+    <nav id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow rounded"
+         style="width:280px;">
+      <div class="d-flex align-items-center mb-3">
+        <button id="sidebarToggle" class="btn btn-outline-secondary btn-sm me-2" title="Collapse Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <span class="fs-5 fw-bold">LEADERSHIP missions</span>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item"><a href="#" class="nav-link active" data-page="dashboard"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+        <li><a href="#" class="nav-link" data-page="missions"><i class="fas fa-tasks me-2"></i>Missions</a></li>
+        <li><a href="#" class="nav-link" data-page="marketplace"><i class="fas fa-store me-2"></i>Marketplace <span class="badge bg-info ms-2">🆕</span></a></li>
+        <li><a href="#" class="nav-link" data-page="balance"><i class="fas fa-wallet me-2"></i>Balance</a></li>
+        <li><a href="#" class="nav-link" data-page="withdraw"><i class="fas fa-money-check-alt me-2"></i>Withdraw</a></li>
+        <li><a href="#" class="nav-link" data-page="vip"><i class="fas fa-crown me-2"></i>VIP</a></li>
+        <li><a href="#" class="nav-link text-danger" data-page="admin"><i class="fas fa-user-shield me-2"></i>Admin <span class="badge bg-warning text-dark ms-2">ADMIN ONLY</span> <span class="badge bg-info ms-2">🆕</span></a></li>
+        <li><a href="#" class="nav-link" data-page="account"><i class="fas fa-user me-2"></i>My Account</a></li>
+      </ul>
+      <hr>
+      <div>
+        <a href="#" id="sidebarLogout" class="btn btn-outline-danger w-100"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+      </div>
+    </nav>
 
-      <!-- Wallet + Buttons Row -->
-      <div class="row mt-4 g-4">
-        <!-- Wallet Balance Card -->
-        <div class="col-md-6">
-          <div class="balance-card position-relative">
-            <div class="balance-icon">💰</div>
-            <h5>Your Wallet Balance</h5>
-            <div class="balance-amount">₹1,260.00</div>
-            <p class="mb-0">Available for withdrawal</p>
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center gap-3">
-          <button class="btn btn-primary btn-lg w-100" onclick="openWithdrawModal()">
-            💸 Withdraw Funds
-          </button>
-          <button class="btn btn-warning btn-lg w-100" onclick="openBuyModal()">
-            🛒 Buy Votes
-          </button>
+    <!-- Dashboard Page -->
+    <div id="page-dashboard" class="dashboard-page" style="margin-left:300px;">
+      <div class="welcome-header">
+        <div class="container text-center">
+          <h1>Welcome, <span id="username">John</span>!</h1>
+          <p class="lead">Your VotePay Dashboard</p>
         </div>
       </div>
+      
+      <div class="container mt-5">
+        <h3>Hello, <span id="dashboardUsername">John</span>! <span class="badge bg-info text-dark">Level 2</span></h3>
 
-      <!-- New Section: Total Votes & Mission Progress -->
-      <div class="row mt-5 g-4">
-        <!-- Total Votes Box -->
-        <div class="col-md-6">
-          <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
-            <h5 class="mb-2">Total Votes</h5>
-            <h2 class="display-4 fw-bold">250</h2>
-            <p class="mb-0">Votes available in your account</p>
+        <!-- Wallet + Buttons Row -->
+        <div class="row mt-4 g-4">
+          <!-- Wallet Balance Card -->
+          <div class="col-md-6">
+            <div class="balance-card position-relative">
+              <div class="balance-icon">💰</div>
+              <h5>Your Wallet Balance</h5>
+              <div class="balance-amount">₹1,260.00</div>
+              <p class="mb-0">Available for withdrawal</p>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="col-md-6 d-flex flex-column align-items-center justify-content-center gap-3">
+            <button class="btn btn-primary btn-lg w-100" onclick="openWithdrawModal()">
+              💸 Withdraw Funds
+            </button>
+            <button class="btn btn-warning btn-lg w-100" onclick="openBuyModal()">
+              🛒 Buy Votes
+            </button>
           </div>
         </div>
 
-        <!-- Missions Progress Box -->
-        <div class="col-md-6">
-          <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
-            <h5 class="mb-2">Missions Completed</h5>
-            <p class="mb-1">8 of 10 Missions Completed</p>
-            <div class="progress" style="height: 25px; border-radius: 20px; overflow: hidden;">
-              <div
-                class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                role="progressbar"
-                style="width: 80%; font-weight: bold;"
-                aria-valuenow="80"
-                aria-valuemin="0"
-                aria-valuemax="100">
-                80%
+        <!-- New Section: Total Votes & Mission Progress -->
+        <div class="row mt-5 g-4">
+          <!-- Total Votes Box -->
+          <div class="col-md-6">
+            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+              <h5 class="mb-2">Total Votes</h5>
+              <h2 class="display-4 fw-bold">250</h2>
+              <p class="mb-0">Votes available in your account</p>
+            </div>
+          </div>
+
+          <!-- Missions Progress Box -->
+          <div class="col-md-6">
+            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
+              <h5 class="mb-2">Missions Completed</h5>
+              <p class="mb-1">8 of 10 Missions Completed</p>
+              <div class="progress" style="height: 25px; border-radius: 20px; overflow: hidden;">
+                <div
+                  class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                  role="progressbar"
+                  style="width: 80%; font-weight: bold;"
+                  aria-valuenow="80"
+                  aria-valuemin="0"
+                  aria-valuemax="100">
+                  80%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Referral Section -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="referral-card">
+              <div class="row align-items-center">
+                <div class="col-md-8 mb-3 mb-md-0">
+                  <h4><i class="fas fa-user-plus me-2"></i> Refer & Earn Rewards</h4>
+                  <p class="mb-0">Share your referral link with friends and earn ₹100 for each successful registration!</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <input 
+                      type="text" 
+                      class="form-control referral-input" 
+                      id="referralLink" 
+                      value="https://votepay.com/ref/john123" 
+                      readonly
+                      placeholder="Your referral link"
+                    >
+                    <button class="btn btn-light" type="button" id="copyButton">
+                      <i class="fas fa-copy"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Transactions Table -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="transactions-card">
+              <div class="table-header">
+                <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Transactions</h5>
+              </div>
+              <div class="table-responsive">
+                <table class="table transaction-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2025-07-15</td>
+                      <td>Vote Purchase</td>
+                      <td>₹500.00</td>
+                      <td>Debit</td>
+                      <td><span class="status-badge badge-completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>2025-07-12</td>
+                      <td>Referral Bonus (Sarah)</td>
+                      <td>₹100.00</td>
+                      <td>Credit</td>
+                      <td><span class="status-badge badge-completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>2025-07-10</td>
+                      <td>Withdrawal Request</td>
+                      <td>₹300.00</td>
+                      <td>Debit</td>
+                      <td><span class="status-badge badge-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td>2025-07-08</td>
+                      <td>Daily Reward</td>
+                      <td>₹50.00</td>
+                      <td>Credit</td>
+                      <td><span class="status-badge badge-completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>2025-07-05</td>
+                      <td>Referral Bonus (Mike)</td>
+                      <td>₹100.00</td>
+                      <td>Credit</td>
+                      <td><span class="status-badge badge-completed">Completed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- Referral Section -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="referral-card">
-            <div class="row align-items-center">
-              <div class="col-md-8 mb-3 mb-md-0">
-                <h4><i class="fas fa-user-plus me-2"></i> Refer & Earn Rewards</h4>
-                <p class="mb-0">Share your referral link with friends and earn ₹100 for each successful registration!</p>
+    </div>
+
+    <!-- Missions Page -->
+    <div id="page-missions" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-tasks me-2"></i> Missions</h2>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mission-card">
+              <div class="mission-header" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
+                <h5 class="mb-0">Daily Voting</h5>
+                <span class="badge bg-success">Active</span>
               </div>
-              <div class="col-md-4">
-                <div class="input-group">
-                  <input 
-                    type="text" 
-                    class="form-control referral-input" 
-                    id="referralLink" 
-                    value="https://votepay.com/ref/john123" 
-                    readonly
-                    placeholder="Your referral link"
-                  >
-                  <button class="btn btn-light" type="button" id="copyButton">
-                    <i class="fas fa-copy"></i>
-                  </button>
+              <div class="mission-content">
+                <p>Vote for your favorite candidate every day for 7 consecutive days.</p>
+                <p><strong>Progress:</strong> 5/7 days</p>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 71%"></div>
+                </div>
+                <p class="mt-2 mission-reward">Reward: ₹100 + 50 Votes</p>
+                <button class="btn btn-sm btn-primary mt-2">Continue Mission</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mission-card">
+              <div class="mission-header" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
+                <h5 class="mb-0">Referral Challenge</h5>
+                <span class="badge bg-success">Active</span>
+              </div>
+              <div class="mission-content">
+                <p>Refer 3 friends to join VotePay and complete their first transaction.</p>
+                <p><strong>Progress:</strong> 2/3 referrals</p>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 66%"></div>
+                </div>
+                <p class="mt-2 mission-reward">Reward: ₹300 + VIP Access (7 days)</p>
+                <button class="btn btn-sm btn-primary mt-2">Invite Friends</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mission-card">
+              <div class="mission-header" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                <h5 class="mb-0">Voting Streak</h5>
+                <span class="badge bg-warning text-dark">Upcoming</span>
+              </div>
+              <div class="mission-content">
+                <p>Maintain a 30-day voting streak without missing a day.</p>
+                <p><strong>Progress:</strong> Starts tomorrow</p>
+                <div class="progress">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                </div>
+                <p class="mt-2 mission-reward">Reward: ₹1000 + Level Up</p>
+                <button class="btn btn-sm btn-outline-secondary mt-2" disabled>Coming Soon</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mission-card">
+              <div class="mission-header" style="background: linear-gradient(135deg, #0f4c75, #3282b8);">
+                <h5 class="mb-0">Community Engagement</h5>
+                <span class="badge bg-success">Active</span>
+              </div>
+              <div class="mission-content">
+                <p>Participate in 5 community discussions and polls.</p>
+                <p><strong>Progress:</strong> 3/5 completed</p>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 60%"></div>
+                </div>
+                <p class="mt-2 mission-reward">Reward: ₹150 + 30 Votes</p>
+                <button class="btn btn-sm btn-primary mt-2">Join Community</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketplace Page -->
+    <div id="page-marketplace" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-store me-2"></i> Marketplace</h2>
+        
+        <div class="row">
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #43cea2, #185a9d);"></div>
+              <div class="product-info">
+                <h5>Standard Vote Pack</h5>
+                <p>Get 100 votes to support your favorite candidates</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹500</span>
+                  <button class="btn btn-sm btn-primary">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);"></div>
+              <div class="product-info">
+                <h5>Premium Vote Pack</h5>
+                <p>250 votes + special badge for your profile</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹1,200</span>
+                  <button class="btn btn-sm btn-primary">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #f7971e, #ffd200);"></div>
+              <div class="product-info">
+                <h5>VIP Membership</h5>
+                <p>30 days of VIP benefits and exclusive voting power</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹999</span>
+                  <button class="btn btn-sm btn-primary">Subscribe</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #0f4c75, #3282b8);"></div>
+              <div class="product-info">
+                <h5>Vote Booster</h5>
+                <p>Double the power of your next 50 votes</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹750</span>
+                  <button class="btn btn-sm btn-primary">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #e44d26, #f16529);"></div>
+              <div class="product-info">
+                <h5>Profile Customization</h5>
+                <p>Special frames, badges, and profile customization</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹299</span>
+                  <button class="btn btn-sm btn-primary">Customize</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="product-card">
+              <div class="product-img" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+              <div class="product-info">
+                <h5>Referral Starter Pack</h5>
+                <p>Special tools to help you refer friends and earn more</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-price">₹199</span>
+                  <button class="btn btn-sm btn-primary">Get Started</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- Transactions Table -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="transactions-card">
-            <div class="table-header">
-              <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Transactions</h5>
+    </div>
+
+    <!-- Balance Page -->
+    <div id="page-balance" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-wallet me-2"></i> Balance</h2>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="balance-card position-relative">
+              <div class="balance-icon">💰</div>
+              <h5>Wallet Balance</h5>
+              <div class="balance-amount">₹1,260.00</div>
+              <p class="mb-0">Available for withdrawal</p>
             </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+              <h5 class="mb-2">Total Votes</h5>
+              <h2 class="display-4 fw-bold">250</h2>
+              <p class="mb-0">Votes available in your account</p>
+            </div>
+          </div>
+          
+          <div class="col-12 mt-4">
+            <div class="card">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Transaction History</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>2025-07-15</td>
+                        <td>Vote Purchase</td>
+                        <td>₹500.00</td>
+                        <td>Debit</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                      </tr>
+                      <tr>
+                        <td>2025-07-12</td>
+                        <td>Referral Bonus (Sarah)</td>
+                        <td>₹100.00</td>
+                        <td>Credit</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                      </tr>
+                      <tr>
+                        <td>2025-07-10</td>
+                        <td>Withdrawal Request</td>
+                        <td>₹300.00</td>
+                        <td>Debit</td>
+                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td>2025-07-08</td>
+                        <td>Daily Reward</td>
+                        <td>₹50.00</td>
+                        <td>Credit</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                      </tr>
+                      <tr>
+                        <td>2025-07-05</td>
+                        <td>Referral Bonus (Mike)</td>
+                        <td>₹100.00</td>
+                        <td>Credit</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Page -->
+    <div id="page-withdraw" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-money-check-alt me-2"></i> Withdraw Funds</h2>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Withdrawal Request</h5>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="mb-3">
+                    <label class="form-label">Withdrawal Amount (₹)</label>
+                    <input type="number" class="form-control" placeholder="Enter amount" value="1000">
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label">Select Withdrawal Method:</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="method" id="methodBank" checked>
+                      <label class="form-check-label" for="methodBank">
+                        Bank Account
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="method" id="methodUPI">
+                      <label class="form-check-label" for="methodUPI">
+                        UPI ID
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="method" id="methodQR">
+                      <label class="form-check-label" for="methodQR">
+                        QR Code
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="accountNumber" class="form-label">Account Number</label>
+                    <input type="text" class="form-control" placeholder="Enter account number">
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="ifsc" class="form-label">IFSC Code</label>
+                    <input type="text" class="form-control" placeholder="Enter IFSC code">
+                  </div>
+                  
+                  <button type="submit" class="btn btn-success w-100">Submit Withdrawal Request</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Withdrawal Information</h5>
+              </div>
+              <div class="card-body">
+                <div class="alert alert-info">
+                  <p><strong>Minimum withdrawal:</strong> ₹500</p>
+                  <p><strong>Processing time:</strong> 24-48 hours</p>
+                  <p><strong>Processing fee:</strong> 2% or ₹20 (whichever is higher)</p>
+                </div>
+                
+                <h5>Recent Withdrawals</h5>
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>₹500.00</strong>
+                      <div class="text-muted small">2025-07-10 - Pending</div>
+                    </div>
+                    <span class="badge bg-warning text-dark">Processing</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>₹1000.00</strong>
+                      <div class="text-muted small">2025-06-28 - Completed</div>
+                    </div>
+                    <span class="badge bg-success">Completed</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>₹750.00</strong>
+                      <div class="text-muted small">2025-06-15 - Completed</div>
+                    </div>
+                    <span class="badge bg-success">Completed</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIP Page -->
+    <div id="page-vip" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-crown me-2"></i> VIP Program</h2>
+        
+        <div class="row">
+          <div class="col-md-4">
+            <div class="vip-tier">
+              <div class="vip-header" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
+                <h3>Silver VIP</h3>
+                <p class="mb-0">₹499/month</p>
+              </div>
+              <div class="vip-benefits">
+                <h5>Benefits:</h5>
+                <ul>
+                  <li>Daily bonus: ₹20</li>
+                  <li>10% extra votes on purchases</li>
+                  <li>Priority support</li>
+                  <li>Silver badge on profile</li>
+                  <li>Access to basic VIP missions</li>
+                </ul>
+                <button class="btn btn-primary w-100">Upgrade to Silver</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="vip-tier">
+              <div class="vip-header" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
+                <h3>Gold VIP</h3>
+                <p class="mb-0">₹999/month</p>
+              </div>
+              <div class="vip-benefits">
+                <h5>Benefits:</h5>
+                <ul>
+                  <li>Daily bonus: ₹50</li>
+                  <li>25% extra votes on purchases</li>
+                  <li>24/7 priority support</li>
+                  <li>Gold badge on profile</li>
+                  <li>Access to all VIP missions</li>
+                  <li>Weekly exclusive rewards</li>
+                </ul>
+                <button class="btn btn-warning w-100">Upgrade to Gold</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="vip-tier">
+              <div class="vip-header" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                <h3>Platinum VIP</h3>
+                <p class="mb-0">₹1,999/month</p>
+              </div>
+              <div class="vip-benefits">
+                <h5>Benefits:</h5>
+                <ul>
+                  <li>Daily bonus: ₹100</li>
+                  <li>50% extra votes on purchases</li>
+                  <li>24/7 dedicated manager</li>
+                  <li>Platinum badge & profile frame</li>
+                  <li>Access to all VIP missions</li>
+                  <li>Weekly exclusive rewards</li>
+                  <li>Early access to new features</li>
+                  <li>VIP-only events</li>
+                </ul>
+                <button class="btn btn-dark w-100">Upgrade to Platinum</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Your VIP Status</h5>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              <p>You are currently a <strong>Silver VIP</strong> member</p>
+              <p class="mb-0">Your membership expires on: <strong>2025-08-15</strong></p>
+            </div>
+            
+            <h5>VIP Benefits in Action</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Daily Bonuses</h5>
+                    <p class="card-text">You've earned ₹420 in daily bonuses this month</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-white bg-info mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Extra Votes</h5>
+                    <p class="card-text">Received 75 extra votes from purchases</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">VIP Missions</h5>
+                    <p class="card-text">Completed 3 VIP missions this month</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Page -->
+    <div id="page-admin" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-user-shield me-2"></i> Admin Panel</h2>
+        
+        <div class="alert alert-warning">
+          <strong>Admin Access Only:</strong> This section contains sensitive administrative functions.
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3">
+            <div class="admin-card">
+              <div class="text-center">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <h4>Users</h4>
+                <div class="admin-stats">1,245</div>
+                <button class="btn btn-outline-primary w-100 mt-3">Manage Users</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-3">
+            <div class="admin-card">
+              <div class="text-center">
+                <i class="fas fa-money-bill-wave fa-3x text-success mb-3"></i>
+                <h4>Transactions</h4>
+                <div class="admin-stats">₹248,950</div>
+                <button class="btn btn-outline-success w-100 mt-3">View Transactions</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-3">
+            <div class="admin-card">
+              <div class="text-center">
+                <i class="fas fa-vote-yea fa-3x text-info mb-3"></i>
+                <h4>Votes</h4>
+                <div class="admin-stats">56,820</div>
+                <button class="btn btn-outline-info w-100 mt-3">Vote Analytics</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-3">
+            <div class="admin-card">
+              <div class="text-center">
+                <i class="fas fa-tasks fa-3x text-warning mb-3"></i>
+                <h4>Missions</h4>
+                <div class="admin-stats">28</div>
+                <button class="btn btn-outline-warning w-100 mt-3">Manage Missions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Recent Activity</h5>
+          </div>
+          <div class="card-body">
             <div class="table-responsive">
-              <table class="table transaction-table">
+              <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Status</th>
+                    <th>Time</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Details</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>2025-07-15</td>
-                    <td>Vote Purchase</td>
-                    <td>₹500.00</td>
-                    <td>Debit</td>
-                    <td><span class="status-badge badge-completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-12</td>
-                    <td>Referral Bonus (Sarah)</td>
-                    <td>₹100.00</td>
-                    <td>Credit</td>
-                    <td><span class="status-badge badge-completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-10</td>
+                    <td>2025-07-22 14:30</td>
+                    <td>Sarah Johnson</td>
                     <td>Withdrawal Request</td>
-                    <td>₹300.00</td>
-                    <td>Debit</td>
-                    <td><span class="status-badge badge-pending">Pending</span></td>
+                    <td>₹1,200 via Bank Transfer</td>
                   </tr>
                   <tr>
-                    <td>2025-07-08</td>
-                    <td>Daily Reward</td>
-                    <td>₹50.00</td>
-                    <td>Credit</td>
-                    <td><span class="status-badge badge-completed">Completed</span></td>
+                    <td>2025-07-22 13:45</td>
+                    <td>Mike Williams</td>
+                    <td>Vote Purchase</td>
+                    <td>Premium Vote Pack (₹1,200)</td>
                   </tr>
                   <tr>
-                    <td>2025-07-05</td>
-                    <td>Referral Bonus (Mike)</td>
-                    <td>₹100.00</td>
-                    <td>Credit</td>
-                    <td><span class="status-badge badge-completed">Completed</span></td>
+                    <td>2025-07-22 12:15</td>
+                    <td>Admin</td>
+                    <td>System Update</td>
+                    <td>Added new mission: Community Engagement</td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-22 10:30</td>
+                    <td>Robert Chen</td>
+                    <td>VIP Upgrade</td>
+                    <td>Gold VIP (₹999)</td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-22 09:20</td>
+                    <td>Emma Davis</td>
+                    <td>Referral Bonus</td>
+                    <td>₹100 for referring John Smith</td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Page -->
+    <div id="page-account" class="dashboard-page" style="display:none; margin-left:300px;">
+      <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-user me-2"></i> My Account</h2>
+        
+        <div class="row">
+          <div class="col-md-4">
+            <div class="profile-card text-center">
+              <img src="https://via.placeholder.com/120" class="profile-img" alt="Profile">
+              <h3 id="profileUsername">John Doe</h3>
+              <p class="text-muted">Level 2 Member</p>
+              <div class="mb-3">
+                <span class="badge bg-primary">Silver VIP</span>
+                <span class="badge bg-info">Active</span>
+              </div>
+              <button class="btn btn-outline-primary w-100 mb-2">Edit Profile</button>
+              <button class="btn btn-outline-secondary w-100 mb-2">Change Password</button>
+              <button class="btn btn-outline-info w-100">Upgrade to Gold VIP</button>
+            </div>
+          </div>
+          
+          <div class="col-md-8">
+            <div class="card mb-4">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Account Information</h5>
+              </div>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" value="John Doe">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" value="john.doe@example.com">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" value="+91 9876543210">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Join Date</label>
+                    <input type="text" class="form-control" value="2025-06-15" disabled>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Bio</label>
+                  <textarea class="form-control" rows="3">Active voter and community member. Passionate about making a difference through informed voting.</textarea>
+                </div>
+                
+                <button class="btn btn-success">Save Changes</button>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Security Settings</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label">Two-Factor Authentication</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="twoFactorSwitch" checked>
+                    <label class="form-check-label" for="twoFactorSwitch">Enable 2FA</label>
+                  </div>
+                  <div class="form-text">Add an extra layer of security to your account</div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Login Activity</label>
+                  <div class="alert alert-light">
+                    <p class="mb-1"><strong>Last Login:</strong> 2025-07-22 09:15 from Mumbai, India</p>
+                    <p class="mb-0"><strong>Device:</strong> Chrome on Windows 10</p>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Connected Devices</label>
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Windows PC</strong>
+                        <div class="text-muted small">Chrome · Mumbai, India · Active now</div>
+                      </div>
+                      <button class="btn btn-sm btn-outline-danger">Logout</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Android Phone</strong>
+                        <div class="text-muted small">Chrome · Delhi, India · 2 hours ago</div>
+                      </div>
+                      <button class="btn btn-sm btn-outline-danger">Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -625,70 +1551,70 @@
           </div>
           <div class="modal-body">
             <form action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
-  <input type="hidden" name="_subject" value="New Withdrawal Request!">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
-  
-  <div class="mb-3">
-    <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
-    <input type="number" class="form-control" name="amount" placeholder="Enter amount" required>
-  </div>
+              <input type="hidden" name="_subject" value="New Withdrawal Request!">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
+              
+              <div class="mb-3">
+                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+                <input type="number" class="form-control" name="amount" placeholder="Enter amount" required>
+              </div>
 
-  <div class="mb-3">
-    <label class="form-label">Select Withdrawal Method:</label>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-      <label class="form-check-label" for="methodBank">
-        Bank Account (Account No + IFSC)
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-      <label class="form-check-label" for="methodUPI">
-        UPI ID
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-      <label class="form-check-label" for="methodQR">
-        Upload QR Code
-      </label>
-    </div>
-  </div>
+              <div class="mb-3">
+                <label class="form-label">Select Withdrawal Method:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
+                  <label class="form-check-label" for="methodBank">
+                    Bank Account (Account No + IFSC)
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
+                  <label class="form-check-label" for="methodUPI">
+                    UPI ID
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
+                  <label class="form-check-label" for="methodQR">
+                    Upload QR Code
+                  </label>
+                </div>
+              </div>
 
-  <!-- BANK DETAILS -->
-  <div id="bankFields">
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">Account Number</label>
-      <input type="text" class="form-control" name="accountNumber" placeholder="Enter account number">
-    </div>
-    <div class="mb-3">
-      <label for="ifsc" class="form-label">IFSC Code</label>
-      <input type="text" class="form-control" name="ifsc" placeholder="Enter IFSC code">
-    </div>
-  </div>
+              <!-- BANK DETAILS -->
+              <div id="bankFields">
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="text" class="form-control" name="accountNumber" placeholder="Enter account number">
+                </div>
+                <div class="mb-3">
+                  <label for="ifsc" class="form-label">IFSC Code</label>
+                  <input type="text" class="form-control" name="ifsc" placeholder="Enter IFSC code">
+                </div>
+              </div>
 
-  <!-- UPI DETAILS -->
-  <div id="upiField" style="display: none;">
-    <div class="mb-3">
-      <label for="upiId" class="form-label">UPI ID</label>
-      <input type="text" class="form-control" name="upiId" placeholder="Enter UPI ID">
-    </div>
-  </div>
+              <!-- UPI DETAILS -->
+              <div id="upiField" style="display: none;">
+                <div class="mb-3">
+                  <label for="upiId" class="form-label">UPI ID</label>
+                  <input type="text" class="form-control" name="upiId" placeholder="Enter UPI ID">
+                </div>
+              </div>
 
-  <!-- QR UPLOAD -->
-  <div id="qrField" style="display: none;">
-    <div class="mb-3">
-      <label for="qrUpload" class="form-label">Upload QR Code</label>
-      <input type="file" class="form-control" name="qrUpload" accept="image/*">
-    </div>
-  </div>
+              <!-- QR UPLOAD -->
+              <div id="qrField" style="display: none;">
+                <div class="mb-3">
+                  <label for="qrUpload" class="form-label">Upload QR Code</label>
+                  <input type="file" class="form-control" name="qrUpload" accept="image/*">
+                </div>
+              </div>
 
-  <!-- Hidden username field -->
-  <input type="hidden" name="username" id="hiddenUsername">
+              <!-- Hidden username field -->
+              <input type="hidden" name="username" id="hiddenUsername">
 
-  <button type="submit" class="btn btn-success">Submit Withdrawal</button>
-</form>
+              <button type="submit" class="btn btn-success">Submit Withdrawal</button>
+            </form>
           </div>
         </div>
       </div>
@@ -741,6 +1667,7 @@
     const switchToLogin = document.getElementById('switchToLogin');
     const switchToRegister = document.getElementById('switchToRegister');
     const closeInstructions = document.getElementById('closeInstructions');
+    const profileUsername = document.getElementById('profileUsername');
     
     // Close deployment instructions
     closeInstructions.addEventListener('click', () => {
@@ -791,6 +1718,7 @@
         balance: 1260,
         votes: 250,
         level: 2,
+        isAdmin: false, // Default to non-admin
         joinDate: new Date().toISOString()
       };
       
@@ -825,11 +1753,17 @@
         return;
       }
       
+      // Make the first user admin for demo purposes
+      if (users.length === 1) {
+        user.isAdmin = true;
+      }
+      
       loginUser(user);
     });
     
     // Logout function
-    logoutBtn.addEventListener('click', () => {
+    document.getElementById('sidebarLogout').addEventListener('click', (e) => {
+      e.preventDefault();
       authSection.style.display = 'block';
       dashboardSection.style.display = 'none';
     });
@@ -838,9 +1772,30 @@
     function loginUser(user) {
       usernameSpan.textContent = user.name;
       dashboardUsername.textContent = user.name;
+      profileUsername.textContent = user.name;
       
       authSection.style.display = 'none';
       dashboardSection.style.display = 'block';
+      
+      // Show dashboard page only
+      document.querySelectorAll('.dashboard-page').forEach(function(page) {
+        page.style.display = 'none';
+      });
+      document.getElementById('page-dashboard').style.display = 'block';
+      
+      // Set active tab
+      document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
+        nav.classList.remove('active');
+      });
+      document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
+      
+      // Sidebar admin menu show/hide
+      const adminMenuItem = document.querySelector('#sidebarMenu .nav-link.text-danger');
+      if (user.isAdmin) {
+        adminMenuItem.style.display = 'block';
+      } else {
+        adminMenuItem.style.display = 'none';
+      }
     }
     
     // Dashboard functions
@@ -887,6 +1842,54 @@
         this.classList.add('btn-light');
       }, 2000);
     });
-</script>
+    
+    // Sidebar collapse/expand
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('sidebarMenu').classList.toggle('collapsed');
+    });
+    
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('sidebarMenu').classList.toggle('show');
+      document.querySelector('.sidebar-overlay').classList.toggle('show');
+    });
+    
+    // Close sidebar when clicking overlay
+    document.querySelector('.sidebar-overlay').addEventListener('click', function() {
+      document.getElementById('sidebarMenu').classList.remove('show');
+      this.classList.remove('show');
+    });
+    
+    // Page switching logic
+    document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Hide all pages
+        document.querySelectorAll('.dashboard-page').forEach(function(page) {
+          page.style.display = 'none';
+        });
+        // Show the selected page
+        const pageId = 'page-' + link.getAttribute('data-page');
+        const pageDiv = document.getElementById(pageId);
+        if (pageDiv) {
+          pageDiv.style.display = 'block';
+        }
+        // Active state styling
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
+          nav.classList.remove('active');
+        });
+        link.classList.add('active');
+        
+        // Close sidebar on mobile after selection
+        if (window.innerWidth < 992) {
+          document.getElementById('sidebarMenu').classList.remove('show');
+          document.querySelector('.sidebar-overlay').classList.remove('show');
+        }
+      });
+    });
+    
+    // Initialize method display
+    document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
+  </script>
 </body>
 </html>
