@@ -1853,21 +1853,40 @@
       });
     });
 
-    // Form validation for QR Code (either image or data required)
-    document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
-      const selectedMethod = document.querySelector('input[name="method"]:checked').value;
-      if (selectedMethod === 'QR Code') {
-        const qrUpload = document.getElementById('qrUpload').value;
-        const qrData = document.getElementById('qrData').value;
-        if (!qrUpload && !qrData) {
-          e.preventDefault();
-          alert('Please either upload a QR Code image or enter QR Code data');
-          return false;
-        }
+    // UpdateWithdrawFields function
+    function updateWithdrawFields() {
+      const selected = document.querySelector('input[name="method"]:checked').value;
+      document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+      document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+      document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
+
+      // Remove all required attributes
+      document.getElementById('accountNumber').removeAttribute('required');
+      document.getElementById('ifscCode').removeAttribute('required');
+      document.getElementById('upiId').removeAttribute('required');
+      document.getElementById('qrUpload').removeAttribute('required');
+      document.getElementById('qrData').removeAttribute('required');
+
+      // Set required only for selected method
+      if (selected === 'Bank Transfer') {
+        document.getElementById('accountNumber').setAttribute('required', 'true');
+        document.getElementById('ifscCode').setAttribute('required', 'true');
+      } else if (selected === 'UPI') {
+        document.getElementById('upiId').setAttribute('required', 'true');
       }
-      return true;
+      // QR Code handled by custom validation
+    }
+
+    // Attach event listeners to all withdrawal method radio buttons
+    document.querySelectorAll('input[name="method"]').forEach(el => {
+      el.addEventListener('change', updateWithdrawFields);
     });
 
+    // Call once on page load to set initial state
+    window.addEventListener('DOMContentLoaded', () => {
+      updateWithdrawFields();
+    });
+    
     // Sidebar navigation handler
     document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
       link.addEventListener('click', function(e) {
