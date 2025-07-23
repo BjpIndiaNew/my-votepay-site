@@ -301,9 +301,16 @@
         z-index: 1050;
         transform: translateX(-100%);
       }
+      
       #sidebarMenu.show {
         transform: translateX(0);
       }
+      
+      .dashboard-page {
+        margin-left: 0 !important;
+        width: 100%;
+      }
+      
       .sidebar-overlay {
         position: fixed;
         top: 0;
@@ -314,6 +321,7 @@
         z-index: 1040;
         display: none;
       }
+      
       .sidebar-overlay.show {
         display: block;
       }
@@ -504,28 +512,69 @@
       font-weight: 500;
       margin-top: 15px;
     }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .auth-hero, .auth-form-container {
+        padding: 30px 20px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .balance-card, .referral-card {
+        padding: 20px;
+      }
+      
+      .balance-amount {
+        font-size: 2rem;
+      }
+      
+      .btn-lg {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
+      }
+      
+      .dashboard-page {
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .auth-container {
+        border-radius: 15px;
+      }
+      
+      .welcome-header {
+        padding: 40px 0;
+      }
+      
+      .welcome-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .balance-card {
+        padding: 15px;
+      }
+      
+      .balance-amount {
+        font-size: 1.8rem;
+      }
+      
+      .mobile-menu-btn {
+        top: 15px;
+        left: 15px;
+        padding: 8px 12px;
+      }
+      
+      .mission-card, .product-card, .vip-tier {
+        margin-bottom: 15px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Deployment Instructions -->
-  <div class="deploy-instructions">
-    <div class="deploy-header">
-      <h5>Deploy to Vercel</h5>
-      <button id="closeInstructions" class="btn btn-sm btn-outline-secondary">×</button>
-    </div>
-    <ol class="deploy-steps">
-      <li>Save this file as <code>index.html</code></li>
-      <li>Create a GitHub account</li>
-      <li>Create a new repository</li>
-      <li>Upload this file to the repository</li>
-      <li>Go to Vercel and import the repository</li>
-    </ol>
-    <a href="https://vercel.com/new" target="_blank" class="vercel-btn">
-      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDI1NiAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyOC4wMDEgMEM1Ny4zMDEgMCAwIDU3LjMgMCAxMjhjMCA3MC43IDU3LjMgMTI4IDEyOCAxMjggNzAuNyAwIDEyOC01Ny4zIDEyOC0xMjggMC03MC43LTU3LjMtMTI4LTEyOC0xMjh6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTE1OS43IDExOS45YzAgMi4xLTEuMSAzLjQtMy4zIDMuNGgtMjEuM1Y5Ni40aDIxLjNjMi4yIDAgMy4zIDEuMyAzLjMgMy40djIwLjF6TTEyOCAzMi4xYy01MyAwLTk2IDQzLTk2IDk2czQzIDk2IDk2IDk2IDk2LTQzIDk2LTk2LTQzLTk2LTk2LTk2em00OC41IDk0LjJjMCAxMC4xLTUuMyAxNi40LTIwLjIgMTYuNGgtMjguNVY1Ni4xaDI3LjRjMTQuOSAwIDIwLjIgNi4zIDIwLjIgMTYuM3Y0My45eiIgZmlsbD0iIzAwMCIvPjwvc3ZnPg==" width="20" height="20" alt="Vercel">
-      Deploy on Vercel
-    </a>
-  </div>
-
   <!-- Authentication Section -->
   <section id="authentication" class="py-5">
     <div class="container">
@@ -677,7 +726,6 @@
         <li><a href="#" class="nav-link" data-page="missions"><i class="fas fa-tasks me-2"></i>Missions</a></li>
         <li><a href="#" class="nav-link" data-page="marketplace"><i class="fas fa-store me-2"></i>Marketplace <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="balance"><i class="fas fa-wallet me-2"></i>Balance</a></li>
-        <li><a href="#" class="nav-link" data-page="withdraw"><i class="fas fa-money-check-alt me-2"></i>Withdraw</a></li>
         <li><a href="#" class="nav-link" data-page="vip"><i class="fas fa-crown me-2"></i>VIP</a></li>
         <li><a href="#" class="nav-link text-danger" data-page="admin"><i class="fas fa-user-shield me-2"></i>Admin <span class="badge bg-warning text-dark ms-2">ADMIN ONLY</span> <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="account"><i class="fas fa-user me-2"></i>My Account</a></li>
@@ -1106,105 +1154,6 @@
       </div>
     </div>
 
-    <!-- Withdraw Page -->
-    <div id="page-withdraw" class="dashboard-page" style="display:none; margin-left:300px;">
-      <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-money-check-alt me-2"></i> Withdraw Funds</h2>
-        
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card mb-4">
-              <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Withdrawal Request</h5>
-              </div>
-              <div class="card-body">
-                <form>
-                  <div class="mb-3">
-                    <label class="form-label">Withdrawal Amount (₹)</label>
-                    <input type="number" class="form-control" placeholder="Enter amount" value="1000">
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label class="form-label">Select Withdrawal Method:</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodBank" checked>
-                      <label class="form-check-label" for="methodBank">
-                        Bank Account
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodUPI">
-                      <label class="form-check-label" for="methodUPI">
-                        UPI ID
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodQR">
-                      <label class="form-check-label" for="methodQR">
-                        QR Code
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="accountNumber" class="form-label">Account Number</label>
-                    <input type="text" class="form-control" placeholder="Enter account number">
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="ifsc" class="form-label">IFSC Code</label>
-                    <input type="text" class="form-control" placeholder="Enter IFSC code">
-                  </div>
-                  
-                  <button type="submit" class="btn btn-success w-100">Submit Withdrawal Request</button>
-                </form>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Withdrawal Information</h5>
-              </div>
-              <div class="card-body">
-                <div class="alert alert-info">
-                  <p><strong>Minimum withdrawal:</strong> ₹500</p>
-                  <p><strong>Processing time:</strong> 24-48 hours</p>
-                  <p><strong>Processing fee:</strong> 2% or ₹20 (whichever is higher)</p>
-                </div>
-                
-                <h5>Recent Withdrawals</h5>
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹500.00</strong>
-                      <div class="text-muted small">2025-07-10 - Pending</div>
-                    </div>
-                    <span class="badge bg-warning text-dark">Processing</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹1000.00</strong>
-                      <div class="text-muted small">2025-06-28 - Completed</div>
-                    </div>
-                    <span class="badge bg-success">Completed</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹750.00</strong>
-                      <div class="text-muted small">2025-06-15 - Completed</div>
-                    </div>
-                    <span class="badge bg-success">Completed</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- VIP Page -->
     <div id="page-vip" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
@@ -1534,88 +1483,80 @@
     </div>
 
     <!-- Withdraw Modal -->
-   <!-- Withdraw Modal -->
-<div class="modal fade" id="withdrawModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Withdraw Funds</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="withdrawalForm" action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="_subject" value="New Withdrawal Request!">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
-          
-          <div class="mb-3">
-            <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
-            <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
+    <div class="modal fade" id="withdrawModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Withdraw Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
+          <div class="modal-body">
+            <form id="withdrawalForm">
+              <div class="mb-3">
+                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+                <input type="number" class="form-control" id="withdrawAmount" placeholder="Enter amount" required>
+              </div>
 
-          <div class="mb-3">
-            <label class="form-label">Select Withdrawal Method:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-              <label class="form-check-label" for="methodBank">
-                Bank Account (Account No + IFSC)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-              <label class="form-check-label" for="methodUPI">
-                UPI ID
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-              <label class="form-check-label" for="methodQR">
-                Upload QR Code
-              </label>
-            </div>
+              <div class="mb-3">
+                <label class="form-label">Select Withdrawal Method:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
+                  <label class="form-check-label" for="methodBank">
+                    Bank Account (Account No + IFSC)
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
+                  <label class="form-check-label" for="methodUPI">
+                    UPI ID
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
+                  <label class="form-check-label" for="methodQR">
+                    Upload QR Code
+                  </label>
+                </div>
+              </div>
+
+              <!-- BANK DETAILS -->
+              <div id="bankFields">
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
+                </div>
+                <div class="mb-3">
+                  <label for="ifsc" class="form-label">IFSC Code</label>
+                  <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
+                </div>
+              </div>
+
+              <!-- UPI DETAILS -->
+              <div id="upiField" style="display: none;">
+                <div class="mb-3">
+                  <label for="upiId" class="form-label">UPI ID</label>
+                  <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
+                </div>
+              </div>
+
+              <!-- QR UPLOAD -->
+              <div id="qrField" style="display: none;">
+                <div class="mb-3">
+                  <label for="qrUpload" class="form-label">Upload QR Code</label>
+                  <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
+                </div>
+                <div class="mb-3">
+                  <label for="qrData" class="form-label">OR Enter QR Code Data</label>
+                  <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success w-100" id="submitWithdrawal">Submit Withdrawal</button>
+            </form>
           </div>
-
-          <!-- BANK DETAILS -->
-          <div id="bankFields">
-            <div class="mb-3">
-              <label for="accountNumber" class="form-label">Account Number</label>
-              <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
-            </div>
-            <div class="mb-3">
-              <label for="ifsc" class="form-label">IFSC Code</label>
-              <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
-            </div>
-          </div>
-
-          <!-- UPI DETAILS -->
-          <div id="upiField" style="display: none;">
-            <div class="mb-3">
-              <label for="upiId" class="form-label">UPI ID</label>
-              <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
-            </div>
-          </div>
-
-          <!-- QR UPLOAD -->
-          <div id="qrField" style="display: none;">
-            <div class="mb-3">
-              <label for="qrUpload" class="form-label">Upload QR Code</label>
-              <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
-            </div>
-            <div class="mb-3">
-              <label for="qrData" class="form-label">OR Enter QR Code Data</label>
-              <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
-            </div>
-          </div>
-
-          <!-- Hidden username field -->
-          <input type="hidden" name="username" id="hiddenUsername">
-
-          <button type="submit" class="btn btn-success" id="submitWithdrawal">Submit Withdrawal</button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
     <!-- Buy Votes Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1">
@@ -1648,6 +1589,7 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
     // Simulate user database
     const users = [];
@@ -1659,13 +1601,7 @@
     const loginForm = document.getElementById('loginForm');
     const switchToLogin = document.getElementById('switchToLogin');
     const switchToRegister = document.getElementById('switchToRegister');
-    const closeInstructions = document.getElementById('closeInstructions');
     const profileUsername = document.getElementById('profileUsername');
-
-    // Close deployment instructions
-    closeInstructions.addEventListener('click', () => {
-      document.querySelector('.deploy-instructions').style.display = 'none';
-    });
 
     // Switch between login/register tabs
     switchToLogin.addEventListener('click', (e) => {
@@ -1680,27 +1616,26 @@
     // Register form submission
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      syncUsers(); // <-- Ensure latest users before registration
-
+      
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const phone = document.getElementById('regPhone').value;
       const password = document.getElementById('regPassword').value;
       const confirmPassword = document.getElementById('regConfirmPassword').value;
-
+      
+      // Simple validation
       if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
       }
-
+      
       // Check if phone number already exists
       const phoneExists = users.some(user => user.phone === phone);
       if (phoneExists) {
         alert('User with this phone number already exists!');
         return;
       }
-
+      
       // Create new user
       const newUser = {
         id: Date.now(),
@@ -1714,58 +1649,47 @@
         isAdmin: false, // Default to non-admin
         joinDate: new Date().toISOString()
       };
-
+      
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
-      localStorage.setItem('loggedInUser', JSON.stringify(newUser)); // <-- Add this line
-
+      
       // Log user in
       loginUser(newUser);
     });
-
-    // Always sync users array from localStorage before login
-function syncUsers() {
-  const usersData = localStorage.getItem('users');
-  if (usersData) {
-    users.length = 0; // Clear array
-    users.push(...JSON.parse(usersData));
-  }
-}
-
-// Login form submission
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  syncUsers(); // <-- Ensure latest users
-
-  const identifier = document.getElementById('loginIdentifier').value;
-  const password = document.getElementById('loginPassword').value;
-
-  // Find user by phone or email
-  let user = users.find(u => u.phone === identifier);
-
-  if (!user) {
-    user = users.find(u => u.email === identifier);
-  }
-
-  if (!user) {
-    alert('User not found!');
-    return;
-  }
-
-  if (user.password !== password) {
-    alert('Incorrect password!');
-    return;
-  }
-
-  // Make the first user admin for demo purposes
-  if (users.length === 1) {
-    user.isAdmin = true;
-  }
-
-  loginUser(user);
-});
-
+    
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const identifier = document.getElementById('loginIdentifier').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Find user by phone or email
+      let user = users.find(u => u.phone === identifier);
+      
+      if (!user) {
+        // If not found by phone, try by email
+        user = users.find(u => u.email === identifier);
+      }
+      
+      if (!user) {
+        alert('User not found!');
+        return;
+      }
+      
+      if (user.password !== password) {
+        alert('Incorrect password!');
+        return;
+      }
+      
+      // Make the first user admin for demo purposes
+      if (users.length === 1) {
+        user.isAdmin = true;
+      }
+      
+      loginUser(user);
+    });
+    
     // Logout function
     document.getElementById('sidebarLogout').addEventListener('click', (e) => {
       e.preventDefault();
@@ -1794,20 +1718,43 @@ loginForm.addEventListener('submit', (e) => {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
     }
 
-    // Restore users and logged-in user on page load
+    // Merge all DOMContentLoaded logic here
     window.addEventListener('DOMContentLoaded', () => {
+      // Restore users array
       const usersData = localStorage.getItem('users');
       if (usersData) {
         users.push(...JSON.parse(usersData));
       }
+      // Restore logged-in user
       const userData = localStorage.getItem('loggedInUser');
       if (userData) {
         const user = JSON.parse(userData);
         loginUser(user);
       }
-      updateWithdrawFields();
+      // Initialize method display
+      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
+      
+      // Mobile sidebar toggle
+      document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('sidebarMenu').classList.toggle('show');
+        document.querySelector('.sidebar-overlay').classList.toggle('show');
+      });
+      
+      // Close sidebar when overlay is clicked
+      document.querySelector('.sidebar-overlay').addEventListener('click', function() {
+        this.classList.remove('show');
+        document.getElementById('sidebarMenu').classList.remove('show');
+      });
+      
+      // Copy referral link
+      document.getElementById('copyButton').addEventListener('click', function() {
+        const referralLink = document.getElementById('referralLink');
+        referralLink.select();
+        document.execCommand('copy');
+        alert('Referral link copied to clipboard!');
+      });
     });
-
+    
     // Dashboard functions
     function openWithdrawModal() {
       const modal = new bootstrap.Modal(document.getElementById('withdrawModal'));
@@ -1818,43 +1765,106 @@ loginForm.addEventListener('submit', (e) => {
       modal.show();
     }
 
-    // Show correct fields when modal opens
+    // Update hidden username field when modal opens
     document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
-      updateWithdrawFields();
-      document.getElementById('hiddenUsername').value = document.getElementById('dashboardUsername').textContent;
+      // Trigger change event to set initial state
+      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
     });
 
-    // Mobile sidebar toggle logic
-const sidebarMenu = document.getElementById('sidebarMenu');
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    // Handle method selection display and validation
+    document.querySelectorAll('input[name="method"]').forEach(el => {
+      el.addEventListener('change', () => {
+        const selected = document.querySelector('input[name="method"]:checked').value;
 
-// Show sidebar on mobile menu button click
-mobileMenuBtn.addEventListener('click', () => {
-  sidebarMenu.classList.add('show');
-  sidebarOverlay.classList.add('show');
-});
+        // Show/hide fields
+        document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+        document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+        document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
 
-// Hide sidebar when overlay is clicked
-sidebarOverlay.addEventListener('click', () => {
-  sidebarMenu.classList.remove('show');
-  sidebarOverlay.classList.remove('show');
-});
+        // Remove all required attributes
+        document.getElementById('accountNumber').removeAttribute('required');
+        document.getElementById('ifscCode').removeAttribute('required');
+        document.getElementById('upiId').removeAttribute('required');
+        document.getElementById('qrUpload').removeAttribute('required');
+        document.getElementById('qrData').removeAttribute('required');
 
-// Hide sidebar when any sidebar link is clicked (on mobile)
-document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 992) {
-      sidebarMenu.classList.remove('show');
-      sidebarOverlay.classList.remove('show');
+        // Set required only for selected method
+        if (selected === 'Bank Transfer') {
+          document.getElementById('accountNumber').setAttribute('required', 'true');
+          document.getElementById('ifscCode').setAttribute('required', 'true');
+        } else if (selected === 'UPI') {
+          document.getElementById('upiId').setAttribute('required', 'true');
+        }
+        // QR Code handled by custom validation
+      });
+    });
+
+    // UpdateWithdrawFields function
+    function updateWithdrawFields() {
+      const selected = document.querySelector('input[name="method"]:checked').value;
+      document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+      document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+      document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
+
+      // Remove all required attributes
+      document.getElementById('accountNumber').removeAttribute('required');
+      document.getElementById('ifscCode').removeAttribute('required');
+      document.getElementById('upiId').removeAttribute('required');
+      document.getElementById('qrUpload').removeAttribute('required');
+      document.getElementById('qrData').removeAttribute('required');
+
+      // Set required only for selected method
+      if (selected === 'Bank Transfer') {
+        document.getElementById('accountNumber').setAttribute('required', 'true');
+        document.getElementById('ifscCode').setAttribute('required', 'true');
+      } else if (selected === 'UPI') {
+        document.getElementById('upiId').setAttribute('required', 'true');
+      }
+      // QR Code handled by custom validation
     }
-  });
-});
 
-// Optional: Collapse sidebar with collapse button (desktop)
-document.getElementById('sidebarToggle').addEventListener('click', () => {
-  sidebarMenu.classList.toggle('collapsed');
-});
+    // Attach event listeners to all withdrawal method radio buttons
+    document.querySelectorAll('input[name="method"]').forEach(el => {
+      el.addEventListener('change', updateWithdrawFields);
+    });
+
+    // Call once on page load to set initial state
+    window.addEventListener('DOMContentLoaded', () => {
+      updateWithdrawFields();
+    });
+    
+    // Sidebar navigation handler
+    document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.dashboard-page').forEach(page => {
+          page.style.display = 'none';
+        });
+        const pageId = 'page-' + link.getAttribute('data-page');
+        const pageDiv = document.getElementById(pageId);
+        if (pageDiv) {
+          pageDiv.style.display = 'block';
+        }
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
+          nav.classList.remove('active');
+        });
+        link.classList.add('active');
+        
+        // Close sidebar on mobile after selection
+        if (window.innerWidth < 992) {
+          document.getElementById('sidebarMenu').classList.remove('show');
+          document.querySelector('.sidebar-overlay').classList.remove('show');
+        }
+      });
+    });
+    
+    // Handle withdrawal form submission
+    document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Withdrawal request submitted successfully!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('withdrawModal'));
+      modal.hide();
+    });
   </script>
 </body>
 </html>
