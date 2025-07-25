@@ -1600,8 +1600,8 @@
       </div>
     </div>
 
+
     <!-- Withdraw Modal -->
-   <!-- Withdraw Modal -->
 <div class="modal fade" id="withdrawModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -1614,9 +1614,15 @@
           <input type="hidden" name="_subject" value="New Withdrawal Request!">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
-          
+
+          <!-- Info alert -->
+          <div class="alert alert-info mb-3">
+            <i class="fas fa-info-circle me-2"></i>
+            <span id="methodInstruction">Enter your bank account details below</span>
+          </div>
+
           <div class="mb-3">
-            <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+            <label for="withdrawAmount" class="form-label">Withdrawal Amount (₹)</label>
             <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
           </div>
 
@@ -1624,21 +1630,15 @@
             <label class="form-label">Select Withdrawal Method:</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-              <label class="form-check-label" for="methodBank">
-                Bank Account (Account No + IFSC)
-              </label>
+              <label class="form-check-label" for="methodBank">Bank Account</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-              <label class="form-check-label" for="methodUPI">
-                UPI ID
-              </label>
+              <label class="form-check-label" for="methodUPI">UPI ID</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-              <label class="form-check-label" for="methodQR">
-                Upload QR Code
-              </label>
+              <label class="form-check-label" for="methodQR">QR Code</label>
             </div>
           </div>
 
@@ -1646,11 +1646,11 @@
           <div id="bankFields">
             <div class="mb-3">
               <label for="accountNumber" class="form-label">Account Number</label>
-              <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
+              <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number" required>
             </div>
             <div class="mb-3">
-              <label for="ifsc" class="form-label">IFSC Code</label>
-              <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
+              <label for="ifscCode" class="form-label">IFSC Code</label>
+              <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code" required>
             </div>
           </div>
 
@@ -1658,7 +1658,7 @@
           <div id="upiField" style="display: none;">
             <div class="mb-3">
               <label for="upiId" class="form-label">UPI ID</label>
-              <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
+              <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)" required>
             </div>
           </div>
 
@@ -1666,7 +1666,7 @@
           <div id="qrField" style="display: none;">
             <div class="mb-3">
               <label for="qrUpload" class="form-label">Upload QR Code</label>
-              <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
+              <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*" required>
             </div>
             <div class="mb-3">
               <label for="qrData" class="form-label">OR Enter QR Code Data</label>
@@ -1683,6 +1683,7 @@
     </div>
   </div>
 </div>
+
 
     <!-- Buy Votes Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1">
@@ -1714,7 +1715,8 @@
               <div class="mb-3">
                 <label for="buyVotesAmount" class="form-label">Votes to Buy</label>
                 <input type="number" class="form-control" id="buyVotesAmount" required>
-              </div>
+              </div>                                                    
+              
               <div class="mb-3">
                 <label for="paymentProof" class="form-label">Upload Payment Proof</label>
                 <input type="file" class="form-control" id="paymentProof" accept="image/*" required>
@@ -1840,6 +1842,17 @@
       document.getElementById('username').textContent = user.name;
       document.getElementById('dashboardUsername').textContent = user.name;
       document.getElementById('profileUsername').textContent = user.name;
+
+      // Update dashboard balance and votes
+      document.querySelector('.balance-amount').textContent = `₹${user.balance.toLocaleString()}.00`;
+      document.querySelector('#page-dashboard .display-4').textContent = user.votes;
+
+      // Update account page fields
+      document.querySelector('#page-account input[type="text"]').value = user.name;
+      document.querySelector('#page-account input[type="email"]').value = user.email || '';
+      document.querySelector('#page-account input[type="tel"]').value = user.phone;
+      document.querySelector('#page-account input[disabled]').value = user.joinDate ? user.joinDate.split('T')[0] : '';
+
       document.querySelectorAll('.dashboard-page').forEach(function(page) {
         page.style.display = 'none';
       });
@@ -2133,6 +2146,57 @@ function deleteUser(phone) {
 document.querySelector('#sidebarMenu .nav-link[data-page="admin"]').addEventListener('click', function() {
   renderAdminPanel();
 });
+
+// Sidebar navigation logic
+document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('.dashboard-page').forEach(page => page.style.display = 'none');
+    document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => nav.classList.remove('active'));
+    const pageId = 'page-' + this.getAttribute('data-page');
+    document.getElementById(pageId).style.display = 'block';
+    this.classList.add('active');
+    if (pageId === 'page-admin') renderAdminPanel();
+  });
+});
+
+function updateWithdrawFields() {
+  const methodBank = document.getElementById('methodBank');
+  const methodUPI = document.getElementById('methodUPI');
+  const methodQR = document.getElementById('methodQR');
+  const bankFields = document.getElementById('bankFields');
+  const upiField = document.getElementById('upiField');
+  const qrField = document.getElementById('qrField');
+  const methodInstruction = document.getElementById('methodInstruction');
+
+  function showFields() {
+    if (methodBank.checked) {
+      bankFields.style.display = '';
+      upiField.style.display = 'none';
+      qrField.style.display = 'none';
+      methodInstruction.textContent = 'Enter your bank account details below';
+    } else if (methodUPI.checked) {
+      bankFields.style.display = 'none';
+      upiField.style.display = '';
+      qrField.style.display = 'none';
+      methodInstruction.textContent = 'Enter your UPI ID below';
+    } else if (methodQR.checked) {
+      bankFields.style.display = 'none';
+      upiField.style.display = 'none';
+      qrField.style.display = '';
+      methodInstruction.textContent = 'Upload your QR code or enter QR data below';
+    }
+  }
+
+  methodBank.addEventListener('change', showFields);
+  methodUPI.addEventListener('change', showFields);
+  methodQR.addEventListener('change', showFields);
+
+  showFields();
+}
+
+// Call updateWithdrawFields when modal opens
+document.getElementById('withdrawModal').addEventListener('show.bs.modal', updateWithdrawFields);
   </script>
 </body>
 </html>
