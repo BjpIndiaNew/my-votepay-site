@@ -1662,8 +1662,6 @@
         return;
       }
       
-  
-      
       loginUser(user);
     });
     
@@ -1675,7 +1673,30 @@
       dashboardSection.style.display = 'none';
     });
     
-    // Login user and show dashboard
+    function setupSidebarNavigation() {
+  document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Hide all dashboard pages
+      document.querySelectorAll('.dashboard-page').forEach(page => {
+        page.style.display = 'none';
+      });
+      // Show the selected page
+      const pageId = 'page-' + link.getAttribute('data-page');
+      const pageDiv = document.getElementById(pageId);
+      if (pageDiv) {
+        pageDiv.style.display = 'block';
+      }
+      // Remove active class from all links and set it to the clicked one
+      document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
+        nav.classList.remove('active');
+      });
+      link.classList.add('active');
+    });
+  });
+}
+
+    // Call this after login and after restoring session:
     function loginUser(user) {
   authSection.style.display = 'none';
   dashboardSection.style.display = 'block';
@@ -1690,12 +1711,10 @@
     nav.classList.remove('active');
   });
   document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
-
-  // Add this code here:
   const adminMenuItem = document.querySelector('#sidebarMenu .nav-link.text-danger');
   adminMenuItem.style.display = user.isAdmin ? 'block' : 'none';
-
   localStorage.setItem('loggedInUser', JSON.stringify(user));
+  setupSidebarNavigation(); // <-- Add this line
 }
     
 
@@ -1786,6 +1805,7 @@
     }
 
     // Attach event listeners to all withdrawal method radio buttons
+   
     document.querySelectorAll('input[name="method"]').forEach(el => {
       el.addEventListener('change', updateWithdrawFields);
     });
@@ -1795,34 +1815,6 @@
       updateWithdrawFields();
     });
     
-    // Sidebar navigation handler
-    document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Sidebar link clicked:', link.getAttribute('data-page')); // Debug line
-
-        // Hide all dashboard pages
-        document.querySelectorAll('.dashboard-page').forEach(page => {
-          page.style.display = 'none';
-        });
-
-        // Show the selected page
-        const pageId = 'page-' + link.getAttribute('data-page');
-        const pageDiv = document.getElementById(pageId);
-
-        if (pageDiv) {
-          pageDiv.style.display = 'block';
-        } else {
-          console.warn('No page found for:', pageId);
-        }
-
-        // Remove active class from all links and set it to the clicked one
-        document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
-          nav.classList.remove('active');
-        });
-        link.classList.add('active');
-      });
-    });
   </script>
 </body>
 </html>
