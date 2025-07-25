@@ -1761,23 +1761,69 @@
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      syncUsers(); // <-- Ensure latest users before registration
+      syncUsers(); // Ensure latest users before registration
 
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const phone = document.getElementById('regPhone').value;
       const password = document.getElementById('regPassword').value;
-    alert('Incorrect password!');
-    return;
-  }
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
 
-  // Make the first user admin for demo purposes
-  if (users.length === 1) {
-    user.isAdmin = true;
-  }
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
 
-  loginUser(user);
-});
+      // Check if phone already exists
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.some(u => u.phone === phone)) {
+        alert('User with this phone number already exists!');
+        return;
+      }
+
+      // Create new user
+      const newUser = {
+        id: Date.now(),
+        name,
+        email: email || null,
+        phone,
+        password,
+        balance: 1260,
+        votes: 250,
+        level: 2,
+        isAdmin: users.length === 0, // First user is admin
+        joinDate: new Date().toISOString()
+      };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('loggedInUser', JSON.stringify(newUser));
+      loginUser(newUser);
+    });
+
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      syncUsers(); // Ensure latest users before login
+
+      const identifier = document.getElementById('loginIdentifier').value;
+      const password = document.getElementById('loginPassword').value;
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      let user = users.find(u => u.phone === identifier) || users.find(u => u.email === identifier);
+
+      if (!user) {
+        alert('User not found!');
+        return;
+      }
+      if (user.password !== password) {
+        alert('Incorrect password!');
+        return;
+      }
+
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      loginUser(user);
+    });
 
     // Logout function
     document.getElementById('sidebarLogout').addEventListener('click', (e) => {
@@ -1806,6 +1852,16 @@
       adminMenuItem.style.display = user.isAdmin ? 'block' : 'none';
       localStorage.setItem('loggedInUser', JSON.stringify(user));
     }
+
+    // Sync users array with localStorage
+function syncUsers() {
+  // Sync users array with localStorage
+  const usersData = localStorage.getItem('users');
+  if (usersData) {
+    users.length = 0;
+    users.push(...JSON.parse(usersData));
+  }
+}
 
     // Restore users and logged-in user on page load
     window.addEventListener('DOMContentLoaded', () => {
