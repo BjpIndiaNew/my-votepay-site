@@ -1733,6 +1733,33 @@
       }
       // Initialize method display
       document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
+
+      // Mobile sidebar logic
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      const sidebarOverlay = document.querySelector('.sidebar-overlay');
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+
+      // Show sidebar on mobile menu button click
+      mobileMenuBtn.addEventListener('click', () => {
+        sidebarMenu.classList.add('show');
+        sidebarOverlay.classList.add('show');
+      });
+
+      // Hide sidebar when overlay is clicked
+      sidebarOverlay.addEventListener('click', () => {
+        sidebarMenu.classList.remove('show');
+        sidebarOverlay.classList.remove('show');
+      });
+
+      // Hide sidebar after clicking a nav link (on mobile)
+      document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 992) {
+            sidebarMenu.classList.remove('show');
+            sidebarOverlay.classList.remove('show');
+          }
+        });
+      });
     });
     
     // Dashboard functions
