@@ -301,9 +301,16 @@
         z-index: 1050;
         transform: translateX(-100%);
       }
+      
       #sidebarMenu.show {
         transform: translateX(0);
       }
+      
+      .dashboard-page {
+        margin-left: 0 !important;
+        width: 100%;
+      }
+      
       .sidebar-overlay {
         position: fixed;
         top: 0;
@@ -314,6 +321,7 @@
         z-index: 1040;
         display: none;
       }
+      
       .sidebar-overlay.show {
         display: block;
       }
@@ -677,7 +685,6 @@
         <li><a href="#" class="nav-link" data-page="missions"><i class="fas fa-tasks me-2"></i>Missions</a></li>
         <li><a href="#" class="nav-link" data-page="marketplace"><i class="fas fa-store me-2"></i>Marketplace <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="balance"><i class="fas fa-wallet me-2"></i>Balance</a></li>
-        <li><a href="#" class="nav-link" data-page="withdraw"><i class="fas fa-money-check-alt me-2"></i>Withdraw</a></li>
         <li><a href="#" class="nav-link" data-page="vip"><i class="fas fa-crown me-2"></i>VIP</a></li>
         <li><a href="#" class="nav-link text-danger" data-page="admin"><i class="fas fa-user-shield me-2"></i>Admin <span class="badge bg-warning text-dark ms-2">ADMIN ONLY</span> <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="account"><i class="fas fa-user me-2"></i>My Account</a></li>
@@ -1106,105 +1113,6 @@
       </div>
     </div>
 
-    <!-- Withdraw Page -->
-    <div id="page-withdraw" class="dashboard-page" style="display:none; margin-left:300px;">
-      <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-money-check-alt me-2"></i> Withdraw Funds</h2>
-        
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card mb-4">
-              <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Withdrawal Request</h5>
-              </div>
-              <div class="card-body">
-                <form>
-                  <div class="mb-3">
-                    <label class="form-label">Withdrawal Amount (₹)</label>
-                    <input type="number" class="form-control" placeholder="Enter amount" value="1000">
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label class="form-label">Select Withdrawal Method:</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodBank" checked>
-                      <label class="form-check-label" for="methodBank">
-                        Bank Account
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodUPI">
-                      <label class="form-check-label" for="methodUPI">
-                        UPI ID
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="method" id="methodQR">
-                      <label class="form-check-label" for="methodQR">
-                        QR Code
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="accountNumber" class="form-label">Account Number</label>
-                    <input type="text" class="form-control" placeholder="Enter account number">
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="ifsc" class="form-label">IFSC Code</label>
-                    <input type="text" class="form-control" placeholder="Enter IFSC code">
-                  </div>
-                  
-                  <button type="submit" class="btn btn-success w-100">Submit Withdrawal Request</button>
-                </form>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Withdrawal Information</h5>
-              </div>
-              <div class="card-body">
-                <div class="alert alert-info">
-                  <p><strong>Minimum withdrawal:</strong> ₹500</p>
-                  <p><strong>Processing time:</strong> 24-48 hours</p>
-                  <p><strong>Processing fee:</strong> 2% or ₹20 (whichever is higher)</p>
-                </div>
-                
-                <h5>Recent Withdrawals</h5>
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹500.00</strong>
-                      <div class="text-muted small">2025-07-10 - Pending</div>
-                    </div>
-                    <span class="badge bg-warning text-dark">Processing</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹1000.00</strong>
-                      <div class="text-muted small">2025-06-28 - Completed</div>
-                    </div>
-                    <span class="badge bg-success">Completed</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>₹750.00</strong>
-                      <div class="text-muted small">2025-06-15 - Completed</div>
-                    </div>
-                    <span class="badge bg-success">Completed</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- VIP Page -->
     <div id="page-vip" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
@@ -1424,73 +1332,6 @@
             </div>
           </div>
         </div>
-
-        <!-- New Admin Features -->
-        <div class="card mt-4">
-          <div class="card-header bg-info text-white">
-            <h5 class="mb-0">User Management</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover" id="adminUsersTable">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Balance</th>
-                    <th>Votes</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody><!-- JS injects users here --></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header bg-warning text-dark">
-            <h5 class="mb-0">Withdrawal Requests</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover" id="adminWithdrawalsTable">
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>Amount</th>
-                    <th>Method</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody><!-- JS injects withdrawals here --></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header bg-success text-white">
-            <h5 class="mb-0">Buy Votes Requests</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover" id="adminBuyVotesTable">
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>Votes</th>
-                    <th>Proof</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody><!-- JS injects buy votes here --></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1600,90 +1441,88 @@
       </div>
     </div>
 
-
     <!-- Withdraw Modal -->
-<div class="modal fade" id="withdrawModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Withdraw Funds</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="withdrawalForm" action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="_subject" value="New Withdrawal Request!">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
-
-          <!-- Info alert -->
-          <div class="alert alert-info mb-3">
-            <i class="fas fa-info-circle me-2"></i>
-            <span id="methodInstruction">Enter your bank account details below</span>
+    <div class="modal fade" id="withdrawModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Withdraw Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
+          <div class="modal-body">
+            <form id="withdrawalForm" action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="_subject" value="New Withdrawal Request!">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
+              
+              <div class="mb-3">
+                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+                <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
+              </div>
 
-          <div class="mb-3">
-            <label for="withdrawAmount" class="form-label">Withdrawal Amount (₹)</label>
-            <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
+              <div class="mb-3">
+                <label class="form-label">Select Withdrawal Method:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
+                  <label class="form-check-label" for="methodBank">
+                    Bank Account (Account No + IFSC)
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
+                  <label class="form-check-label" for="methodUPI">
+                    UPI ID
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
+                  <label class="form-check-label" for="methodQR">
+                    Upload QR Code
+                  </label>
+                </div>
+              </div>
+
+              <!-- BANK DETAILS -->
+              <div id="bankFields">
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
+                </div>
+                <div class="mb-3">
+                  <label for="ifsc" class="form-label">IFSC Code</label>
+                  <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
+                </div>
+              </div>
+
+              <!-- UPI DETAILS -->
+              <div id="upiField" style="display: none;">
+                <div class="mb-3">
+                  <label for="upiId" class="form-label">UPI ID</label>
+                  <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
+                </div>
+              </div>
+
+              <!-- QR UPLOAD -->
+              <div id="qrField" style="display: none;">
+                <div class="mb-3">
+                  <label for="qrUpload" class="form-label">Upload QR Code</label>
+                  <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
+                </div>
+                <div class="mb-3">
+                  <label for="qrData" class="form-label">OR Enter QR Code Data</label>
+                  <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
+                </div>
+              </div>
+
+              <!-- Hidden username field -->
+              <input type="hidden" name="username" id="hiddenUsername">
+
+              <button type="submit" class="btn btn-success" id="submitWithdrawal">Submit Withdrawal</button>
+            </form>
           </div>
-
-          <div class="mb-3">
-            <label class="form-label">Select Withdrawal Method:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-              <label class="form-check-label" for="methodBank">Bank Account</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-              <label class="form-check-label" for="methodUPI">UPI ID</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-              <label class="form-check-label" for="methodQR">QR Code</label>
-            </div>
-          </div>
-
-          <!-- BANK DETAILS -->
-          <div id="bankFields">
-            <div class="mb-3">
-              <label for="accountNumber" class="form-label">Account Number</label>
-              <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number" required>
-            </div>
-            <div class="mb-3">
-              <label for="ifscCode" class="form-label">IFSC Code</label>
-              <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code" required>
-            </div>
-          </div>
-
-          <!-- UPI DETAILS -->
-          <div id="upiField" style="display: none;">
-            <div class="mb-3">
-              <label for="upiId" class="form-label">UPI ID</label>
-              <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)" required>
-            </div>
-          </div>
-
-          <!-- QR UPLOAD -->
-          <div id="qrField" style="display: none;">
-            <div class="mb-3">
-              <label for="qrUpload" class="form-label">Upload QR Code</label>
-              <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*" required>
-            </div>
-            <div class="mb-3">
-              <label for="qrData" class="form-label">OR Enter QR Code Data</label>
-              <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
-            </div>
-          </div>
-
-          <!-- Hidden username field -->
-          <input type="hidden" name="username" id="hiddenUsername">
-
-          <button type="submit" class="btn btn-success" id="submitWithdrawal">Submit Withdrawal</button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
 
     <!-- Buy Votes Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1">
@@ -1709,20 +1548,6 @@
               <img src="https://via.placeholder.com/200x200?text=QR+Code" alt="QR Code" class="qr-img">
             </div>
             <p>After payment, please contact support or upload proof for order processing.</p>
-
-            <!-- Add this form inside the buyModal -->
-            <form id="buyVotesForm">
-              <div class="mb-3">
-                <label for="buyVotesAmount" class="form-label">Votes to Buy</label>
-                <input type="number" class="form-control" id="buyVotesAmount" required>
-              </div>                                                    
-              
-              <div class="mb-3">
-                <label for="paymentProof" class="form-label">Upload Payment Proof</label>
-                <input type="file" class="form-control" id="paymentProof" accept="image/*" required>
-              </div>
-              <button type="submit" class="btn btn-success">Submit Payment Proof</button>
-            </form>
           </div>
         </div>
       </div>
@@ -1730,6 +1555,7 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
     // Simulate user database
     const users = [];
@@ -1763,26 +1589,29 @@
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      syncUsers(); // Ensure latest users before registration
+      // Add these lines here:
+      users.length = 0;
+      users.push(...JSON.parse(localStorage.getItem('users') || '[]'));
 
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const phone = document.getElementById('regPhone').value;
       const password = document.getElementById('regPassword').value;
       const confirmPassword = document.getElementById('regConfirmPassword').value;
-
+      
+      // Simple validation
       if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
       }
-
-      // Check if phone already exists
-      let users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (users.some(u => u.phone === phone)) {
+      
+      // Check if phone number already exists
+      const phoneExists = users.some(user => user.phone === phone);
+      if (phoneExists) {
         alert('User with this phone number already exists!');
         return;
       }
-
+      
       // Create new user
       const newUser = {
         id: Date.now(),
@@ -1796,37 +1625,48 @@
         isAdmin: users.length === 0, // First user is admin
         joinDate: new Date().toISOString()
       };
+      
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
-      localStorage.setItem('loggedInUser', JSON.stringify(newUser));
+      
+      // Log user in
       loginUser(newUser);
     });
-
+    
     // Login form submission
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      syncUsers(); // Ensure latest users before login
+      // Add these lines here:
+      users.length = 0;
+      users.push(...JSON.parse(localStorage.getItem('users') || '[]'));
 
       const identifier = document.getElementById('loginIdentifier').value;
       const password = document.getElementById('loginPassword').value;
-
-      let users = JSON.parse(localStorage.getItem('users') || '[]');
-      let user = users.find(u => u.phone === identifier) || users.find(u => u.email === identifier);
-
+      
+      // Find user by phone or email
+      let user = users.find(u => u.phone === identifier);
+      
+      if (!user) {
+        // If not found by phone, try by email
+        user = users.find(u => u.email === identifier);
+      }
+      
       if (!user) {
         alert('User not found!');
         return;
       }
+      
       if (user.password !== password) {
         alert('Incorrect password!');
         return;
       }
-
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      
+  
+      
       loginUser(user);
     });
-
+    
     // Logout function
     document.getElementById('sidebarLogout').addEventListener('click', (e) => {
       e.preventDefault();
@@ -1837,64 +1677,48 @@
     
     // Login user and show dashboard
     function loginUser(user) {
-      authSection.style.display = 'none';
-      dashboardSection.style.display = 'block';
-      document.getElementById('username').textContent = user.name;
-      document.getElementById('dashboardUsername').textContent = user.name;
-      document.getElementById('profileUsername').textContent = user.name;
+  authSection.style.display = 'none';
+  dashboardSection.style.display = 'block';
+  document.getElementById('username').textContent = user.name;
+  document.getElementById('dashboardUsername').textContent = user.name;
+  document.getElementById('profileUsername').textContent = user.name;
+  document.querySelectorAll('.dashboard-page').forEach(function(page) {
+    page.style.display = 'none';
+  });
+  document.getElementById('page-dashboard').style.display = 'block';
+  document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
+    nav.classList.remove('active');
+  });
+  document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
 
-      // Update dashboard balance and votes
-      document.querySelector('.balance-amount').textContent = `₹${user.balance.toLocaleString()}.00`;
-      document.querySelector('#page-dashboard .display-4').textContent = user.votes;
+  // Add this code here:
+  const adminMenuItem = document.querySelector('#sidebarMenu .nav-link.text-danger');
+  adminMenuItem.style.display = user.isAdmin ? 'block' : 'none';
 
-      // Update account page fields
-      document.querySelector('#page-account input[type="text"]').value = user.name;
-      document.querySelector('#page-account input[type="email"]').value = user.email || '';
-      document.querySelector('#page-account input[type="tel"]').value = user.phone;
-      document.querySelector('#page-account input[disabled]').value = user.joinDate ? user.joinDate.split('T')[0] : '';
-
-      document.querySelectorAll('.dashboard-page').forEach(function(page) {
-        page.style.display = 'none';
-      });
-      document.getElementById('page-dashboard').style.display = 'block';
-      document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
-        nav.classList.remove('active');
-      });
-      document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
-      const adminMenuItem = document.querySelector('#sidebarMenu .nav-link.text-danger');
-      adminMenuItem.style.display = user.isAdmin ? 'block' : 'none';
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-    }
-
-    // Sync users array with localStorage
-function syncUsers() {
-  // Sync users array with localStorage
-  const usersData = localStorage.getItem('users');
-  if (usersData) {
-    users.length = 0;
-    users.push(...JSON.parse(usersData));
-  }
+  localStorage.setItem('loggedInUser', JSON.stringify(user));
 }
+    
 
-    // Restore users and logged-in user on page load
+    // Merge all DOMContentLoaded logic here
     window.addEventListener('DOMContentLoaded', () => {
+      // Restore users array
       const usersData = localStorage.getItem('users');
       if (usersData) {
         users.push(...JSON.parse(usersData));
       }
+      // Restore logged-in user
       const userData = localStorage.getItem('loggedInUser');
       if (userData) {
         const user = JSON.parse(userData);
         loginUser(user);
       }
-      updateWithdrawFields();
+      // Initialize method display
+      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
     });
-
+    
     // Dashboard functions
     function openWithdrawModal() {
       const modal = new bootstrap.Modal(document.getElementById('withdrawModal'));
-     
-
       modal.show();
     }
     function openBuyModal() {
@@ -1902,301 +1726,93 @@ function syncUsers() {
       modal.show();
     }
 
-    // Show correct fields when modal opens
+    // Update hidden username field when modal opens
     document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
-      updateWithdrawFields();
       document.getElementById('hiddenUsername').value = document.getElementById('dashboardUsername').textContent;
+      // Trigger change event to set initial state
+      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
     });
 
-    // Mobile sidebar toggle logic
-const sidebarMenu = document.getElementById('sidebarMenu');
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    // Handle method selection display and validation
+    document.querySelectorAll('input[name="method"]').forEach(el => {
+      el.addEventListener('change', () => {
+        const selected = document.querySelector('input[name="method"]:checked').value;
 
-// Show sidebar on mobile menu button click
-mobileMenuBtn.addEventListener('click', () => {
-  sidebarMenu.classList.add('show');
-  sidebarOverlay.classList.add('show');
-});
+        // Show/hide fields
+        document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+        document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+        document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
 
-// Hide sidebar when overlay is clicked
-sidebarOverlay.addEventListener('click', () => {
-  sidebarMenu.classList.remove('show');
-  sidebarOverlay.classList.remove('show');
-});
+        // Remove all required attributes
+        document.getElementById('accountNumber').removeAttribute('required');
+        document.getElementById('ifscCode').removeAttribute('required');
+        document.getElementById('upiId').removeAttribute('required');
+        document.getElementById('qrUpload').removeAttribute('required');
+        document.getElementById('qrData').removeAttribute('required');
 
-// Hide sidebar when any sidebar link is clicked (on mobile)
-document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 992) {
-      sidebarMenu.classList.remove('show');
-      sidebarOverlay.classList.remove('show');
+        // Set required only for selected method
+        if (selected === 'Bank Transfer') {
+          document.getElementById('accountNumber').setAttribute('required', 'true');
+          document.getElementById('ifscCode').setAttribute('required', 'true');
+        } else if (selected === 'UPI') {
+          document.getElementById('upiId').setAttribute('required', 'true');
+        }
+        // QR Code handled by custom validation
+      });
+    });
+
+    // UpdateWithdrawFields function
+    function updateWithdrawFields() {
+      const selected = document.querySelector('input[name="method"]:checked').value;
+      document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
+      document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
+      document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
+
+      // Remove all required attributes
+      document.getElementById('accountNumber').removeAttribute('required');
+      document.getElementById('ifscCode').removeAttribute('required');
+      document.getElementById('upiId').removeAttribute('required');
+      document.getElementById('qrUpload').removeAttribute('required');
+      document.getElementById('qrData').removeAttribute('required');
+
+      // Set required only for selected method
+      if (selected === 'Bank Transfer') {
+        document.getElementById('accountNumber').setAttribute('required', 'true');
+        document.getElementById('ifscCode').setAttribute('required', 'true');
+      } else if (selected === 'UPI') {
+        document.getElementById('upiId').setAttribute('required', 'true');
+      }
+      // QR Code handled by custom validation
     }
-  });
-});
 
-// Optional: Collapse sidebar with collapse button (desktop)
-document.getElementById('sidebarToggle').addEventListener('click', () => {
-  sidebarMenu.classList.toggle('collapsed');
-});
+    // Attach event listeners to all withdrawal method radio buttons
+    document.querySelectorAll('input[name="method"]').forEach(el => {
+      el.addEventListener('change', updateWithdrawFields);
+    });
 
-document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const user = JSON.parse(localStorage.getItem('loggedInUser'));
-  const amount = document.getElementById('withdrawAmount').value;
-  const method = document.querySelector('input[name="method"]:checked').value;
-  const accountNumber = document.getElementById('accountNumber').value;
-  const ifsc = document.getElementById('ifscCode').value;
-  const upiId = document.getElementById('upiId').value;
-  const qrData = document.getElementById('qrData').value;
-
-  const withdrawal = {
-    id: Date.now(),
-    userPhone: user.phone,
-    userName: user.name,
-    amount,
-    method,
-    accountNumber,
-    ifsc,
-    upiId,
-    qrData,
-    status: 'pending',
-    adminMessage: '',
-    date: new Date().toISOString()
-  };
-
-  let withdrawals = JSON.parse(localStorage.getItem('withdrawals') || '[]');
-  withdrawals.push(withdrawal);
-  localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
-  alert('Withdrawal request submitted!');
-  this.reset();
-  bootstrap.Modal.getInstance(document.getElementById('withdrawModal')).hide();
-});
-
-document.getElementById('buyVotesForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const user = JSON.parse(localStorage.getItem('loggedInUser'));
-  const votes = document.getElementById('buyVotesAmount').value;
-  const proof = document.getElementById('paymentProof').files[0];
-  const reader = new FileReader();
-  reader.onload = function() {
-    const buyRequest = {
-      id: Date.now(),
-      userPhone: user.phone,
-      userName: user.name,
-      votes,
-      proof: reader.result, // base64 image
-      status: 'pending',
-      adminMessage: '',
-      date: new Date().toISOString()
-    };
-    let buyRequests = JSON.parse(localStorage.getItem('buyRequests') || '[]');
-    buyRequests.push(buyRequest);
-    localStorage.setItem('buyRequests', JSON.stringify(buyRequests));
-    alert('Buy votes request submitted!');
-    document.getElementById('buyVotesForm').reset();
-    bootstrap.Modal.getInstance(document.getElementById('buyModal')).hide();
-  };
-  reader.readAsDataURL(proof);
-});
-
-function renderAdminPanel() {
-  // Users
-  const users = JSON.parse(localStorage.getItem('users') || '[]');
-  const usersTbody = document.querySelector('#adminUsersTable tbody');
-  usersTbody.innerHTML = '';
-  users.forEach(u => {
-    usersTbody.innerHTML += `
-      <tr>
-        <td>${u.name}</td>
-        <td>${u.phone}</td>
-        <td><input type="number" value="${u.balance}" min="0" style="width:80px" onchange="updateUserBalance('${u.phone}', this.value)"></td>
-        <td><input type="number" value="${u.votes}" min="0" style="width:60px" onchange="updateUserVotes('${u.phone}', this.value)"></td>
-        <td><button class="btn btn-sm btn-danger" onclick="deleteUser('${u.phone}')">Delete</button></td>
-      </tr>
-    `;
-  });
-
-  // Withdrawals
-  const withdrawals = JSON.parse(localStorage.getItem('withdrawals') || '[]');
-  const withdrawalsTbody = document.querySelector('#adminWithdrawalsTable tbody');
-  withdrawalsTbody.innerHTML = '';
-  withdrawals.forEach(w => {
-    withdrawalsTbody.innerHTML += `
-      <tr>
-        <td>${w.userName} (${w.userPhone})</td>
-        <td>₹${w.amount}</td>
-        <td>${w.method}</td>
-        <td>${w.status}</td>
-        <td>
-          ${w.status === 'pending' ? `
-            <button class="btn btn-sm btn-success" onclick="approveWithdrawal(${w.id})">Approve</button>
-            <button class="btn btn-sm btn-danger" onclick="rejectWithdrawal(${w.id})">Reject</button>
-          ` : w.adminMessage}
-        </td>
-      </tr>
-    `;
-  });
-
-  // Buy Votes
-  const buyRequests = JSON.parse(localStorage.getItem('buyRequests') || '[]');
-  const buyTbody = document.querySelector('#adminBuyVotesTable tbody');
-  buyTbody.innerHTML = '';
-  buyRequests.forEach(b => {
-    buyTbody.innerHTML += `
-      <tr>
-        <td>${b.userName} (${b.userPhone})</td>
-        <td>${b.votes}</td>
-        <td>${b.proof ? `<img src="${b.proof}" style="max-width:60px;">` : ''}</td>
-        <td>${b.status}</td>
-        <td>
-          ${b.status === 'pending' ? `
-            <button class="btn btn-sm btn-success" onclick="approveBuyVotes(${b.id})">Approve</button>
-            <button class="btn btn-sm btn-danger" onclick="rejectBuyVotes(${b.id})">Reject</button>
-          ` : b.adminMessage}
-        </td>
-      </tr>
-    `;
-  });
-}
-
-// Update user balance/votes
-function updateUserBalance(phone, value) {
-  let users = JSON.parse(localStorage.getItem('users') || '[]');
-  const idx = users.findIndex(u => u.phone === phone);
-  if (idx !== -1) {
-    users[idx].balance = Number(value);
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Balance updated!');
-  }
-}
-function updateUserVotes(phone, value) {
-  let users = JSON.parse(localStorage.getItem('users') || '[]');
-  const idx = users.findIndex(u => u.phone === phone);
-  if (idx !== -1) {
-    users[idx].votes = Number(value);
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Votes updated!');
-  }
-}
-
-// Approve/Reject Withdrawals
-function approveWithdrawal(id) {
-  let withdrawals = JSON.parse(localStorage.getItem('withdrawals') || '[]');
-  const idx = withdrawals.findIndex(w => w.id === id);
-  if (idx !== -1) {
-    withdrawals[idx].status = 'approved';
-    withdrawals[idx].adminMessage = 'Approved. Payment sent.';
-    localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
-    renderAdminPanel();
-  }
-}
-function rejectWithdrawal(id) {
-  const msg = prompt('Enter rejection message:');
-  let withdrawals = JSON.parse(localStorage.getItem('withdrawals') || '[]');
-  const idx = withdrawals.findIndex(w => w.id === id);
-  if (idx !== -1) {
-    withdrawals[idx].status = 'rejected';
-    withdrawals[idx].adminMessage = msg || 'Rejected';
-    localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
-    renderAdminPanel();
-  }
-}
-
-// Approve/Reject Buy Votes
-function approveBuyVotes(id) {
-  let buyRequests = JSON.parse(localStorage.getItem('buyRequests') || '[]');
-  const idx = buyRequests.findIndex(b => b.id === id);
-  if (idx !== -1) {
-    // Add votes to user
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    const userIdx = users.findIndex(u => u.phone === buyRequests[idx].userPhone);
-    if (userIdx !== -1) {
-      users[userIdx].votes += Number(buyRequests[idx].votes);
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-    buyRequests[idx].status = 'approved';
-    buyRequests[idx].adminMessage = 'Approved. Votes credited.';
-    localStorage.setItem('buyRequests', JSON.stringify(buyRequests));
-    renderAdminPanel();
-  }
-}
-function rejectBuyVotes(id) {
-  const msg = prompt('Enter rejection message:');
-  let buyRequests = JSON.parse(localStorage.getItem('buyRequests') || '[]');
-  const idx = buyRequests.findIndex(b => b.id === id);
-  if (idx !== -1) {
-    buyRequests[idx].status = 'rejected';
-    buyRequests[idx].adminMessage = msg || 'Rejected';
-    localStorage.setItem('buyRequests', JSON.stringify(buyRequests));
-    renderAdminPanel();
-  }
-}
-
-// Delete user
-function deleteUser(phone) {
-  if (!confirm('Delete this user?')) return;
-  let users = JSON.parse(localStorage.getItem('users') || '[]');
-  users = users.filter(u => u.phone !== phone);
-  localStorage.setItem('users', JSON.stringify(users));
-  renderAdminPanel();
-}
-
-// Call renderAdminPanel() when admin page is shown
-document.querySelector('#sidebarMenu .nav-link[data-page="admin"]').addEventListener('click', function() {
-  renderAdminPanel();
-});
-
-// Sidebar navigation logic
-document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelectorAll('.dashboard-page').forEach(page => page.style.display = 'none');
-    document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => nav.classList.remove('active'));
-    const pageId = 'page-' + this.getAttribute('data-page');
-    document.getElementById(pageId).style.display = 'block';
-    this.classList.add('active');
-    if (pageId === 'page-admin') renderAdminPanel();
-  });
-});
-
-function updateWithdrawFields() {
-  const methodBank = document.getElementById('methodBank');
-  const methodUPI = document.getElementById('methodUPI');
-  const methodQR = document.getElementById('methodQR');
-  const bankFields = document.getElementById('bankFields');
-  const upiField = document.getElementById('upiField');
-  const qrField = document.getElementById('qrField');
-  const methodInstruction = document.getElementById('methodInstruction');
-
-  function showFields() {
-    if (methodBank.checked) {
-      bankFields.style.display = '';
-      upiField.style.display = 'none';
-      qrField.style.display = 'none';
-      methodInstruction.textContent = 'Enter your bank account details below';
-    } else if (methodUPI.checked) {
-      bankFields.style.display = 'none';
-      upiField.style.display = '';
-      qrField.style.display = 'none';
-      methodInstruction.textContent = 'Enter your UPI ID below';
-    } else if (methodQR.checked) {
-      bankFields.style.display = 'none';
-      upiField.style.display = 'none';
-      qrField.style.display = '';
-      methodInstruction.textContent = 'Upload your QR code or enter QR data below';
-    }
-  }
-
-  methodBank.addEventListener('change', showFields);
-  methodUPI.addEventListener('change', showFields);
-  methodQR.addEventListener('change', showFields);
-
-  showFields();
-}
-
-// Call updateWithdrawFields when modal opens
-document.getElementById('withdrawModal').addEventListener('show.bs.modal', updateWithdrawFields);
+    // Call once on page load to set initial state
+    window.addEventListener('DOMContentLoaded', () => {
+      updateWithdrawFields();
+    });
+    
+    // Sidebar navigation handler
+    document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.dashboard-page').forEach(page => {
+          page.style.display = 'none';
+        });
+        const pageId = 'page-' + link.getAttribute('data-page');
+        const pageDiv = document.getElementById(pageId);
+        if (pageDiv) {
+          pageDiv.style.display = 'block';
+        }
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
+          nav.classList.remove('active');
+        });
+        link.classList.add('active');
+      });
+    });
   </script>
 </body>
 </html>
