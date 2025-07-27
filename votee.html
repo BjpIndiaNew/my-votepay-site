@@ -6,6 +6,7 @@
   <title>VotePay - Voting & Payment Platform</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #43cea2;
@@ -13,21 +14,56 @@
       --secondary: #8E2DE2;
       --secondary-dark: #4A00E0;
       --accent: #f7971e;
+      --dark: #1a1d28;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
     body {
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow-x: hidden;
+      color: var(--dark);
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCc+CiAgPHBhdGggZD0nTTAgMEg1MFY1MEgwWicgZmlsbD0nI2Y4ZjlmYScvPgogIDxwYXRoIGQ9J00wLDAgNTAsNTAgTTUwLDAgMCw1MCcgc3Ryb2tlPScjZTllY2VmJyBzdHJva2Utd2lkdGg9JzAuNScvPgo8L3N2Zz4=');
     }
     
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    
+    .lead {
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+    
+    /* Auth Container */
     .auth-container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 2rem auto;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.8s ease-out;
+      background: white;
     }
     
     .auth-hero {
@@ -37,6 +73,19 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .auth-hero::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
     }
     
     .auth-form-container {
@@ -44,67 +93,114 @@
       padding: 50px;
     }
     
-    .form-switch {
-      text-align: center;
-      margin-top: 20px;
-      font-weight: 500;
-    }
-    
-    .form-switch a {
-      color: var(--primary-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    .form-switch a:hover {
-      text-decoration: underline;
-    }
-    
     .logo {
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     
     .logo i {
-      margin-right: 10px;
       color: var(--accent);
-    }
-    
-    .auth-features {
-      margin-top: 30px;
-    }
-    
-    .auth-features li {
-      margin-bottom: 15px;
+      background: rgba(255,255,255,0.15);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
     }
     
-    .auth-features i {
-      color: var(--accent);
-      margin-right: 10px;
-      font-size: 1.2rem;
+    /* Cards */
+    .card, .balance-card, .mission-card, .product-card, .vip-tier {
+      border-radius: 16px;
+      border: none;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card:hover, .balance-card:hover, .mission-card:hover, .product-card:hover, .vip-tier:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+    
+    .balance-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 30px;
+      position: relative;
+    }
+    
+    .balance-amount {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 10px 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .balance-icon {
+      font-size: 3rem;
+      opacity: 0.2;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    
+    /* Buttons */
+    .btn {
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
     }
     
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border: none;
-      padding: 12px 25px;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
     
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 20px;
+      height: 200%;
+      background: rgba(255,255,255,0.3);
+      transform: rotate(25deg);
+      transition: all 0.6s;
+    }
+    
+    .btn-primary:hover::after {
+      left: 120%;
+    }
+    
+    .btn-lg {
+      padding: 0.85rem 1.75rem;
+      font-size: 1.1rem;
+      border-radius: 14px;
+    }
+    
+    /* Forms */
     .form-control {
-      padding: 12px 15px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      transition: all 0.3s ease;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #e1e5eb;
+      transition: var(--transition);
+      font-size: 1rem;
+      height: auto;
     }
     
     .form-control:focus {
@@ -112,253 +208,180 @@
       box-shadow: 0 0 0 0.25rem rgba(67, 206, 162, 0.25);
     }
     
-    .optional-field {
-      position: relative;
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
     }
     
-    .optional-field::after {
-      content: "(optional)";
-      position: absolute;
-      right: 15px;
-      top: 40px;
-      font-size: 0.8rem;
-      color: #6c757d;
-    }
-    
-    /* Dashboard styles */
-    #dashboard {
-      display: none;
-      position: relative;
-    }
-    
-    .balance-card {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
+    .input-group {
       border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    }
-    
-    .balance-amount {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-    
-    .balance-icon {
-      font-size: 3rem;
-      opacity: 0.3;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-    }
-    
-    .btn-lg {
-      font-size: 1.2rem;
-      padding: 0.75rem 1.5rem;
-    }
-    
-    .payment-detail {
-      background-color: #f1f1f1;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    
-    .payment-detail strong {
-      display: inline-block;
-      width: 150px;
-    }
-    
-    .qr-img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
-    
-    .referral-card {
-      background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-      color: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      margin-bottom: 20px;
-    }
-    
-    .referral-input {
-      background-color: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-    }
-    
-    .referral-input:focus {
-      background-color: rgba(255,255,255,0.3);
-      color: white;
-      box-shadow: none;
-    }
-    
-    .referral-input::placeholder {
-      color: rgba(255,255,255,0.7);
-    }
-    
-    .transactions-card {
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       overflow: hidden;
     }
     
-    .table-header {
-      background: linear-gradient(135deg, #0f4c75, #3282b8);
-      color: white;
-      padding: 15px 20px;
-    }
-    
-    .transaction-table {
-      margin-bottom: 0;
-    }
-    
-    .transaction-table th {
-      font-weight: 600;
-    }
-    
-    .transaction-table tr:last-child td {
-      border-bottom: none;
-    }
-    
-    .status-badge {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-    
-    .badge-completed {
-      background-color: rgba(40, 167, 69, 0.15);
-      color: #28a745;
-    }
-    
-    .badge-pending {
-      background-color: rgba(255, 193, 7, 0.15);
-      color: #ffc107;
-    }
-    
-    .badge-failed {
-      background-color: rgba(220, 53, 69, 0.15);
-      color: #dc3545;
-    }
-    
+    /* Tabs */
     .nav-tabs .nav-link {
-      color: #555;
+      border-radius: 12px 12px 0 0;
+      padding: 12px 24px;
       font-weight: 500;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px 8px 0 0;
+      color: var(--gray);
+      transition: var(--transition);
     }
     
     .nav-tabs .nav-link.active {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
       border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    /* Dashboard */
+    #dashboard {
+      display: none;
+      position: relative;
     }
     
     .welcome-header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      padding: 60px 0;
-      border-radius: 0 0 20px 20px;
+      padding: 80px 0 60px;
+      border-radius: 0 0 30px 30px;
       margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
     }
     
-    /* Sidebar styles */
+    .welcome-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4MCcgaGVpZ2h0PSc4MCc+CiAgPHBhdGggZD0nTTAgMEg4MFY4MEgwWicgZmlsbD0nbm9uZScvPgogIDxwYXRoIGQ9J00yMCwyMCBDNDAsNDAgNjAsMjAgODAsNDAgTTIwLDYwIEM0MCw0MCA2MCw2MCA4MCw0MCcgc3Ryb2tlPSdyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpJyBzdHJva2Utd2lkdGg9JzInLz4KPC9zdmc+');
+      opacity: 0.1;
+    }
+    
+    /* Sidebar */
     #sidebarMenu {
-      transition: all 0.3s;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      background: white;
+      box-shadow: 0 0 25px rgba(0,0,0,0.08);
       height: calc(100vh - 40px);
       position: fixed;
       overflow-y: auto;
+      z-index: 100;
+      border-radius: 0 20px 20px 0;
     }
     
-    #sidebarMenu.collapsed {
-      transform: translateX(-100%);
+    #sidebarMenu .nav-link {
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
     }
     
-    .dashboard-page {
-      padding: 20px;
-      transition: all 0.3s;
+    #sidebarMenu .nav-link:hover {
+      background: rgba(67, 206, 162, 0.1);
     }
     
     #sidebarMenu .nav-link.active {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     
-    @media (max-width: 992px) {
-      #sidebarMenu {
-        position: fixed;
-        width: 280px;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        z-index: 1050;
-        transform: translateX(-100%);
-      }
-      
-      #sidebarMenu.show {
-        transform: translateX(0);
-      }
-      
-      .dashboard-page {
-        margin-left: 0 !important;
-        width: 100%;
-      }
-      
-      .sidebar-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 1040;
-        display: none;
-      }
-      
-      .sidebar-overlay.show {
-        display: block;
-      }
+    #sidebarMenu .nav-link i {
+      width: 24px;
+      text-align: center;
+      margin-right: 12px;
     }
     
-    /* Mobile menu button */
-    .mobile-menu-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1020;
-      display: none;
-      background: var(--primary);
-      color: white;
+    /* Stats */
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
     }
     
-    @media (max-width: 992px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-    }
-    
-    /* Mission card styling */
-    .mission-card {
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-    
-    .mission-card:hover {
+    .stat-card:hover {
       transform: translateY(-5px);
     }
     
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 10px 0;
+    }
+    
+    /* Transactions */
+    .transaction-table th {
+      font-weight: 600;
+      color: var(--gray);
+      border-bottom: 2px solid #f1f1f1;
+    }
+    
+    .transaction-table td {
+      vertical-align: middle;
+      border-color: #f8f9fa;
+    }
+    
+    .transaction-table tr:hover {
+      background-color: rgba(67, 206, 162, 0.05);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* Progress */
+    .progress {
+      height: 12px;
+      border-radius: 10px;
+      background: #e9ecef;
+    }
+    
+    .progress-bar {
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    
+    /* Badges */
+    .badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    
+    .badge-pill {
+      border-radius: 50px;
+    }
+    
+    /* Mission Cards */
     .mission-header {
-      padding: 15px 20px;
+      padding: 20px;
       color: white;
       display: flex;
       justify-content: space-between;
@@ -366,34 +389,20 @@
     }
     
     .mission-content {
-      padding: 20px;
+      padding: 25px;
       background: white;
     }
     
     .mission-reward {
       font-weight: bold;
       color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 15px;
     }
     
-    .progress {
-      height: 10px;
-      border-radius: 5px;
-    }
-    
-    /* Marketplace styling */
-    .product-card {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s;
-      margin-bottom: 20px;
-    }
-    
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-    
+    /* Marketplace */
     .product-img {
       height: 180px;
       background-size: cover;
@@ -401,155 +410,255 @@
     }
     
     .product-info {
-      padding: 15px;
+      padding: 20px;
       background: white;
     }
     
     .product-price {
       font-weight: bold;
       color: var(--primary-dark);
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
     
-    /* VIP styling */
-    .vip-tier {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      transition: all 0.3s;
-    }
-    
-    .vip-tier:hover {
-      transform: translateY(-5px);
-    }
-    
+    /* VIP */
     .vip-header {
-      padding: 20px;
+      padding: 25px;
       color: white;
       text-align: center;
     }
     
     .vip-benefits {
-      padding: 20px;
+      padding: 25px;
       background: white;
     }
     
-    .vip-benefits li {
-      margin-bottom: 10px;
+    /* Responsive */
+    @media (max-width: 992px) {
+      .auth-container {
+        margin: 1rem;
+      }
+      
+      .auth-hero, .auth-form-container {
+        padding: 30px;
+      }
+      
+      .dashboard-page {
+        margin-left: 0 !important;
+        padding: 15px;
+      }
+      
+      .welcome-header {
+        padding: 60px 0 40px;
+      }
     }
     
-    /* Admin panel styling */
- 
-    
-    /* Account page styling */
-    .profile-card {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    @media (max-width: 768px) {
+      .auth-hero {
+        padding: 30px 20px;
+      }
+      
+      .auth-form-container {
+        padding: 30px 20px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .balance-amount {
+        font-size: 2rem;
+      }
     }
     
-    .profile-img {
+    /* New Elements */
+    .floating-element {
+      position: absolute;
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid var(--primary);
-      margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+      filter: blur(20px);
+      z-index: 0;
     }
     
-    /* Deployment instructions */
-    .deploy-instructions {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      max-width: 400px;
-      z-index: 1000;
+    .floating-1 {
+      top: 10%;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      animation: float 8s ease-in-out infinite;
     }
     
-    .deploy-header {
+    .floating-2 {
+      top: 60%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      animation: float 10s ease-in-out infinite;
+    }
+    
+    .floating-3 {
+      bottom: 20%;
+      left: 15%;
+      width: 40px;
+      height: 40px;
+      animation: float 12s ease-in-out infinite;
+    }
+    
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(67, 206, 162, 0.1);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary);
       margin-bottom: 15px;
     }
     
-    .deploy-steps {
-      padding-left: 20px;
+    .wave-divider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
     }
     
-    .deploy-steps li {
-      margin-bottom: 10px;
+    .wave-divider svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 80px;
+      transform: rotate(180deg);
     }
     
-    .vercel-btn {
-      background: black;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+    .wave-divider .shape-fill {
+      fill: #FFFFFF;
+    }
+    
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      z-index: 2000;
       display: flex;
       align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      margin-top: 15px;
+      gap: 12px;
+      transform: translateX(150%);
+      transition: transform 0.4s ease-out;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification i {
+      font-size: 1.5rem;
+    }
+    
+    .notification.success i {
+      color: var(--success);
+    }
+    
+    .notification.error i {
+      color: var(--danger);
+    }
+    
+    /* Pulse animation for important elements */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    .pulse-once {
+      animation: pulse 0.5s ease-out;
     }
   </style>
 </head>
 <body>
-  <!-- Deployment Instructions -->
-  <div class="deploy-instructions">
-    <div class="deploy-header">
-      <h5>Deploy to Vercel</h5>
-      <button id="closeInstructions" class="btn btn-sm btn-outline-secondary">×</button>
+  <!-- Notification Area -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <div>
+      <strong>Success!</strong>
+      <div id="notification-message">Your action was completed successfully</div>
     </div>
-    <ol class="deploy-steps">
-      <li>Save this file as <code>index.html</code></li>
-      <li>Create a GitHub account</li>
-      <li>Create a new repository</li>
-      <li>Upload this file to the repository</li>
-      <li>Go to Vercel and import the repository</li>
-    </ol>
-    <a href="https://vercel.com/new" target="_blank" class="vercel-btn">
-      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDI1NiAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyOC4wMDEgMEM1Ny4zMDEgMCAwIDU3LjMgMCAxMjhjMCA3MC43IDU3LjMgMTI4IDEyOCAxMjggNzAuNyAwIDEyOC01Ny4zIDEyOC0xMjggMC03MC43LTU3LjMtMTI4LTEyOC0xMjh6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTE1OS43IDExOS45YzAgMi4xLTEuMSAzLjQtMy4zIDMuNGgtMjEuM1Y5Ni40aDIxLjNjMi4yIDAgMy4zIDEuMyAzLjMgMy40djIwLjF6TTEyOCAzMi4xYy01MyAwLTk2IDQzLTk2IDk2czQzIDk2IDk2IDk2IDk2LTQzIDk2LTk2LTQzLTk2LTk2LTk2em00OC41IDk0LjJjMCAxMC4xLTUuMyAxNi40LTIwLjIgMTYuNGgtMjguNVY1Ni4xaDI3LjRjMTQuOSAwIDIwLjIgNi4zIDIwLjIgMTYuM3Y0My45eiIgZmlsbD0iIzAwMCIvPjwvc3ZnPg==" width="20" height="20" alt="Vercel">
-      Deploy on Vercel
-    </a>
   </div>
-
+  
   <!-- Authentication Section -->
-  <section id="authentication" class="py-5">
+  <section id="authentication" class="py-4">
     <div class="container">
       <div class="auth-container">
         <div class="row g-0">
           <div class="col-lg-6 d-none d-lg-block">
-            <div class="auth-hero">
+            <div class="auth-hero position-relative">
+              <div class="floating-element floating-1"></div>
+              <div class="floating-element floating-2"></div>
+              <div class="floating-element floating-3"></div>
+              
               <div class="logo">
                 <i class="fas fa-vote-yea"></i>VotePay
               </div>
               <h1>Welcome to VotePay</h1>
               <p class="lead">Your trusted platform for voting and payment solutions.</p>
               
-              <div class="auth-features">
-                <h4>Why choose VotePay?</h4>
-                <ul class="list-unstyled">
-                  <li><i class="fas fa-check-circle"></i> Secure and reliable transactions</li>
-                  <li><i class="fas fa-check-circle"></i> Instant vote purchasing</li>
-                  <li><i class="fas fa-check-circle"></i> Easy fund withdrawal</li>
-                  <li><i class="fas fa-check-circle"></i> Referral bonus program</li>
-                  <li><i class="fas fa-check-circle"></i> 24/7 customer support</li>
-                </ul>
+              <div class="auth-features mt-5">
+                <h4 class="mb-4">Why choose VotePay?</h4>
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="feature-icon">
+                      <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5>Secure Transactions</h5>
+                    <p class="small">Bank-level security for all your payments and votes</p>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="feature-icon">
+                      <i class="fas fa-bolt"></i>
+                    </div>
+                    <h5>Instant Voting</h5>
+                    <p class="small">Purchase and cast votes in seconds</p>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="feature-icon">
+                      <i class="fas fa-wallet"></i>
+                    </div>
+                    <h5>Easy Withdrawals</h5>
+                    <p class="small">Get your funds quickly to any payment method</p>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="feature-icon">
+                      <i class="fas fa-gift"></i>
+                    </div>
+                    <h5>Referral Bonuses</h5>
+                    <p class="small">Earn rewards for inviting friends</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="wave-divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                  <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
               </div>
             </div>
           </div>
           
           <div class="col-lg-6">
-            <div class="auth-form-container">
+            <div class="auth-form-container position-relative">
               <div class="text-center mb-5">
                 <h2>Create Your Account</h2>
                 <p class="text-muted">Join thousands of users who trust VotePay</p>
@@ -573,19 +682,23 @@
                       <input type="text" class="form-control" id="regName" placeholder="Enter your full name" required>
                     </div>
                     
-                    <div class="mb-3 optional-field">
-                      <label for="regEmail" class="form-label">Email Address</label>
-                      <input type="email" class="form-control" id="regEmail" placeholder="Enter your email (optional)">
+                    <div class="mb-3">
+                      <label for="regEmail" class="form-label">Email Address <span class="text-muted">(optional)</span></label>
+                      <input type="email" class="form-control" id="regEmail" placeholder="Enter your email">
                     </div>
                     
                     <div class="mb-3">
                       <label for="regPhone" class="form-label">Phone Number</label>
-                      <input type="tel" class="form-control" id="regPhone" placeholder="Enter your phone number" required>
+                      <div class="input-group">
+                        <span class="input-group-text">+91</span>
+                        <input type="tel" class="form-control" id="regPhone" placeholder="9876543210" required>
+                      </div>
                     </div>
                     
                     <div class="mb-3">
                       <label for="regPassword" class="form-label">Password</label>
                       <input type="password" class="form-control" id="regPassword" placeholder="Create a password" required>
+                      <div class="form-text">Use 8+ characters with a mix of letters, numbers & symbols</div>
                     </div>
                     
                     <div class="mb-3">
@@ -596,15 +709,15 @@
                     <div class="form-check mb-4">
                       <input class="form-check-input" type="checkbox" id="termsCheck" required>
                       <label class="form-check-label" for="termsCheck">
-                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
                       </label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3">Create Account</button>
                   </form>
                   
-                  <div class="form-switch">
-                    Already have an account? <a href="#" id="switchToLogin">Login here</a>
+                  <div class="form-switch mt-4 text-center">
+                    <p class="mb-0">Already have an account? <a href="#" id="switchToLogin" class="text-decoration-none fw-bold">Login here</a></p>
                   </div>
                 </div>
                 
@@ -619,25 +732,23 @@
                     <div class="mb-3">
                       <label for="loginPassword" class="form-label">Password</label>
                       <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
-                    </div>
-                    
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">
-                          Remember me
-                        </label>
-                      </div>
-                      <div>
-                        <a href="#" class="text-decoration-none">Forgot Password?</a>
+                      <div class="text-end mt-2">
+                        <a href="#" class="text-decoration-none small">Forgot Password?</a>
                       </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    <div class="mb-3 form-check">
+                      <input class="form-check-input" type="checkbox" id="rememberMe">
+                      <label class="form-check-label" for="rememberMe">
+                        Remember me
+                      </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3">Sign In</button>
                   </form>
                   
-                  <div class="form-switch">
-                    Don't have an account? <a href="#" id="switchToRegister">Register here</a>
+                  <div class="form-switch mt-4 text-center">
+                    <p class="mb-0">Don't have an account? <a href="#" id="switchToRegister" class="text-decoration-none fw-bold">Register here</a></p>
                   </div>
                 </div>
               </div>
@@ -661,11 +772,11 @@
     <!-- Sidebar Navigation -->
     <nav id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow rounded"
          style="width:280px;">
-      <div class="d-flex align-items-center mb-3">
+      <div class="d-flex align-items-center mb-4">
         <button id="sidebarToggle" class="btn btn-outline-secondary btn-sm me-2" title="Collapse Menu">
           <i class="fas fa-bars"></i>
         </button>
-        <span class="fs-5 fw-bold">LEADERSHIP missions</span>
+        <span class="fs-5 fw-bold">VotePay Dashboard</span>
       </div>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -685,155 +796,187 @@
     <!-- Dashboard Page -->
     <div id="page-dashboard" class="dashboard-page" style="margin-left:300px;">
       <div class="welcome-header">
-        <div class="container text-center">
+        <div class="container text-center position-relative">
           <h1>Welcome, <span id="username">John</span>!</h1>
           <p class="lead">Your VotePay Dashboard</p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark p-2">Level 2 Member</span>
+            <span class="badge bg-warning text-dark p-2">Silver VIP</span>
+          </div>
         </div>
       </div>
       
-      <div class="container mt-5">
-        <h3>Hello, <span id="dashboardUsername">John</span>! <span class="badge bg-info text-dark">Level 2</span></h3>
-
-        <!-- Wallet + Buttons Row -->
-        <div class="row mt-4 g-4">
-          <!-- Wallet Balance Card -->
-          <div class="col-md-6">
-            <div class="balance-card position-relative">
-              <div class="balance-icon">💰</div>
-              <h5>Your Wallet Balance</h5>
-              <div class="balance-amount">₹1,260.00</div>
-              <p class="mb-0">Available for withdrawal</p>
-            </div>
-          </div>
-
-          <!-- Buttons -->
-          <div class="col-md-6 d-flex flex-column align-items-center justify-content-center gap-3">
-            <button class="btn btn-primary btn-lg w-100" onclick="openWithdrawModal()">
-              💸 Withdraw Funds
-            </button>
-            <button class="btn btn-warning btn-lg w-100" onclick="openBuyModal()">
-              🛒 Buy Votes
-            </button>
+      <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Dashboard Overview</h3>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
+            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-cog me-1"></i> Settings</button>
           </div>
         </div>
 
-        <!-- New Section: Total Votes & Mission Progress -->
-        <div class="row mt-5 g-4">
-          <!-- Total Votes Box -->
-          <div class="col-md-6">
-            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
-              <h5 class="mb-2">Total Votes</h5>
-              <h2 class="display-4 fw-bold">250</h2>
-              <p class="mb-0">Votes available in your account</p>
+        <!-- Stats Cards -->
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <div><i class="fas fa-wallet text-primary"></i></div>
+              <div class="stat-value">₹1,260</div>
+              <div class="text-muted">Wallet Balance</div>
             </div>
           </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <div><i class="fas fa-vote-yea text-success"></i></div>
+              <div class="stat-value">250</div>
+              <div class="text-muted">Available Votes</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <div><i class="fas fa-gift text-warning"></i></div>
+              <div class="stat-value">₹420</div>
+              <div class="text-muted">Referral Earnings</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <div><i class="fas fa-trophy text-danger"></i></div>
+              <div class="stat-value">8/10</div>
+              <div class="text-muted">Missions Completed</div>
+            </div>
+          </div>
+        </div>
 
-          <!-- Missions Progress Box -->
+        <!-- Action Cards -->
+        <div class="row mt-4 g-4">
           <div class="col-md-6">
-            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
-              <h5 class="mb-2">Missions Completed</h5>
-              <p class="mb-1">8 of 10 Missions Completed</p>
-              <div class="progress" style="height: 25px; border-radius: 20px; overflow: hidden;">
-                <div
-                  class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                  role="progressbar"
-                  style="width: 80%; font-weight: bold;"
-                  aria-valuenow="80"
-                  aria-valuemin="0"
-                  aria-valuemax="100">
-                  80%
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-primary p-3 rounded-circle me-3">
+                    <i class="fas fa-money-bill-wave fa-2x text-white"></i>
+                  </div>
+                  <div>
+                    <h5 class="mb-0">Withdraw Funds</h5>
+                    <p class="text-muted mb-0">Transfer money to your bank or UPI</p>
+                  </div>
                 </div>
+                <button class="btn btn-primary w-100 mt-3" onclick="openWithdrawModal()">
+                  <i class="fas fa-arrow-right me-2"></i>Withdraw Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-warning p-3 rounded-circle me-3">
+                    <i class="fas fa-shopping-cart fa-2x text-white"></i>
+                  </div>
+                  <div>
+                    <h5 class="mb-0">Buy Votes</h5>
+                    <p class="text-muted mb-0">Get more votes to support candidates</p>
+                  </div>
+                </div>
+                <button class="btn btn-warning w-100 mt-3" onclick="openBuyModal()">
+                  <i class="fas fa-arrow-right me-2"></i>Buy Votes Now
+                </button>
               </div>
             </div>
           </div>
         </div>
         
         <!-- Referral Section -->
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="referral-card">
-              <div class="row align-items-center">
-                <div class="col-md-8 mb-3 mb-md-0">
-                  <h4><i class="fas fa-user-plus me-2"></i> Refer & Earn Rewards</h4>
-                  <p class="mb-0">Share your referral link with friends and earn ₹100 for each successful registration!</p>
+        <div class="card mt-4">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-8 mb-3 mb-md-0">
+                <h5 class="d-flex align-items-center gap-2"><i class="fas fa-user-plus text-info"></i> Refer & Earn Rewards</h5>
+                <p class="mb-0">Share your referral link with friends and earn ₹100 for each successful registration! Plus, get 10% of their first purchase.</p>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="referralLink" 
+                    value="https://votepay.com/ref/john123" 
+                    readonly
+                    placeholder="Your referral link"
+                  >
+                  <button class="btn btn-outline-primary" type="button" id="copyButton">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
                 </div>
-                <div class="col-md-4">
-                  <div class="input-group">
-                    <input 
-                      type="text" 
-                      class="form-control referral-input" 
-                      id="referralLink" 
-                      value="https://votepay.com/ref/john123" 
-                      readonly
-                      placeholder="Your referral link"
-                    >
-                    <button class="btn btn-light" type="button" id="copyButton">
-                      <i class="fas fa-copy"></i>
-                    </button>
-                  </div>
+                <div class="d-flex gap-2 mt-2">
+                  <button class="btn btn-sm btn-outline-secondary w-50"><i class="fab fa-whatsapp me-1"></i> WhatsApp</button>
+                  <button class="btn btn-sm btn-outline-secondary w-50"><i class="fab fa-telegram me-1"></i> Telegram</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Transactions Table -->
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="transactions-card">
-              <div class="table-header">
-                <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Transactions</h5>
-              </div>
-              <div class="table-responsive">
-                <table class="table transaction-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Description</th>
-                      <th>Amount</th>
-                      <th>Type</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>2025-07-15</td>
-                      <td>Vote Purchase</td>
-                      <td>₹500.00</td>
-                      <td>Debit</td>
-                      <td><span class="status-badge badge-completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                      <td>2025-07-12</td>
-                      <td>Referral Bonus (Sarah)</td>
-                      <td>₹100.00</td>
-                      <td>Credit</td>
-                      <td><span class="status-badge badge-completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                      <td>2025-07-10</td>
-                      <td>Withdrawal Request</td>
-                      <td>₹300.00</td>
-                      <td>Debit</td>
-                      <td><span class="status-badge badge-pending">Pending</span></td>
-                    </tr>
-                    <tr>
-                      <td>2025-07-08</td>
-                      <td>Daily Reward</td>
-                      <td>₹50.00</td>
-                      <td>Credit</td>
-                      <td><span class="status-badge badge-completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                      <td>2025-07-05</td>
-                      <td>Referral Bonus (Mike)</td>
-                      <td>₹100.00</td>
-                      <td>Credit</td>
-                      <td><span class="status-badge badge-completed">Completed</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        <!-- Recent Activity -->
+        <div class="card mt-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Activity</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table transaction-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2025-07-15</td>
+                    <td>Vote Purchase</td>
+                    <td>₹500.00</td>
+                    <td>Debit</td>
+                    <td><span class="badge bg-success bg-opacity-10 text-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-12</td>
+                    <td>Referral Bonus (Sarah)</td>
+                    <td>₹100.00</td>
+                    <td>Credit</td>
+                    <td><span class="badge bg-success bg-opacity-10 text-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-10</td>
+                    <td>Withdrawal Request</td>
+                    <td>₹300.00</td>
+                    <td>Debit</td>
+                    <td><span class="badge bg-warning bg-opacity-10 text-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-08</td>
+                    <td>Daily Reward</td>
+                    <td>₹50.00</td>
+                    <td>Credit</td>
+                    <td><span class="badge bg-success bg-opacity-10 text-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-05</td>
+                    <td>Referral Bonus (Mike)</td>
+                    <td>₹100.00</td>
+                    <td>Credit</td>
+                    <td><span class="badge bg-success bg-opacity-10 text-success">Completed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center mt-3">
+              <a href="#" class="btn btn-outline-primary">View All Activity</a>
             </div>
           </div>
         </div>
@@ -843,7 +986,10 @@
     <!-- Missions Page -->
     <div id="page-missions" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-tasks me-2"></i> Missions</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2><i class="fas fa-tasks me-2"></i> Missions</h2>
+          <div class="badge bg-primary p-2">Earn up to ₹1,500 this week!</div>
+        </div>
         
         <div class="row">
           <div class="col-md-6">
@@ -855,11 +1001,11 @@
               <div class="mission-content">
                 <p>Vote for your favorite candidate every day for 7 consecutive days.</p>
                 <p><strong>Progress:</strong> 5/7 days</p>
-                <div class="progress">
+                <div class="progress mb-3">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 71%"></div>
                 </div>
-                <p class="mt-2 mission-reward">Reward: ₹100 + 50 Votes</p>
-                <button class="btn btn-sm btn-primary mt-2">Continue Mission</button>
+                <p class="mission-reward"><i class="fas fa-gift"></i> Reward: ₹100 + 50 Votes</p>
+                <button class="btn btn-primary w-100 mt-2">Continue Mission</button>
               </div>
             </div>
           </div>
@@ -873,11 +1019,11 @@
               <div class="mission-content">
                 <p>Refer 3 friends to join VotePay and complete their first transaction.</p>
                 <p><strong>Progress:</strong> 2/3 referrals</p>
-                <div class="progress">
+                <div class="progress mb-3">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 66%"></div>
                 </div>
-                <p class="mt-2 mission-reward">Reward: ₹300 + VIP Access (7 days)</p>
-                <button class="btn btn-sm btn-primary mt-2">Invite Friends</button>
+                <p class="mission-reward"><i class="fas fa-gift"></i> Reward: ₹300 + VIP Access (7 days)</p>
+                <button class="btn btn-primary w-100 mt-2">Invite Friends</button>
               </div>
             </div>
           </div>
@@ -891,11 +1037,11 @@
               <div class="mission-content">
                 <p>Maintain a 30-day voting streak without missing a day.</p>
                 <p><strong>Progress:</strong> Starts tomorrow</p>
-                <div class="progress">
+                <div class="progress mb-3">
                   <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
                 </div>
-                <p class="mt-2 mission-reward">Reward: ₹1000 + Level Up</p>
-                <button class="btn btn-sm btn-outline-secondary mt-2" disabled>Coming Soon</button>
+                <p class="mission-reward"><i class="fas fa-gift"></i> Reward: ₹1000 + Level Up</p>
+                <button class="btn btn-outline-secondary w-100 mt-2" disabled>Coming Soon</button>
               </div>
             </div>
           </div>
@@ -909,12 +1055,34 @@
               <div class="mission-content">
                 <p>Participate in 5 community discussions and polls.</p>
                 <p><strong>Progress:</strong> 3/5 completed</p>
-                <div class="progress">
+                <div class="progress mb-3">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 60%"></div>
                 </div>
-                <p class="mt-2 mission-reward">Reward: ₹150 + 30 Votes</p>
-                <button class="btn btn-sm btn-primary mt-2">Join Community</button>
+                <p class="mission-reward"><i class="fas fa-gift"></i> Reward: ₹150 + 30 Votes</p>
+                <button class="btn btn-primary w-100 mt-2">Join Community</button>
               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-trophy me-2"></i> Completed Missions</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+              <div>
+                <h6 class="mb-0">Welcome Mission</h6>
+                <p class="mb-0 small text-muted">Completed: 2025-06-17</p>
+              </div>
+              <div class="badge bg-success">₹100 Earned</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-3">
+              <div>
+                <h6 class="mb-0">First Vote</h6>
+                <p class="mb-0 small text-muted">Completed: 2025-06-18</p>
+              </div>
+              <div class="badge bg-success">₹50 Earned</div>
             </div>
           </div>
         </div>
@@ -924,16 +1092,24 @@
     <!-- Marketplace Page -->
     <div id="page-marketplace" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-store me-2"></i> Marketplace</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2><i class="fas fa-store me-2"></i> Marketplace</h2>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-filter me-1"></i> Filter</button>
+            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-search me-1"></i> Search</button>
+          </div>
+        </div>
         
         <div class="row">
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #43cea2, #185a9d);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #43cea2, #185a9d); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-vote-yea fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>Standard Vote Pack</h5>
-                <p>Get 100 votes to support your favorite candidates</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">Get 100 votes to support your favorite candidates</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹500</span>
                   <button class="btn btn-sm btn-primary">Buy Now</button>
                 </div>
@@ -943,11 +1119,13 @@
           
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-star fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>Premium Vote Pack</h5>
-                <p>250 votes + special badge for your profile</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">250 votes + special badge for your profile</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹1,200</span>
                   <button class="btn btn-sm btn-primary">Buy Now</button>
                 </div>
@@ -957,13 +1135,15 @@
           
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #f7971e, #ffd200);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #f7971e, #ffd200); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-crown fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>VIP Membership</h5>
-                <p>30 days of VIP benefits and exclusive voting power</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">30 days of VIP benefits and exclusive voting power</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹999</span>
-                  <button class="btn btn-sm btn-primary">Subscribe</button>
+                  <button class="btn btn-sm btn-warning">Subscribe</button>
                 </div>
               </div>
             </div>
@@ -971,11 +1151,13 @@
           
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #0f4c75, #3282b8);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #0f4c75, #3282b8); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-bolt fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>Vote Booster</h5>
-                <p>Double the power of your next 50 votes</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">Double the power of your next 50 votes</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹750</span>
                   <button class="btn btn-sm btn-primary">Buy Now</button>
                 </div>
@@ -985,11 +1167,13 @@
           
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #e44d26, #f16529);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #e44d26, #f16529); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-paint-brush fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>Profile Customization</h5>
-                <p>Special frames, badges, and profile customization</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">Special frames, badges, and profile customization</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹299</span>
                   <button class="btn btn-sm btn-primary">Customize</button>
                 </div>
@@ -999,11 +1183,13 @@
           
           <div class="col-md-4">
             <div class="product-card">
-              <div class="product-img" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+              <div class="product-img" style="background: linear-gradient(135deg, #11998e, #38ef7d); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user-plus fa-4x text-white"></i>
+              </div>
               <div class="product-info">
                 <h5>Referral Starter Pack</h5>
-                <p>Special tools to help you refer friends and earn more</p>
-                <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted small">Special tools to help you refer friends and earn more</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="product-price">₹199</span>
                   <button class="btn btn-sm btn-primary">Get Started</button>
                 </div>
@@ -1020,78 +1206,92 @@
         <h2 class="mb-4"><i class="fas fa-wallet me-2"></i> Balance</h2>
         
         <div class="row">
-          <div class="col-md-6">
-            <div class="balance-card position-relative">
-              <div class="balance-icon">💰</div>
-              <h5>Wallet Balance</h5>
-              <div class="balance-amount">₹1,260.00</div>
-              <p class="mb-0">Available for withdrawal</p>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
-              <h5 class="mb-2">Total Votes</h5>
-              <h2 class="display-4 fw-bold">250</h2>
-              <p class="mb-0">Votes available in your account</p>
-            </div>
-          </div>
-          
-          <div class="col-12 mt-4">
+          <div class="col-md-8">
             <div class="card">
-              <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Transaction History</h5>
-              </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>2025-07-15</td>
-                        <td>Vote Purchase</td>
-                        <td>₹500.00</td>
-                        <td>Debit</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                      <tr>
-                        <td>2025-07-12</td>
-                        <td>Referral Bonus (Sarah)</td>
-                        <td>₹100.00</td>
-                        <td>Credit</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                      <tr>
-                        <td>2025-07-10</td>
-                        <td>Withdrawal Request</td>
-                        <td>₹300.00</td>
-                        <td>Debit</td>
-                        <td><span class="badge bg-warning text-dark">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td>2025-07-08</td>
-                        <td>Daily Reward</td>
-                        <td>₹50.00</td>
-                        <td>Credit</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                      <tr>
-                        <td>2025-07-05</td>
-                        <td>Referral Bonus (Mike)</td>
-                        <td>₹100.00</td>
-                        <td>Credit</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h4>Your Wallet</h4>
+                  <button class="btn btn-sm btn-outline-primary"><i class="fas fa-history me-1"></i> Transaction History</button>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="balance-card position-relative">
+                      <div class="balance-icon">💰</div>
+                      <h5>Wallet Balance</h5>
+                      <div class="balance-amount">₹1,260.00</div>
+                      <p class="mb-0">Available for withdrawal</p>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                      <h5 class="mb-2">Total Votes</h5>
+                      <h2 class="display-4 fw-bold">250</h2>
+                      <p class="mb-0">Votes available in your account</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <h5>Quick Actions</h5>
+                  <div class="d-flex gap-3 mt-3">
+                    <button class="btn btn-primary flex-fill" onclick="openWithdrawModal()">
+                      <i class="fas fa-rupee-sign me-2"></i>Withdraw
+                    </button>
+                    <button class="btn btn-outline-primary flex-fill">
+                      <i class="fas fa-exchange-alt me-2"></i>Transfer
+                    </button>
+                    <button class="btn btn-outline-primary flex-fill" onclick="openBuyModal()">
+                      <i class="fas fa-shopping-cart me-2"></i>Buy Votes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="mb-3">Recent Transactions</h5>
+                <div class="list-group">
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Vote Purchase</h6>
+                        <small class="text-muted">Today, 10:30 AM</small>
+                      </div>
+                      <div class="text-danger">-₹500.00</div>
+                    </div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Referral Bonus</h6>
+                        <small class="text-muted">Yesterday, 04:15 PM</small>
+                      </div>
+                      <div class="text-success">+₹100.00</div>
+                    </div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Withdrawal Request</h6>
+                        <small class="text-muted">Jul 10, 2025</small>
+                      </div>
+                      <div class="text-danger">-₹300.00</div>
+                    </div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Daily Reward</h6>
+                        <small class="text-muted">Jul 8, 2025</small>
+                      </div>
+                      <div class="text-success">+₹50.00</div>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1103,7 +1303,10 @@
     <!-- VIP Page -->
     <div id="page-vip" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-crown me-2"></i> VIP Program</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2><i class="fas fa-crown me-2"></i> VIP Program</h2>
+          <div class="badge bg-warning p-2">Silver VIP Member</div>
+        </div>
         
         <div class="row">
           <div class="col-md-4">
@@ -1114,33 +1317,36 @@
               </div>
               <div class="vip-benefits">
                 <h5>Benefits:</h5>
-                <ul>
-                  <li>Daily bonus: ₹20</li>
-                  <li>10% extra votes on purchases</li>
-                  <li>Priority support</li>
-                  <li>Silver badge on profile</li>
-                  <li>Access to basic VIP missions</li>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Daily bonus: ₹20</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 10% extra votes on purchases</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Priority support</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Silver badge on profile</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Access to basic VIP missions</li>
                 </ul>
-                <button class="btn btn-primary w-100">Upgrade to Silver</button>
+                <button class="btn btn-outline-primary w-100">Your Current Plan</button>
               </div>
             </div>
           </div>
           
           <div class="col-md-4">
-            <div class="vip-tier">
+            <div class="vip-tier position-relative" style="border: 2px solid #ffc107;">
+              <div class="position-absolute top-0 end-0 m-2">
+                <span class="badge bg-warning">RECOMMENDED</span>
+              </div>
               <div class="vip-header" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
                 <h3>Gold VIP</h3>
                 <p class="mb-0">₹999/month</p>
               </div>
               <div class="vip-benefits">
                 <h5>Benefits:</h5>
-                <ul>
-                  <li>Daily bonus: ₹50</li>
-                  <li>25% extra votes on purchases</li>
-                  <li>24/7 priority support</li>
-                  <li>Gold badge on profile</li>
-                  <li>Access to all VIP missions</li>
-                  <li>Weekly exclusive rewards</li>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Daily bonus: ₹50</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 25% extra votes on purchases</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 24/7 priority support</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Gold badge on profile</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Access to all VIP missions</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Weekly exclusive rewards</li>
                 </ul>
                 <button class="btn btn-warning w-100">Upgrade to Gold</button>
               </div>
@@ -1155,15 +1361,15 @@
               </div>
               <div class="vip-benefits">
                 <h5>Benefits:</h5>
-                <ul>
-                  <li>Daily bonus: ₹100</li>
-                  <li>50% extra votes on purchases</li>
-                  <li>24/7 dedicated manager</li>
-                  <li>Platinum badge & profile frame</li>
-                  <li>Access to all VIP missions</li>
-                  <li>Weekly exclusive rewards</li>
-                  <li>Early access to new features</li>
-                  <li>VIP-only events</li>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Daily bonus: ₹100</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 50% extra votes on purchases</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 24/7 dedicated manager</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Platinum badge & profile frame</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Access to all VIP missions</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Weekly exclusive rewards</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Early access to new features</li>
+                  <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> VIP-only events</li>
                 </ul>
                 <button class="btn btn-dark w-100">Upgrade to Platinum</button>
               </div>
@@ -1172,144 +1378,52 @@
         </div>
         
         <div class="card mt-4">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Your VIP Status</h5>
-          </div>
           <div class="card-body">
-            <div class="alert alert-info">
-              <p>You are currently a <strong>Silver VIP</strong> member</p>
-              <p class="mb-0">Your membership expires on: <strong>2025-08-15</strong></p>
-            </div>
-            
-            <h5>VIP Benefits in Action</h5>
+            <h5 class="mb-4">Your VIP Benefits in Action</h5>
             <div class="row">
-              <div class="col-md-4">
-                <div class="card text-white bg-success mb-3">
+              <div class="col-md-4 mb-3">
+                <div class="card border-success">
                   <div class="card-body">
-                    <h5 class="card-title">Daily Bonuses</h5>
-                    <p class="card-text">You've earned ₹420 in daily bonuses this month</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card text-white bg-info mb-3">
-                  <div class="card-body">
-                    <h5 class="card-title">Extra Votes</h5>
-                    <p class="card-text">Received 75 extra votes from purchases</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card text-white bg-warning mb-3">
-                  <div class="card-body">
-                    <h5 class="card-title">VIP Missions</h5>
-                    <p class="card-text">Completed 3 VIP missions this month</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Account Page -->
-    <div id="page-account" class="dashboard-page" style="display:none; margin-left:300px;">
-      <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-user me-2"></i> My Account</h2>
-        
-        <div class="row">
-          <div class="col-md-4">
-            <div class="profile-card text-center">
-              <img src="https://via.placeholder.com/120" class="profile-img" alt="Profile">
-              <h3 id="profileUsername">John Doe</h3>
-              <p class="text-muted">Level 2 Member</p>
-              <div class="mb-3">
-                <span class="badge bg-primary">Silver VIP</span>
-                <span class="badge bg-info">Active</span>
-              </div>
-              <button class="btn btn-outline-primary w-100 mb-2">Edit Profile</button>
-              <button class="btn btn-outline-secondary w-100 mb-2">Change Password</button>
-              <button class="btn btn-outline-info w-100">Upgrade to Gold VIP</button>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="card mb-4">
-              <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Account Information</h5>
-              </div>
-              <div class="card-body">
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" value="John Doe">
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" value="john.doe@example.com">
-                  </div>
-                </div>
-                
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" value="+91 9876543210">
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Join Date</label>
-                    <input type="text" class="form-control" value="2025-06-15" disabled>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Bio</label>
-                  <textarea class="form-control" rows="3">Active voter and community member. Passionate about making a difference through informed voting.</textarea>
-                </div>
-                
-                <button class="btn btn-success">Save Changes</button>
-              </div>
-            </div>
-            
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Security Settings</h5>
-              </div>
-              <div class="card-body">
-                <div class="mb-3">
-                  <label class="form-label">Two-Factor Authentication</label>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="twoFactorSwitch" checked>
-                    <label class="form-check-label" for="twoFactorSwitch">Enable 2FA</label>
-                  </div>
-                  <div class="form-text">Add an extra layer of security to your account</div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Login Activity</label>
-                  <div class="alert alert-light">
-                    <p class="mb-1"><strong>Last Login:</strong> 2025-07-22 09:15 from Mumbai, India</p>
-                    <p class="mb-0"><strong>Device:</strong> Chrome on Windows 10</p>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Connected Devices</label>
-                  <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Windows PC</strong>
-                        <div class="text-muted small">Chrome · Mumbai, India · Active now</div>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-rupee-sign fa-2x text-success"></i>
                       </div>
-                      <button class="btn btn-sm btn-outline-danger">Logout</button>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       <div>
-                        <strong>Android Phone</strong>
-                        <div class="text-muted small">Chrome · Delhi, India · 2 hours ago</div>
+                        <h5 class="mb-0">₹420</h5>
+                        <p class="mb-0 text-muted">Earned this month</p>
                       </div>
-                      <button class="btn btn-sm btn-outline-danger">Logout</button>
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="card border-info">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-vote-yea fa-2x text-info"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-0">75</h5>
+                        <p class="mb-0 text-muted">Extra Votes</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="card border-warning">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-tasks fa-2x text-warning"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-0">3</h5>
+                        <p class="mb-0 text-muted">VIP Missions Completed</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1332,30 +1446,36 @@
               <input type="hidden" name="_template" value="table">
               <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
               
-              <div class="mb-3">
+              <div class="mb-4">
                 <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
                 <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
+                <div class="form-text">Minimum withdrawal: ₹200.00</div>
               </div>
 
-              <div class="mb-3">
+              <div class="mb-4">
                 <label class="form-label">Select Withdrawal Method:</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-                  <label class="form-check-label" for="methodBank">
-                    Bank Account (Account No + IFSC)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-                  <label class="form-check-label" for="methodUPI">
-                    UPI ID
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-                  <label class="form-check-label" for="methodQR">
-                    Upload QR Code
-                  </label>
+                <div class="d-flex gap-3 mb-3">
+                  <div class="form-check flex-fill text-center p-3 border rounded">
+                    <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
+                    <label class="form-check-label d-block mt-2" for="methodBank">
+                      <i class="fas fa-university fa-2x mb-2"></i><br>
+                      Bank Account
+                    </label>
+                  </div>
+                  <div class="form-check flex-fill text-center p-3 border rounded">
+                    <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
+                    <label class="form-check-label d-block mt-2" for="methodUPI">
+                      <i class="fas fa-mobile-alt fa-2x mb-2"></i><br>
+                      UPI ID
+                    </label>
+                  </div>
+                  <div class="form-check flex-fill text-center p-3 border rounded">
+                    <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
+                    <label class="form-check-label d-block mt-2" for="methodQR">
+                      <i class="fas fa-qrcode fa-2x mb-2"></i><br>
+                      QR Code
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -1394,7 +1514,9 @@
               <!-- Hidden username field -->
               <input type="hidden" name="username" id="hiddenUsername">
 
-              <button type="submit" class="btn btn-success" id="submitWithdrawal">Submit Withdrawal</button>
+              <button type="submit" class="btn btn-success w-100 py-3 mt-2" id="submitWithdrawal">
+                <i class="fas fa-paper-plane me-2"></i>Submit Withdrawal Request
+              </button>
             </form>
           </div>
         </div>
@@ -1410,21 +1532,47 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <p>Please use any of the following details provided by the admin to purchase votes:</p>
-            <div class="payment-detail">
-              <strong>Account Number:</strong> 1234567890
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i> Please use any of the following details provided by the admin to purchase votes
             </div>
-            <div class="payment-detail">
-              <strong>IFSC Code:</strong> SBIN0001234
+            
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="mb-3">Bank Transfer</h5>
+                    <div class="payment-detail">
+                      <strong>Account Name:</strong> VotePay Admin
+                    </div>
+                    <div class="payment-detail">
+                      <strong>Account Number:</strong> 1234567890
+                    </div>
+                    <div class="payment-detail">
+                      <strong>IFSC Code:</strong> SBIN0001234
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="mb-3">UPI Payment</h5>
+                    <div class="payment-detail">
+                      <strong>UPI ID:</strong> admin@upi
+                    </div>
+                    <div class="text-center mt-3">
+                      <img src="https://via.placeholder.com/180x180?text=UPI+QR" alt="QR Code" class="img-fluid">
+                      <p class="mt-2 small text-muted">Scan to pay via UPI</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="payment-detail">
-              <strong>UPI ID:</strong> admin@upi
+            
+            <div class="alert alert-light">
+              <i class="fas fa-exclamation-circle me-2 text-warning"></i> After payment, please contact support at <strong>support@votepay.com</strong> or upload payment proof for order processing.
             </div>
-            <div class="payment-detail">
-              <strong>QR Code:</strong><br/>
-              <img src="https://via.placeholder.com/200x200?text=QR+Code" alt="QR Code" class="qr-img">
-            </div>
-            <p>After payment, please contact support or upload proof for order processing.</p>
           </div>
         </div>
       </div>
@@ -1444,13 +1592,19 @@
     const loginForm = document.getElementById('loginForm');
     const switchToLogin = document.getElementById('switchToLogin');
     const switchToRegister = document.getElementById('switchToRegister');
-    const closeInstructions = document.getElementById('closeInstructions');
     const profileUsername = document.getElementById('profileUsername');
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
 
-    // Close deployment instructions
-    closeInstructions.addEventListener('click', () => {
-      document.querySelector('.deploy-instructions').style.display = 'none';
-    });
+    // Show notification
+    function showNotification(message, isSuccess = true) {
+      notificationMessage.textContent = message;
+      notification.className = `notification ${isSuccess ? 'success' : 'error'} show`;
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
 
     // Switch between login/register tabs
     switchToLogin.addEventListener('click', (e) => {
@@ -1465,7 +1619,7 @@
     // Register form submission
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
+      
       // Add these lines here:
       users.length = 0;
       users.push(...JSON.parse(localStorage.getItem('users') || '[]'));
@@ -1478,14 +1632,14 @@
       
       // Simple validation
       if (password !== confirmPassword) {
-        alert('Passwords do not match!');
+        showNotification('Passwords do not match!', false);
         return;
       }
       
       // Check if phone number already exists
       const phoneExists = users.some(user => user.phone === phone);
       if (phoneExists) {
-        alert('User with this phone number already exists!');
+        showNotification('User with this phone number already exists!', false);
         return;
       }
       
@@ -1499,7 +1653,6 @@
         balance: 1260,
         votes: 250,
         level: 2,
-      
         joinDate: new Date().toISOString()
       };
       
@@ -1508,6 +1661,8 @@
       
       // Log user in
       loginUser(newUser);
+      
+      showNotification('Account created successfully! Welcome to VotePay.');
     });
     
     // Login form submission
@@ -1530,16 +1685,17 @@
       }
       
       if (!user) {
-        alert('User not found!');
+        showNotification('User not found!', false);
         return;
       }
       
       if (user.password !== password) {
-        alert('Incorrect password!');
+        showNotification('Incorrect password!', false);
         return;
       }
       
       loginUser(user);
+      showNotification('Login successful! Welcome back.');
     });
     
     // Logout function
@@ -1548,101 +1704,67 @@
       localStorage.removeItem('loggedInUser');
       authSection.style.display = 'block';
       dashboardSection.style.display = 'none';
+      showNotification('You have been logged out successfully.');
     });
     
+    // Sidebar navigation
     function setupSidebarNavigation() {
-  document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      // Hide all dashboard pages
-      document.querySelectorAll('.dashboard-page').forEach(page => {
-        page.style.display = 'none';
-      });
-      // Show the selected page
-      const pageId = 'page-' + link.getAttribute('data-page');
-      const pageDiv = document.getElementById(pageId);
-      if (pageDiv) {
-        pageDiv.style.display = 'block';
-      }
-      // Remove active class from all links and set it to the clicked one
-      document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
-        nav.classList.remove('active');
-      });
-      link.classList.add('active');
-    });
-  });
-}
-
-    // Call this after login and after restoring session:
-    function loginUser(user) {
-  authSection.style.display = 'none';
-  dashboardSection.style.display = 'block';
-  document.getElementById('username').textContent = user.name;
-  document.getElementById('dashboardUsername').textContent = user.name;
-  document.getElementById('profileUsername').textContent = user.name;
-  document.querySelectorAll('.dashboard-page').forEach(function(page) {
-    page.style.display = 'none';
-  });
-  document.getElementById('page-dashboard').style.display = 'block';
-  document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
-    nav.classList.remove('active');
-  });
-  document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
- 
-  localStorage.setItem('loggedInUser', JSON.stringify(user));
-  setupSidebarNavigation(); // <-- Add this line
-}
-    
-
-    // Merge all DOMContentLoaded logic here
-    window.addEventListener('DOMContentLoaded', () => {
-      // Restore users array
-      const usersData = localStorage.getItem('users');
-      if (usersData) {
-        users.push(...JSON.parse(usersData));
-      }
-      // Restore logged-in user
-      const userData = localStorage.getItem('loggedInUser');
-      if (userData) {
-        const user = JSON.parse(userData);
-        loginUser(user);
-      }
-      // Initialize method display
-      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
-
-      // Mobile sidebar logic
-      const sidebarMenu = document.getElementById('sidebarMenu');
-      const sidebarOverlay = document.querySelector('.sidebar-overlay');
-      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-
-      // Show sidebar on mobile menu button click
-      mobileMenuBtn.addEventListener('click', () => {
-        sidebarMenu.classList.add('show');
-        sidebarOverlay.classList.add('show');
-      });
-
-      // Hide sidebar when overlay is clicked
-      sidebarOverlay.addEventListener('click', () => {
-        sidebarMenu.classList.remove('show');
-        sidebarOverlay.classList.remove('show');
-      });
-
-      // Hide sidebar after clicking a nav link (on mobile)
-      document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 992) {
-            sidebarMenu.classList.remove('show');
-            sidebarOverlay.classList.remove('show');
+      document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Hide all dashboard pages
+          document.querySelectorAll('.dashboard-page').forEach(page => {
+            page.style.display = 'none';
+          });
+          // Show the selected page
+          const pageId = 'page-' + link.getAttribute('data-page');
+          const pageDiv = document.getElementById(pageId);
+          if (pageDiv) {
+            pageDiv.style.display = 'block';
           }
+          // Remove active class from all links and set it to the clicked one
+          document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
+            nav.classList.remove('active');
+          });
+          link.classList.add('active');
         });
       });
-    });
+    }
+
+    // Login user
+    function loginUser(user) {
+      authSection.style.display = 'none';
+      dashboardSection.style.display = 'block';
+      document.getElementById('username').textContent = user.name;
+      document.getElementById('dashboardUsername').textContent = user.name;
+      document.getElementById('profileUsername').textContent = user.name;
+      document.querySelectorAll('.dashboard-page').forEach(function(page) {
+        page.style.display = 'none';
+      });
+      document.getElementById('page-dashboard').style.display = 'block';
+      document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
+        nav.classList.remove('active');
+      });
+      document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
+     
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      setupSidebarNavigation();
+    }
     
+    // Copy referral link
+    document.getElementById('copyButton').addEventListener('click', function() {
+      const referralLink = document.getElementById('referralLink');
+      referralLink.select();
+      document.execCommand('copy');
+      showNotification('Referral link copied to clipboard!');
+    });
+
     // Dashboard functions
     function openWithdrawModal() {
       const modal = new bootstrap.Modal(document.getElementById('withdrawModal'));
       modal.show();
     }
+    
     function openBuyModal() {
       const modal = new bootstrap.Modal(document.getElementById('buyModal'));
       modal.show();
@@ -1679,45 +1801,57 @@
         } else if (selected === 'UPI') {
           document.getElementById('upiId').setAttribute('required', 'true');
         }
-        // QR Code handled by custom validation
       });
     });
 
-    // UpdateWithdrawFields function
-    function updateWithdrawFields() {
-      const selected = document.querySelector('input[name="method"]:checked').value;
-      document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
-      document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
-      document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
+    // Mobile sidebar logic
+    function setupMobileSidebar() {
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      const sidebarOverlay = document.querySelector('.sidebar-overlay');
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 
-      // Remove all required attributes
-      document.getElementById('accountNumber').removeAttribute('required');
-      document.getElementById('ifscCode').removeAttribute('required');
-      document.getElementById('upiId').removeAttribute('required');
-      document.getElementById('qrUpload').removeAttribute('required');
-      document.getElementById('qrData').removeAttribute('required');
+      // Show sidebar on mobile menu button click
+      mobileMenuBtn.addEventListener('click', () => {
+        sidebarMenu.classList.add('show');
+        sidebarOverlay.classList.add('show');
+      });
 
-      // Set required only for selected method
-      if (selected === 'Bank Transfer') {
-        document.getElementById('accountNumber').setAttribute('required', 'true');
-        document.getElementById('ifscCode').setAttribute('required', 'true');
-      } else if (selected === 'UPI') {
-        document.getElementById('upiId').setAttribute('required', 'true');
-      }
-      // QR Code handled by custom validation
+      // Hide sidebar when overlay is clicked
+      sidebarOverlay.addEventListener('click', () => {
+        sidebarMenu.classList.remove('show');
+        sidebarOverlay.classList.remove('show');
+      });
+
+      // Hide sidebar after clicking a nav link (on mobile)
+      document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 992) {
+            sidebarMenu.classList.remove('show');
+            sidebarOverlay.classList.remove('show');
+          }
+        });
+      });
     }
-
-    // Attach event listeners to all withdrawal method radio buttons
-   
-    document.querySelectorAll('input[name="method"]').forEach(el => {
-      el.addEventListener('change', updateWithdrawFields);
-    });
-
-    // Call once on page load to set initial state
-    window.addEventListener('DOMContentLoaded', () => {
-      updateWithdrawFields();
-    });
     
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      // Restore users array
+      const usersData = localStorage.getItem('users');
+      if (usersData) {
+        users.push(...JSON.parse(usersData));
+      }
+      // Restore logged-in user
+      const userData = localStorage.getItem('loggedInUser');
+      if (userData) {
+        const user = JSON.parse(userData);
+        loginUser(user);
+      }
+      // Initialize method display
+      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
+      
+      // Setup mobile sidebar
+      setupMobileSidebar();
+    });
   </script>
 </body>
 </html>
