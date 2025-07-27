@@ -1712,21 +1712,33 @@
       document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
         link.addEventListener('click', function(e) {
           e.preventDefault();
+          // Get page name from data attribute
+          const pageName = this.getAttribute('data-page');
+          
           // Hide all dashboard pages
           document.querySelectorAll('.dashboard-page').forEach(page => {
             page.style.display = 'none';
           });
+          
           // Show the selected page
-          const pageId = 'page-' + link.getAttribute('data-page');
-          const pageDiv = document.getElementById(pageId);
+          const pageDiv = document.getElementById(`page-${pageName}`);
           if (pageDiv) {
             pageDiv.style.display = 'block';
           }
-          // Remove active class from all links and set it to the clicked one
+          
+          // Remove active class from all links
           document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
             nav.classList.remove('active');
           });
-          link.classList.add('active');
+          
+          // Add active class to clicked link
+          this.classList.add('active');
+          
+          // Close mobile sidebar if open
+          if (window.innerWidth <= 992) {
+            document.getElementById('sidebarMenu').classList.remove('show');
+            document.querySelector('.sidebar-overlay').classList.remove('show');
+          }
         });
       });
     }
@@ -1738,11 +1750,15 @@
       document.getElementById('username').textContent = user.name;
       document.getElementById('dashboardUsername').textContent = user.name;
       document.getElementById('profileUsername').textContent = user.name;
-      document.querySelectorAll('.dashboard-page').forEach(function(page) {
+      
+      // Hide all dashboard pages except dashboard
+      document.querySelectorAll('.dashboard-page').forEach(page => {
         page.style.display = 'none';
       });
       document.getElementById('page-dashboard').style.display = 'block';
-      document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
+      
+      // Set active link
+      document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
         nav.classList.remove('active');
       });
       document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
@@ -1821,16 +1837,6 @@
         sidebarMenu.classList.remove('show');
         sidebarOverlay.classList.remove('show');
       });
-
-      // Hide sidebar after clicking a nav link (on mobile)
-      document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 992) {
-            sidebarMenu.classList.remove('show');
-            sidebarOverlay.classList.remove('show');
-          }
-        });
-      });
     }
     
     // Initialize
@@ -1851,6 +1857,9 @@
       
       // Setup mobile sidebar
       setupMobileSidebar();
+      
+      // Setup sidebar navigation
+      setupSidebarNavigation();
     });
   </script>
 </body>
