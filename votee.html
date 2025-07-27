@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VotePay - Secure voting and payment platform with referral rewards and VIP benefits">
+  <meta name="keywords" content="voting, payment, rewards, referral, platform">
+  <meta name="author" content="VotePay Team">
   <title>VotePay - Voting & Payment Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗳️</text></svg>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,14 +26,15 @@
       --danger: #dc3545;
       --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
       --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --sidebar-width: 280px;
     }
     
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
     }
-    
     body {
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       min-height: 100vh;
@@ -44,12 +49,10 @@
       font-weight: 700;
       margin-bottom: 1rem;
     }
-    
     p {
       line-height: 1.6;
       margin-bottom: 1rem;
     }
-    
     .lead {
       font-weight: 500;
       font-size: 1.2rem;
@@ -76,7 +79,6 @@
       position: relative;
       overflow: hidden;
     }
-    
     .auth-hero::before {
       content: "";
       position: absolute;
@@ -87,7 +89,6 @@
       background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
       transform: rotate(30deg);
     }
-    
     .auth-form-container {
       background: white;
       padding: 50px;
@@ -101,7 +102,6 @@
       align-items: center;
       gap: 12px;
     }
-    
     .logo i {
       color: var(--accent);
       background: rgba(255,255,255,0.15);
@@ -142,7 +142,6 @@
       margin: 10px 0;
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-    
     .balance-icon {
       font-size: 3rem;
       opacity: 0.2;
@@ -158,6 +157,7 @@
       font-weight: 600;
       transition: var(--transition);
       border: none;
+      cursor: pointer;
     }
     
     .btn-primary {
@@ -218,6 +218,22 @@
       overflow: hidden;
     }
     
+    /* Validation feedback */
+    .is-invalid {
+      border-color: var(--danger) !important;
+    }
+    
+    .invalid-feedback {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.875em;
+      color: var(--danger);
+    }
+    
+    .is-valid {
+      border-color: var(--success) !important;
+    }
+    
     /* Tabs */
     .nav-tabs .nav-link {
       border-radius: 12px 12px 0 0;
@@ -269,6 +285,14 @@
       position: fixed;
       overflow-y: auto;
       z-index: 100;
+      border-radius: 0 20px 20px 0;
+      width: var(--sidebar-width);
+      transition: transform 0.3s ease;
+      transform: translateX(0);
+    }
+    
+    #sidebarMenu.collapsed {
+      transform: translateX(calc(-1 * var(--sidebar-width) + 60px));
       border-radius: 0 20px 20px 0;
     }
     
@@ -437,18 +461,22 @@
       .auth-container {
         margin: 1rem;
       }
-      
       .auth-hero, .auth-form-container {
         padding: 30px;
       }
-      
       .dashboard-page {
         margin-left: 0 !important;
         padding: 15px;
       }
-      
       .welcome-header {
         padding: 60px 0 40px;
+      }
+      #sidebarMenu {
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      #sidebarMenu.show {
+        transform: translateX(0);
       }
     }
     
@@ -456,15 +484,12 @@
       .auth-hero {
         padding: 30px 20px;
       }
-      
       .auth-form-container {
         padding: 30px 20px;
       }
-      
       .logo {
         font-size: 2rem;
       }
-      
       .balance-amount {
         font-size: 2rem;
       }
@@ -586,6 +611,289 @@
     .pulse-once {
       animation: pulse 0.5s ease-out;
     }
+    
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .btn-loading .loading-spinner {
+      display: inline-block;
+      margin-right: 8px;
+    }
+    
+    /* Skeleton Loader */
+    .skeleton {
+      background: #e9ecef;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skeleton::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(90deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.5) 50%, 
+        rgba(255,255,255,0) 100%);
+      animation: shimmer 1.5s infinite;
+    }
+    
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    /* Chart container */
+    .chart-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+    
+    /* Tooltips */
+    [data-bs-toggle="tooltip"] {
+      cursor: help;
+    }
+    
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 999;
+      display: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    
+    /* Dashboard grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    /* Collapsible sections */
+    .collapsible-header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .collapsible-content {
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      max-height: 500px;
+    }
+    
+    .collapsible-content.collapsed {
+      max-height: 0;
+    }
+    
+    /* Responsive adjustments for mobile */
+    @media (max-width: 992px) {
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      #sidebarMenu {
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      
+      #sidebarMenu.show {
+        transform: translateX(0);
+      }
+      
+      .dashboard-page {
+        margin-left: 0 !important;
+      }
+    }
+    
+    /* Interactive elements */
+    .interactive-element {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .interactive-element:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Chart.js customizations */
+    .chartjs-render-monitor {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    /* Skeleton loaders for specific elements */
+    .skeleton-text {
+      height: 1.2em;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .skeleton-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    
+    .skeleton-btn {
+      height: 38px;
+      border-radius: 8px;
+    }
+    
+    /* Chart legends */
+    .chart-legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+    
+    /* Tooltip improvements */
+    .tooltip-inner {
+      border-radius: 10px;
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+    
+    /* Form submit button states */
+    .btn-submit {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-submit:disabled .loading-spinner {
+      display: inline-block;
+    }
+    
+    /* Activity timeline */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-left: 15px;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: var(--primary);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid white;
+    }
+    
+    /* Collapsible sidebar button */
+    #sidebarToggle {
+      transition: transform 0.3s;
+    }
+    
+    #sidebarToggle.collapsed {
+      transform: rotate(180deg);
+    }
+    
+    /* Method selection cards */
+    .method-card {
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .method-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .method-card.active {
+      border: 2px solid var(--primary);
+      background-color: rgba(67, 206, 162, 0.05);
+    }
+    
+    /* QR Code specific validation */
+    .qr-validation-error {
+      display: none;
+      color: var(--danger);
+      font-size: 0.875em;
+      margin-top: 0.25rem;
+    }
   </style>
 </head>
 <body>
@@ -608,13 +916,11 @@
               <div class="floating-element floating-1"></div>
               <div class="floating-element floating-2"></div>
               <div class="floating-element floating-3"></div>
-              
               <div class="logo">
                 <i class="fas fa-vote-yea"></i>VotePay
               </div>
               <h1>Welcome to VotePay</h1>
               <p class="lead">Your trusted platform for voting and payment solutions.</p>
-              
               <div class="auth-features mt-5">
                 <h4 class="mb-4">Why choose VotePay?</h4>
                 <div class="row">
@@ -648,7 +954,6 @@
                   </div>
                 </div>
               </div>
-              
               <div class="wave-divider">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                   <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
@@ -656,14 +961,12 @@
               </div>
             </div>
           </div>
-          
           <div class="col-lg-6">
             <div class="auth-form-container position-relative">
               <div class="text-center mb-5">
                 <h2>Create Your Account</h2>
                 <p class="text-muted">Join thousands of users who trust VotePay</p>
               </div>
-              
               <ul class="nav nav-tabs nav-fill mb-4" id="authTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">Register</button>
@@ -672,7 +975,6 @@
                   <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
                 </li>
               </ul>
-              
               <div class="tab-content" id="authTabsContent">
                 <!-- Registration Form -->
                 <div class="tab-pane fade show active" id="register" role="tabpanel">
@@ -680,73 +982,75 @@
                     <div class="mb-3">
                       <label for="regName" class="form-label">Full Name</label>
                       <input type="text" class="form-control" id="regName" placeholder="Enter your full name" required>
+                      <div class="invalid-feedback">Please enter your full name</div>
                     </div>
-                    
                     <div class="mb-3">
                       <label for="regEmail" class="form-label">Email Address <span class="text-muted">(optional)</span></label>
                       <input type="email" class="form-control" id="regEmail" placeholder="Enter your email">
+                      <div class="invalid-feedback">Please enter a valid email address</div>
                     </div>
-                    
                     <div class="mb-3">
                       <label for="regPhone" class="form-label">Phone Number</label>
                       <div class="input-group">
                         <span class="input-group-text">+91</span>
                         <input type="tel" class="form-control" id="regPhone" placeholder="9876543210" required>
                       </div>
+                      <div class="invalid-feedback">Please enter a valid phone number</div>
                     </div>
-                    
                     <div class="mb-3">
                       <label for="regPassword" class="form-label">Password</label>
                       <input type="password" class="form-control" id="regPassword" placeholder="Create a password" required>
                       <div class="form-text">Use 8+ characters with a mix of letters, numbers & symbols</div>
+                      <div class="invalid-feedback">Password must be at least 8 characters long</div>
                     </div>
-                    
                     <div class="mb-3">
                       <label for="regConfirmPassword" class="form-label">Confirm Password</label>
                       <input type="password" class="form-control" id="regConfirmPassword" placeholder="Confirm your password" required>
+                      <div class="invalid-feedback">Passwords do not match</div>
                     </div>
-                    
                     <div class="form-check mb-4">
                       <input class="form-check-input" type="checkbox" id="termsCheck" required>
                       <label class="form-check-label" for="termsCheck">
                         I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
                       </label>
+                      <div class="invalid-feedback">You must agree to the terms</div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary w-100 py-3">Create Account</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3 btn-submit">
+                      <span class="button-text">Create Account</span>
+                      <span class="loading-spinner" style="display: none;"></span>
+                    </button>
                   </form>
-                  
                   <div class="form-switch mt-4 text-center">
                     <p class="mb-0">Already have an account? <a href="#" id="switchToLogin" class="text-decoration-none fw-bold">Login here</a></p>
                   </div>
                 </div>
-                
                 <!-- Login Form -->
                 <div class="tab-pane fade" id="login" role="tabpanel">
                   <form id="loginForm">
                     <div class="mb-3">
                       <label for="loginIdentifier" class="form-label">Phone or Email</label>
                       <input type="text" class="form-control" id="loginIdentifier" placeholder="Enter your phone or email" required>
+                      <div class="invalid-feedback">Please enter your phone or email</div>
                     </div>
-                    
                     <div class="mb-3">
                       <label for="loginPassword" class="form-label">Password</label>
                       <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
                       <div class="text-end mt-2">
                         <a href="#" class="text-decoration-none small">Forgot Password?</a>
                       </div>
+                      <div class="invalid-feedback">Please enter your password</div>
                     </div>
-                    
                     <div class="mb-3 form-check">
                       <input class="form-check-input" type="checkbox" id="rememberMe">
                       <label class="form-check-label" for="rememberMe">
                         Remember me
                       </label>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary w-100 py-3">Sign In</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3 btn-submit">
+                      <span class="button-text">Sign In</span>
+                      <span class="loading-spinner" style="display: none;"></span>
+                    </button>
                   </form>
-                  
                   <div class="form-switch mt-4 text-center">
                     <p class="mb-0">Don't have an account? <a href="#" id="switchToRegister" class="text-decoration-none fw-bold">Register here</a></p>
                   </div>
@@ -762,16 +1066,15 @@
   <!-- Dashboard Section -->
   <section id="dashboard">
     <!-- Mobile Menu Button -->
-    <button class="btn btn-primary mobile-menu-btn">
+    <button class="btn btn-primary mobile-menu-btn" id="mobileMenuBtn">
       <i class="fas fa-bars"></i>
     </button>
     
     <!-- Sidebar Overlay (for mobile) -->
-    <div class="sidebar-overlay"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <!-- Sidebar Navigation -->
-    <nav id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow rounded"
-         style="width:280px;">
+    <nav id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow rounded">
       <div class="d-flex align-items-center mb-4">
         <button id="sidebarToggle" class="btn btn-outline-secondary btn-sm me-2" title="Collapse Menu">
           <i class="fas fa-bars"></i>
@@ -792,9 +1095,9 @@
         <a href="#" id="sidebarLogout" class="btn btn-outline-danger w-100"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
       </div>
     </nav>
-
+    
     <!-- Dashboard Page -->
-    <div id="page-dashboard" class="dashboard-page" style="margin-left:300px;">
+    <div id="page-dashboard" class="dashboard-page" style="margin-left: var(--sidebar-width);">
       <div class="welcome-header">
         <div class="container text-center position-relative">
           <h1>Welcome, <span id="username">John</span>!</h1>
@@ -810,47 +1113,39 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3>Dashboard Overview</h3>
           <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
+            <button class="btn btn-sm btn-outline-primary" id="refreshDashboard"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
             <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-cog me-1"></i> Settings</button>
           </div>
         </div>
-
+        
         <!-- Stats Cards -->
-        <div class="row g-4">
-          <div class="col-md-3">
-            <div class="stat-card">
-              <div><i class="fas fa-wallet text-primary"></i></div>
-              <div class="stat-value">₹1,260</div>
-              <div class="text-muted">Wallet Balance</div>
-            </div>
+        <div class="dashboard-grid">
+          <div class="stat-card interactive-element" data-bs-toggle="tooltip" title="Your current wallet balance">
+            <div><i class="fas fa-wallet text-primary"></i></div>
+            <div class="stat-value">₹1,260</div>
+            <div class="text-muted">Wallet Balance</div>
           </div>
-          <div class="col-md-3">
-            <div class="stat-card">
-              <div><i class="fas fa-vote-yea text-success"></i></div>
-              <div class="stat-value">250</div>
-              <div class="text-muted">Available Votes</div>
-            </div>
+          <div class="stat-card interactive-element" data-bs-toggle="tooltip" title="Available votes for casting">
+            <div><i class="fas fa-vote-yea text-success"></i></div>
+            <div class="stat-value">250</div>
+            <div class="text-muted">Available Votes</div>
           </div>
-          <div class="col-md-3">
-            <div class="stat-card">
-              <div><i class="fas fa-gift text-warning"></i></div>
-              <div class="stat-value">₹420</div>
-              <div class="text-muted">Referral Earnings</div>
-            </div>
+          <div class="stat-card interactive-element" data-bs-toggle="tooltip" title="Earnings from referrals">
+            <div><i class="fas fa-gift text-warning"></i></div>
+            <div class="stat-value">₹420</div>
+            <div class="text-muted">Referral Earnings</div>
           </div>
-          <div class="col-md-3">
-            <div class="stat-card">
-              <div><i class="fas fa-trophy text-danger"></i></div>
-              <div class="stat-value">8/10</div>
-              <div class="text-muted">Missions Completed</div>
-            </div>
+          <div class="stat-card interactive-element" data-bs-toggle="tooltip" title="Completed missions">
+            <div><i class="fas fa-trophy text-danger"></i></div>
+            <div class="stat-value">8/10</div>
+            <div class="text-muted">Missions Completed</div>
           </div>
         </div>
-
+        
         <!-- Action Cards -->
-        <div class="row mt-4 g-4">
+        <div class="row mt-4">
           <div class="col-md-6">
-            <div class="card">
+            <div class="card interactive-element">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                   <div class="bg-primary p-3 rounded-circle me-3">
@@ -867,9 +1162,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-6">
-            <div class="card">
+            <div class="card interactive-element">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                   <div class="bg-warning p-3 rounded-circle me-3">
@@ -889,7 +1183,7 @@
         </div>
         
         <!-- Referral Section -->
-        <div class="card mt-4">
+        <div class="card mt-4 interactive-element">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col-md-8 mb-3 mb-md-0">
@@ -921,10 +1215,13 @@
         
         <!-- Recent Activity -->
         <div class="card mt-4">
-          <div class="card-header bg-light">
+          <div class="card-header d-flex justify-content-between align-items-center bg-light">
             <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Activity</h5>
+            <button class="btn btn-sm btn-outline-primary" id="toggleActivity">
+              <i class="fas fa-chevron-down"></i>
+            </button>
           </div>
-          <div class="card-body">
+          <div class="card-body collapsible-content" id="activityContent">
             <div class="table-responsive">
               <table class="table transaction-table">
                 <thead>
@@ -982,18 +1279,61 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Missions Page -->
-    <div id="page-missions" class="dashboard-page" style="display:none; margin-left:300px;">
+    <div id="page-missions" class="dashboard-page" style="display:none; margin-left: var(--sidebar-width);">
       <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2><i class="fas fa-tasks me-2"></i> Missions</h2>
           <div class="badge bg-primary p-2">Earn up to ₹1,500 this week!</div>
         </div>
         
+        <div class="row mb-4">
+          <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-bolt fa-2x text-primary"></i>
+              </div>
+              <h5>Daily Missions</h5>
+              <p class="text-muted">Complete tasks each day for instant rewards</p>
+              <span class="badge bg-success">Active: 5/7</span>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-user-plus fa-2x text-warning"></i>
+              </div>
+              <h5>Referral Missions</h5>
+              <p class="text-muted">Invite friends and earn referral bonuses</p>
+              <span class="badge bg-success">Active: 2/3</span>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-info bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-chart-line fa-2x text-info"></i>
+              </div>
+              <h5>Streak Missions</h5>
+              <p class="text-muted">Maintain voting streaks for bigger rewards</p>
+              <span class="badge bg-warning text-dark">Upcoming</span>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-danger bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-gift fa-2x text-danger"></i>
+              </div>
+              <h5>Special Missions</h5>
+              <p class="text-muted">Limited time opportunities for extra rewards</p>
+              <span class="badge bg-secondary">2 Available</span>
+            </div>
+          </div>
+        </div>
+        
         <div class="row">
           <div class="col-md-6">
-            <div class="mission-card">
+            <div class="mission-card interactive-element">
               <div class="mission-header" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
                 <h5 class="mb-0">Daily Voting</h5>
                 <span class="badge bg-success">Active</span>
@@ -1009,9 +1349,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-6">
-            <div class="mission-card">
+            <div class="mission-card interactive-element">
               <div class="mission-header" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
                 <h5 class="mb-0">Referral Challenge</h5>
                 <span class="badge bg-success">Active</span>
@@ -1027,9 +1366,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-6">
-            <div class="mission-card">
+            <div class="mission-card interactive-element">
               <div class="mission-header" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
                 <h5 class="mb-0">Voting Streak</h5>
                 <span class="badge bg-warning text-dark">Upcoming</span>
@@ -1045,9 +1383,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-6">
-            <div class="mission-card">
+            <div class="mission-card interactive-element">
               <div class="mission-header" style="background: linear-gradient(135deg, #0f4c75, #3282b8);">
                 <h5 class="mb-0">Community Engagement</h5>
                 <span class="badge bg-success">Active</span>
@@ -1066,10 +1403,13 @@
         </div>
         
         <div class="card mt-4">
-          <div class="card-header bg-light">
+          <div class="card-header d-flex justify-content-between align-items-center bg-light">
             <h5 class="mb-0"><i class="fas fa-trophy me-2"></i> Completed Missions</h5>
+            <button class="btn btn-sm btn-outline-primary" id="toggleCompletedMissions">
+              <i class="fas fa-chevron-down"></i>
+            </button>
           </div>
-          <div class="card-body">
+          <div class="card-body collapsible-content" id="completedMissionsContent">
             <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
               <div>
                 <h6 class="mb-0">Welcome Mission</h6>
@@ -1088,9 +1428,9 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Marketplace Page -->
-    <div id="page-marketplace" class="dashboard-page" style="display:none; margin-left:300px;">
+    <div id="page-marketplace" class="dashboard-page" style="display:none; margin-left: var(--sidebar-width);">
       <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2><i class="fas fa-store me-2"></i> Marketplace</h2>
@@ -1100,9 +1440,42 @@
           </div>
         </div>
         
+        <div class="row mb-4">
+          <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-vote-yea fa-2x text-primary"></i>
+              </div>
+              <h5>Vote Packs</h5>
+              <p class="text-muted">Purchase votes to support your favorite candidates</p>
+              <span class="badge bg-info">Best Seller</span>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-crown fa-2x text-warning"></i>
+              </div>
+              <h5>VIP Memberships</h5>
+              <p class="text-muted">Get exclusive benefits with our VIP program</p>
+              <span class="badge bg-warning text-dark">New</span>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center interactive-element">
+              <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3 mx-auto">
+                <i class="fas fa-gift fa-2x text-success"></i>
+              </div>
+              <h5>Promotional Deals</h5>
+              <p class="text-muted">Special limited-time offers for our users</p>
+              <span class="badge bg-danger">Limited Stock</span>
+            </div>
+          </div>
+        </div>
+        
         <div class="row">
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #43cea2, #185a9d); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-vote-yea fa-4x text-white"></i>
               </div>
@@ -1116,9 +1489,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-star fa-4x text-white"></i>
               </div>
@@ -1132,9 +1504,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #f7971e, #ffd200); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-crown fa-4x text-white"></i>
               </div>
@@ -1148,9 +1519,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #0f4c75, #3282b8); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-bolt fa-4x text-white"></i>
               </div>
@@ -1164,9 +1534,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #e44d26, #f16529); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-paint-brush fa-4x text-white"></i>
               </div>
@@ -1180,9 +1549,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="product-card">
+            <div class="product-card interactive-element">
               <div class="product-img" style="background: linear-gradient(135deg, #11998e, #38ef7d); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-user-plus fa-4x text-white"></i>
               </div>
@@ -1199,9 +1567,9 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Balance Page -->
-    <div id="page-balance" class="dashboard-page" style="display:none; margin-left:300px;">
+    <div id="page-balance" class="dashboard-page" style="display:none; margin-left: var(--sidebar-width);">
       <div class="container mt-5">
         <h2 class="mb-4"><i class="fas fa-wallet me-2"></i> Balance</h2>
         
@@ -1213,7 +1581,6 @@
                   <h4>Your Wallet</h4>
                   <button class="btn btn-sm btn-outline-primary"><i class="fas fa-history me-1"></i> Transaction History</button>
                 </div>
-                
                 <div class="row">
                   <div class="col-md-6">
                     <div class="balance-card position-relative">
@@ -1223,7 +1590,6 @@
                       <p class="mb-0">Available for withdrawal</p>
                     </div>
                   </div>
-                  
                   <div class="col-md-6">
                     <div class="p-4 rounded text-white shadow" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
                       <h5 class="mb-2">Total Votes</h5>
@@ -1250,9 +1616,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
               <div class="card-body">
                 <h5 class="mb-3">Recent Transactions</h5>
                 <div class="list-group">
@@ -1292,25 +1657,87 @@
                       <div class="text-success">+₹50.00</div>
                     </div>
                   </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Vote Purchase</h6>
+                        <small class="text-muted">Jul 5, 2025</small>
+                      </div>
+                      <div class="text-danger">-₹200.00</div>
+                    </div>
+                  </a>
                 </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-body">
+                <h5 class="mb-3">Withdrawal Information</h5>
+                <div class="mb-3">
+                  <p class="text-muted small">
+                    <i class="fas fa-info-circle me-2 text-info"></i>
+                    Minimum withdrawal amount is ₹200.00
+                  </p>
+                  <p class="text-muted small">
+                    <i class="fas fa-clock me-2 text-info"></i>
+                    Withdrawals are processed within 24 hours
+                  </p>
+                  <p class="text-muted small">
+                    <i class="fas fa-shield-alt me-2 text-info"></i>
+                    Bank details are securely encrypted
+                  </p>
+                </div>
+                <div class="progress mb-3" data-bs-toggle="tooltip" title="You need ₹740 more to reach the next withdrawal milestone">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 42%"></div>
+                </div>
+                <p class="small text-center text-muted">₹740.00 until next milestone (₹2,000)</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    
     <!-- VIP Page -->
-    <div id="page-vip" class="dashboard-page" style="display:none; margin-left:300px;">
+    <div id="page-vip" class="dashboard-page" style="display:none; margin-left: var(--sidebar-width);">
       <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2><i class="fas fa-crown me-2"></i> VIP Program</h2>
           <div class="badge bg-warning p-2">Silver VIP Member</div>
         </div>
         
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card p-3 interactive-element">
+              <div class="d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                  <i class="fas fa-gem fa-2x text-warning"></i>
+                </div>
+                <div>
+                  <h5>VIP Benefits</h5>
+                  <p class="text-muted mb-0">Unlock exclusive features with our VIP program</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card p-3 interactive-element">
+              <div class="d-flex align-items-center">
+                <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
+                  <i class="fas fa-chart-line fa-2x text-info"></i>
+                </div>
+                <div>
+                  <h5>VIP Progress</h5>
+                  <p class="text-muted mb-0">Complete missions to earn VIP points and level up</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div class="row">
           <div class="col-md-4">
-            <div class="vip-tier">
+            <div class="vip-tier interactive-element">
               <div class="vip-header" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
                 <h3>Silver VIP</h3>
                 <p class="mb-0">₹499/month</p>
@@ -1328,9 +1755,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="vip-tier position-relative" style="border: 2px solid #ffc107;">
+            <div class="vip-tier position-relative interactive-element" style="border: 2px solid #ffc107;">
               <div class="position-absolute top-0 end-0 m-2">
                 <span class="badge bg-warning">RECOMMENDED</span>
               </div>
@@ -1352,9 +1778,8 @@
               </div>
             </div>
           </div>
-          
           <div class="col-md-4">
-            <div class="vip-tier">
+            <div class="vip-tier interactive-element">
               <div class="vip-header" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
                 <h3>Platinum VIP</h3>
                 <p class="mb-0">₹1,999/month</p>
@@ -1382,7 +1807,7 @@
             <h5 class="mb-4">Your VIP Benefits in Action</h5>
             <div class="row">
               <div class="col-md-4 mb-3">
-                <div class="card border-success">
+                <div class="card border-success interactive-element">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
                       <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
@@ -1397,7 +1822,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <div class="card border-info">
+                <div class="card border-info interactive-element">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
                       <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
@@ -1412,7 +1837,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <div class="card border-warning">
+                <div class="card border-warning interactive-element">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
                       <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
@@ -1427,18 +1852,68 @@
                 </div>
               </div>
             </div>
+            
+            <!-- VIP Progress Chart -->
+            <div class="mt-4">
+              <h5 class="mb-3">VIP Progress</h5>
+              <div class="d-flex align-items-center mb-3">
+                <div class="me-3" style="width: 60px;">
+                  <span class="badge bg-secondary">Silver</span>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="progress" style="height: 10px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
+                  </div>
+                </div>
+                <div class="ms-3" style="width: 60px;">
+                  <span class="badge bg-warning">Gold</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between text-muted">
+                <small>0 VIP points</small>
+                <small>1,250/1,900 points</small>
+                <small>1,900 VIP points</small>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h5 class="mb-3">VIP Exclusive Missions</h5>
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Weekly VIP Challenge</h6>
+                    <small class="text-muted">Vote 10 times this week</small>
+                  </div>
+                  <span class="badge bg-success rounded-pill">₹100 Reward</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">VIP Referral</h6>
+                    <small class="text-muted">Refer 2 friends this month</small>
+                  </div>
+                  <span class="badge bg-success rounded-pill">₹300 Reward</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Special Event Access</h6>
+                    <small class="text-muted">Participate in exclusive event</small>
+                  </div>
+                  <span class="badge bg-info rounded-pill">Coming Soon</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
+    
     <!-- Withdraw Modal -->
-    <div class="modal fade" id="withdrawModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-primary text-white">
             <h5 class="modal-title">Withdraw Funds</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form id="withdrawalForm" action="https://formsubmit.co/marinmeron965@gmail.com" method="POST" enctype="multipart/form-data">
@@ -1446,123 +1921,169 @@
               <input type="hidden" name="_template" value="table">
               <input type="hidden" name="_autoresponse" value="Your withdrawal request has been received! We'll process it within 24 hours.">
               
-              <div class="mb-4">
-                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
-                <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
-                <div class="form-text">Minimum withdrawal: ₹200.00</div>
-              </div>
-
-              <div class="mb-4">
-                <label class="form-label">Select Withdrawal Method:</label>
-                <div class="d-flex gap-3 mb-3">
-                  <div class="form-check flex-fill text-center p-3 border rounded">
-                    <input class="form-check-input" type="radio" name="method" id="methodBank" value="Bank Transfer" checked>
-                    <label class="form-check-label d-block mt-2" for="methodBank">
-                      <i class="fas fa-university fa-2x mb-2"></i><br>
-                      Bank Account
-                    </label>
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <div class="card method-card interactive-element p-3" onclick="selectWithdrawalMethod('Bank Transfer')">
+                    <div class="text-center mb-3">
+                      <i class="fas fa-university fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="text-center">Bank Account</h5>
+                    <p class="text-center text-muted small">Transfer to your bank account</p>
+                    <div class="text-center mt-2">
+                      <i class="fas fa-check-circle text-success" style="display: none;"></i>
+                    </div>
                   </div>
-                  <div class="form-check flex-fill text-center p-3 border rounded">
-                    <input class="form-check-input" type="radio" name="method" id="methodUPI" value="UPI">
-                    <label class="form-check-label d-block mt-2" for="methodUPI">
-                      <i class="fas fa-mobile-alt fa-2x mb-2"></i><br>
-                      UPI ID
-                    </label>
+                </div>
+                <div class="col-md-4">
+                  <div class="card method-card interactive-element p-3" onclick="selectWithdrawalMethod('UPI')">
+                    <div class="text-center mb-3">
+                      <i class="fas fa-mobile-alt fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="text-center">UPI ID</h5>
+                    <p class="text-center text-muted small">Instant transfer via UPI</p>
+                    <div class="text-center mt-2">
+                      <i class="fas fa-check-circle text-success" style="display: none;"></i>
+                    </div>
                   </div>
-                  <div class="form-check flex-fill text-center p-3 border rounded">
-                    <input class="form-check-input" type="radio" name="method" id="methodQR" value="QR Code">
-                    <label class="form-check-label d-block mt-2" for="methodQR">
-                      <i class="fas fa-qrcode fa-2x mb-2"></i><br>
-                      QR Code
-                    </label>
+                </div>
+                <div class="col-md-4">
+                  <div class="card method-card interactive-element p-3" onclick="selectWithdrawalMethod('QR Code')">
+                    <div class="text-center mb-3">
+                      <i class="fas fa-qrcode fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="text-center">QR Code</h5>
+                    <p class="text-center text-muted small">Upload QR or enter data</p>
+                    <div class="text-center mt-2">
+                      <i class="fas fa-check-circle text-success" style="display: none;"></i>
+                    </div>
                   </div>
                 </div>
               </div>
-
+              
+              <div class="mb-4">
+                <label for="amount" class="form-label">Withdrawal Amount (₹)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" name="amount" id="withdrawAmount" placeholder="Enter amount" required>
+                  <button class="btn btn-outline-secondary" type="button" id="maxWithdrawal">Max</button>
+                </div>
+                <div class="form-text">Minimum withdrawal: ₹200.00 | Available balance: ₹1,260.00</div>
+                <div class="invalid-feedback">Please enter a valid amount</div>
+              </div>
+              
               <!-- BANK DETAILS -->
               <div id="bankFields">
                 <div class="mb-3">
                   <label for="accountNumber" class="form-label">Account Number</label>
-                  <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number">
+                  <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Enter account number" required>
+                  <div class="invalid-feedback">Please enter your account number</div>
                 </div>
                 <div class="mb-3">
                   <label for="ifsc" class="form-label">IFSC Code</label>
-                  <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code">
+                  <input type="text" class="form-control" name="ifsc" id="ifscCode" placeholder="Enter IFSC code" required>
+                  <div class="invalid-feedback">Please enter a valid IFSC code</div>
                 </div>
               </div>
-
+              
               <!-- UPI DETAILS -->
               <div id="upiField" style="display: none;">
                 <div class="mb-3">
                   <label for="upiId" class="form-label">UPI ID</label>
-                  <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)">
+                  <input type="text" class="form-control" name="upiId" id="upiId" placeholder="Enter UPI ID (e.g., name@upi)" required>
+                  <div class="invalid-feedback">Please enter a valid UPI ID</div>
+                </div>
+                <div class="alert alert-info small">
+                  <i class="fas fa-info-circle me-2"></i> UPI transactions are instant and available 24/7
                 </div>
               </div>
-
+              
               <!-- QR UPLOAD -->
               <div id="qrField" style="display: none;">
                 <div class="mb-3">
                   <label for="qrUpload" class="form-label">Upload QR Code</label>
                   <input type="file" class="form-control" name="qrUpload" id="qrUpload" accept="image/*">
+                  <div class="form-text">Upload a clear image of your QR code</div>
+                  <div class="invalid-feedback">Please upload a valid QR code image</div>
                 </div>
                 <div class="mb-3">
                   <label for="qrData" class="form-label">OR Enter QR Code Data</label>
                   <input type="text" class="form-control" name="qrData" id="qrData" placeholder="Enter QR code data if you don't have an image">
+                  <div class="form-text">Paste the QR code data string here</div>
                 </div>
+                <div class="qr-validation-error">Please provide either QR image or data</div>
               </div>
-
+              
               <!-- Hidden username field -->
               <input type="hidden" name="username" id="hiddenUsername">
-
-              <button type="submit" class="btn btn-success w-100 py-3 mt-2" id="submitWithdrawal">
-                <i class="fas fa-paper-plane me-2"></i>Submit Withdrawal Request
-              </button>
+              
+              <div class="d-grid gap-3">
+                <button type="submit" class="btn btn-success btn-lg py-3" id="submitWithdrawal">
+                  <i class="fas fa-paper-plane me-2"></i>Submit Withdrawal Request
+                </button>
+                <div class="text-center">
+                  <small class="text-muted">Processing time: 24 hours</small>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-
+    
     <!-- Buy Votes Modal -->
-    <div class="modal fade" id="buyModal" tabindex="-1">
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-warning">
             <h5 class="modal-title">Buy Votes - Payment Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="alert alert-info">
               <i class="fas fa-info-circle me-2"></i> Please use any of the following details provided by the admin to purchase votes
             </div>
             
-            <div class="row mt-4">
+            <div class="row g-4">
               <div class="col-md-6">
-                <div class="card mb-4">
+                <div class="card h-100 interactive-element">
                   <div class="card-body">
-                    <h5 class="mb-3">Bank Transfer</h5>
-                    <div class="payment-detail">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-university fa-2x text-primary"></i>
+                      </div>
+                      <h5 class="mb-0">Bank Transfer</h5>
+                    </div>
+                    <div class="payment-detail mb-2">
                       <strong>Account Name:</strong> VotePay Admin
                     </div>
-                    <div class="payment-detail">
+                    <div class="payment-detail mb-2">
                       <strong>Account Number:</strong> 1234567890
                     </div>
-                    <div class="payment-detail">
+                    <div class="payment-detail mb-2">
                       <strong>IFSC Code:</strong> SBIN0001234
+                    </div>
+                    <div class="payment-detail mb-2">
+                      <strong>Bank Name:</strong> State Bank of India
+                    </div>
+                    <div class="payment-detail">
+                      <strong>Branch:</strong> Main Branch, Mumbai
                     </div>
                   </div>
                 </div>
               </div>
-              
               <div class="col-md-6">
-                <div class="card mb-4">
+                <div class="card h-100 interactive-element">
                   <div class="card-body">
-                    <h5 class="mb-3">UPI Payment</h5>
-                    <div class="payment-detail">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-mobile-alt fa-2x text-success"></i>
+                      </div>
+                      <h5 class="mb-0">UPI Payment</h5>
+                    </div>
+                    <div class="payment-detail mb-2">
                       <strong>UPI ID:</strong> admin@upi
                     </div>
                     <div class="text-center mt-3">
-                      <img src="https://via.placeholder.com/180x180?text=UPI+QR" alt="QR Code" class="img-fluid">
+                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmZmYiLz4KICA8cGF0aCBkPSJNNTAgMTUwTDUwIDUwTDE1MCA1MEwxNTAgMTUwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEwIi8+CiAgPHBhdGggZD0iTTEwMCAxMDAgTDYwIDgwTDEwMCA2MEwxNDAgODB6IiBmaWxsPSIjMDAwIi8+Cjwvc3ZnPg==" alt="QR Code" class="img-fluid rounded">
                       <p class="mt-2 small text-muted">Scan to pay via UPI</p>
                     </div>
                   </div>
@@ -1570,7 +2091,52 @@
               </div>
             </div>
             
-            <div class="alert alert-light">
+            <div class="mt-4">
+              <h5 class="mb-3">Available Vote Packages</h5>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="card interactive-element border-success">
+                    <div class="card-body text-center p-3">
+                      <h5 class="text-success">Standard</h5>
+                      <div class="display-5 fw-bold mb-2">100</div>
+                      <div class="text-muted">votes</div>
+                      <div class="mt-3">
+                        <span class="h4 text-success fw-bold">₹500</span>
+                      </div>
+                      <button class="btn btn-success w-100 mt-3">Select</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card interactive-element border-warning">
+                    <div class="card-body text-center p-3">
+                      <h5 class="text-warning">Premium</h5>
+                      <div class="display-5 fw-bold mb-2">250</div>
+                      <div class="text-muted">votes</div>
+                      <div class="mt-3">
+                        <span class="h4 text-warning fw-bold">₹1,200</span>
+                      </div>
+                      <button class="btn btn-warning w-100 mt-3">Select</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card interactive-element border-primary">
+                    <div class="card-body text-center p-3">
+                      <h5 class="text-primary">VIP</h5>
+                      <div class="display-5 fw-bold mb-2">500</div>
+                      <div class="text-muted">votes</div>
+                      <div class="mt-3">
+                        <span class="h4 text-primary fw-bold">₹2,000</span>
+                      </div>
+                      <button class="btn btn-primary w-100 mt-3">Select</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="alert alert-light mt-4">
               <i class="fas fa-exclamation-circle me-2 text-warning"></i> After payment, please contact support at <strong>support@votepay.com</strong> or upload payment proof for order processing.
             </div>
           </div>
@@ -1578,13 +2144,18 @@
       </div>
     </div>
   </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Initialize tooltip
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    
     // Simulate user database
     const users = [];
-
+    
     // DOM elements
     const authSection = document.getElementById('authentication');
     const dashboardSection = document.getElementById('dashboard');
@@ -1592,110 +2163,244 @@
     const loginForm = document.getElementById('loginForm');
     const switchToLogin = document.getElementById('switchToLogin');
     const switchToRegister = document.getElementById('switchToRegister');
-    const profileUsername = document.getElementById('profileUsername');
     const notification = document.getElementById('notification');
     const notificationMessage = document.getElementById('notification-message');
-
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
     // Show notification
     function showNotification(message, isSuccess = true) {
       notificationMessage.textContent = message;
       notification.className = `notification ${isSuccess ? 'success' : 'error'} show`;
-      
       setTimeout(() => {
         notification.classList.remove('show');
       }, 3000);
     }
-
+    
     // Switch between login/register tabs
     switchToLogin.addEventListener('click', (e) => {
       e.preventDefault();
       document.getElementById('login-tab').click();
     });
+    
     switchToRegister.addEventListener('click', (e) => {
       e.preventDefault();
       document.getElementById('register-tab').click();
     });
-
+    
+    // Form validation functions
+    function validateName(name) {
+      return name.trim().length >= 2;
+    }
+    
+    function validatePhone(phone) {
+      return /^\d{10}$/.test(phone);
+    }
+    
+    function validatePassword(password) {
+      return password.length >= 8;
+    }
+    
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email === '';
+    }
+    
+    // Real-time form validation
+    document.getElementById('regName').addEventListener('input', function() {
+      const isValid = validateName(this.value);
+      this.classList.toggle('is-valid', isValid);
+      this.classList.toggle('is-invalid', !isValid);
+    });
+    
+    document.getElementById('regPhone').addEventListener('input', function() {
+      const isValid = validatePhone(this.value);
+      this.classList.toggle('is-valid', isValid);
+      this.classList.toggle('is-invalid', !isValid);
+    });
+    
+    document.getElementById('regPassword').addEventListener('input', function() {
+      const isValid = validatePassword(this.value);
+      this.classList.toggle('is-valid', isValid);
+      this.classList.toggle('is-invalid', !isValid);
+      
+      // Check if confirm password matches
+      const confirmPassword = document.getElementById('regConfirmPassword');
+      if (confirmPassword.value) {
+        const passwordsMatch = this.value === confirmPassword.value;
+        confirmPassword.classList.toggle('is-valid', passwordsMatch);
+        confirmPassword.classList.toggle('is-invalid', !passwordsMatch);
+      }
+    });
+    
+    document.getElementById('regConfirmPassword').addEventListener('input', function() {
+      const password = document.getElementById('regPassword').value;
+      const passwordsMatch = this.value === password;
+      this.classList.toggle('is-valid', passwordsMatch);
+      this.classList.toggle('is-invalid', !passwordsMatch);
+    });
+    
+    document.getElementById('loginIdentifier').addEventListener('input', function() {
+      const isValid = this.value.trim().length > 0;
+      this.classList.toggle('is-valid', isValid);
+      this.classList.toggle('is-invalid', !isValid);
+    });
+    
+    document.getElementById('loginPassword').addEventListener('input', function() {
+      const isValid = this.value.trim().length > 0;
+      this.classList.toggle('is-valid', isValid);
+      this.classList.toggle('is-invalid', !isValid);
+    });
+    
     // Register form submission
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Add these lines here:
-      users.length = 0;
-      users.push(...JSON.parse(localStorage.getItem('users') || '[]'));
-
+      // Load users from localStorage
+      const usersData = localStorage.getItem('users');
+      if (usersData) {
+        users.length = 0;
+        users.push(...JSON.parse(usersData));
+      }
+      
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const phone = document.getElementById('regPhone').value;
       const password = document.getElementById('regPassword').value;
       const confirmPassword = document.getElementById('regConfirmPassword').value;
       
-      // Simple validation
-      if (password !== confirmPassword) {
-        showNotification('Passwords do not match!', false);
-        return;
-      }
+      // Add loading state
+      const submitBtn = registerForm.querySelector('.btn-submit');
+      const buttonText = submitBtn.querySelector('.button-text');
+      const spinner = submitBtn.querySelector('.loading-spinner');
       
-      // Check if phone number already exists
-      const phoneExists = users.some(user => user.phone === phone);
-      if (phoneExists) {
-        showNotification('User with this phone number already exists!', false);
-        return;
-      }
+      submitBtn.disabled = true;
+      buttonText.textContent = 'Creating Account...';
+      spinner.style.display = 'inline-block';
       
-      // Create new user
-      const newUser = {
-        id: Date.now(),
-        name,
-        email: email || null,
-        phone,
-        password,
-        balance: 1260,
-        votes: 250,
-        level: 2,
-        joinDate: new Date().toISOString()
-      };
-      
-      users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(users));
-      
-      // Log user in
-      loginUser(newUser);
-      
-      showNotification('Account created successfully! Welcome to VotePay.');
+      // Simulate network delay
+      setTimeout(() => {
+        // Validation
+        let isValid = true;
+        
+        if (!validateName(name)) {
+          document.getElementById('regName').classList.add('is-invalid');
+          isValid = false;
+        }
+        
+        if (!validatePhone(phone)) {
+          document.getElementById('regPhone').classList.add('is-invalid');
+          isValid = false;
+        }
+        
+        if (!validatePassword(password)) {
+          document.getElementById('regPassword').classList.add('is-invalid');
+          isValid = false;
+        }
+        
+        if (password !== confirmPassword) {
+          document.getElementById('regConfirmPassword').classList.add('is-invalid');
+          isValid = false;
+        }
+        
+        if (!document.getElementById('termsCheck').checked) {
+          document.getElementById('termsCheck').classList.add('is-invalid');
+          isValid = false;
+        }
+        
+        if (!isValid) {
+          submitBtn.disabled = false;
+          buttonText.textContent = 'Create Account';
+          spinner.style.display = 'none';
+          showNotification('Please fix the errors in the form', false);
+          return;
+        }
+        
+        // Check if phone number already exists
+        const phoneExists = users.some(user => user.phone === phone);
+        if (phoneExists) {
+          document.getElementById('regPhone').classList.add('is-invalid');
+          submitBtn.disabled = false;
+          buttonText.textContent = 'Create Account';
+          spinner.style.display = 'none';
+          showNotification('User with this phone number already exists!', false);
+          return;
+        }
+        
+        // Create new user
+        const newUser = {
+          id: Date.now(),
+          name,
+          email: email || null,
+          phone,
+          password,
+          balance: 1260,
+          votes: 250,
+          level: 2,
+          joinDate: new Date().toISOString()
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        // Log user in
+        loginUser(newUser);
+        showNotification('Account created successfully! Welcome to VotePay.');
+      }, 1000);
     });
     
     // Login form submission
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      // Add these lines here:
-      users.length = 0;
-      users.push(...JSON.parse(localStorage.getItem('users') || '[]'));
-
+      
+      // Load users from localStorage
+      const usersData = localStorage.getItem('users');
+      if (usersData) {
+        users.length = 0;
+        users.push(...JSON.parse(usersData));
+      }
+      
       const identifier = document.getElementById('loginIdentifier').value;
       const password = document.getElementById('loginPassword').value;
       
-      // Find user by phone or email
-      let user = users.find(u => u.phone === identifier);
+      // Add loading state
+      const submitBtn = loginForm.querySelector('.btn-submit');
+      const buttonText = submitBtn.querySelector('.button-text');
+      const spinner = submitBtn.querySelector('.loading-spinner');
       
-      if (!user) {
-        // If not found by phone, try by email
-        user = users.find(u => u.email === identifier);
-      }
+      submitBtn.disabled = true;
+      buttonText.textContent = 'Signing In...';
+      spinner.style.display = 'inline-block';
       
-      if (!user) {
-        showNotification('User not found!', false);
-        return;
-      }
-      
-      if (user.password !== password) {
-        showNotification('Incorrect password!', false);
-        return;
-      }
-      
-      loginUser(user);
-      showNotification('Login successful! Welcome back.');
+      // Simulate network delay
+      setTimeout(() => {
+        // Find user by phone or email
+        let user = users.find(u => u.phone === identifier);
+        if (!user) {
+          // If not found by phone, try by email
+          user = users.find(u => u.email === identifier);
+        }
+        
+        if (!user) {
+          document.getElementById('loginIdentifier').classList.add('is-invalid');
+          submitBtn.disabled = false;
+          buttonText.textContent = 'Sign In';
+          spinner.style.display = 'none';
+          showNotification('User not found!', false);
+          return;
+        }
+        
+        if (user.password !== password) {
+          document.getElementById('loginPassword').classList.add('is-invalid');
+          submitBtn.disabled = false;
+          buttonText.textContent = 'Sign In';
+          spinner.style.display = 'none';
+          showNotification('Incorrect password!', false);
+          return;
+        }
+        
+        loginUser(user);
+        showNotification('Login successful! Welcome back.');
+      }, 1000);
     });
     
     // Logout function
@@ -1712,8 +2417,6 @@
       document.querySelectorAll('#sidebarMenu .nav-link[data-page]').forEach(function(link) {
         link.addEventListener('click', function(e) {
           e.preventDefault();
-          // Get page name from data attribute
-          const pageName = this.getAttribute('data-page');
           
           // Hide all dashboard pages
           document.querySelectorAll('.dashboard-page').forEach(page => {
@@ -1721,48 +2424,55 @@
           });
           
           // Show the selected page
-          const pageDiv = document.getElementById(`page-${pageName}`);
+          const pageId = 'page-' + link.getAttribute('data-page');
+          const pageDiv = document.getElementById(pageId);
           if (pageDiv) {
             pageDiv.style.display = 'block';
           }
           
-          // Remove active class from all links
+          // Remove active class from all links and set it to the clicked one
           document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
             nav.classList.remove('active');
           });
           
-          // Add active class to clicked link
-          this.classList.add('active');
+          link.classList.add('active');
           
-          // Close mobile sidebar if open
+          // Close sidebar on mobile
           if (window.innerWidth <= 992) {
             document.getElementById('sidebarMenu').classList.remove('show');
             document.querySelector('.sidebar-overlay').classList.remove('show');
           }
         });
       });
+      
+      // Add click handlers for quick action buttons
+      document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = this.getAttribute('data-page');
+          document.querySelector(`#sidebarMenu .nav-link[data-page="${page}"]`).click();
+        });
+      });
     }
-
+    
     // Login user
     function loginUser(user) {
       authSection.style.display = 'none';
       dashboardSection.style.display = 'block';
       document.getElementById('username').textContent = user.name;
-      document.getElementById('dashboardUsername').textContent = user.name;
-      document.getElementById('profileUsername').textContent = user.name;
       
-      // Hide all dashboard pages except dashboard
-      document.querySelectorAll('.dashboard-page').forEach(page => {
+      document.querySelectorAll('.dashboard-page').forEach(function(page) {
         page.style.display = 'none';
       });
+      
       document.getElementById('page-dashboard').style.display = 'block';
       
-      // Set active link
-      document.querySelectorAll('#sidebarMenu .nav-link').forEach(nav => {
+      document.querySelectorAll('#sidebarMenu .nav-link').forEach(function(nav) {
         nav.classList.remove('active');
       });
+      
       document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
-     
+      
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       setupSidebarNavigation();
     }
@@ -1773,8 +2483,20 @@
       referralLink.select();
       document.execCommand('copy');
       showNotification('Referral link copied to clipboard!');
+      
+      // Add visual feedback
+      const originalText = this.innerHTML;
+      this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      this.classList.remove('btn-outline-primary');
+      this.classList.add('btn-success');
+      
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.classList.remove('btn-success');
+        this.classList.add('btn-outline-primary');
+      }, 2000);
     });
-
+    
     // Dashboard functions
     function openWithdrawModal() {
       const modal = new bootstrap.Modal(document.getElementById('withdrawModal'));
@@ -1785,57 +2507,144 @@
       const modal = new bootstrap.Modal(document.getElementById('buyModal'));
       modal.show();
     }
-
+    
+    // Handle method selection display and validation
+    function selectWithdrawalMethod(method) {
+      // Update active selection
+      document.querySelectorAll('.method-card').forEach(card => {
+        card.classList.remove('active');
+        card.querySelector('.fa-check-circle').style.display = 'none';
+      });
+      
+      // Highlight selected method
+      const selectedCard = document.querySelector(`.method-card:has([onclick*="'${method}'"])`);
+      if (selectedCard) {
+        selectedCard.classList.add('active');
+        selectedCard.querySelector('.fa-check-circle').style.display = 'inline';
+      }
+      
+      // Show/hide fields
+      document.getElementById('bankFields').style.display = method === 'Bank Transfer' ? 'block' : 'none';
+      document.getElementById('upiField').style.display = method === 'UPI' ? 'block' : 'none';
+      document.getElementById('qrField').style.display = method === 'QR Code' ? 'block' : 'none';
+      
+      // Remove all required attributes
+      document.getElementById('accountNumber').removeAttribute('required');
+      document.getElementById('ifscCode').removeAttribute('required');
+      document.getElementById('upiId').removeAttribute('required');
+      
+      // Clear custom validation messages
+      document.getElementById('qrUpload').setCustomValidity('');
+      document.getElementById('qrData').setCustomValidity('');
+      
+      // Set required only for selected method
+      if (method === 'Bank Transfer') {
+        document.getElementById('accountNumber').setAttribute('required', 'true');
+        document.getElementById('ifscCode').setAttribute('required', 'true');
+      } else if (method === 'UPI') {
+        document.getElementById('upiId').setAttribute('required', 'true');
+      }
+    }
+    
     // Update hidden username field when modal opens
     document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
-      document.getElementById('hiddenUsername').value = document.getElementById('dashboardUsername').textContent;
-      // Trigger change event to set initial state
-      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
-    });
-
-    // Handle method selection display and validation
-    document.querySelectorAll('input[name="method"]').forEach(el => {
-      el.addEventListener('change', () => {
-        const selected = document.querySelector('input[name="method"]:checked').value;
-
-        // Show/hide fields
-        document.getElementById('bankFields').style.display = selected === 'Bank Transfer' ? 'block' : 'none';
-        document.getElementById('upiField').style.display = selected === 'UPI' ? 'block' : 'none';
-        document.getElementById('qrField').style.display = selected === 'QR Code' ? 'block' : 'none';
-
-        // Remove all required attributes
-        document.getElementById('accountNumber').removeAttribute('required');
-        document.getElementById('ifscCode').removeAttribute('required');
-        document.getElementById('upiId').removeAttribute('required');
-        document.getElementById('qrUpload').removeAttribute('required');
-        document.getElementById('qrData').removeAttribute('required');
-
-        // Set required only for selected method
-        if (selected === 'Bank Transfer') {
-          document.getElementById('accountNumber').setAttribute('required', 'true');
-          document.getElementById('ifscCode').setAttribute('required', 'true');
-        } else if (selected === 'UPI') {
-          document.getElementById('upiId').setAttribute('required', 'true');
-        }
+      const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+      document.getElementById('hiddenUsername').value = user.name || 'User';
+      
+      // Reset validation states
+      document.querySelectorAll('.is-invalid').forEach(el => {
+        el.classList.remove('is-invalid');
       });
+      
+      // Set max withdrawal amount
+      document.getElementById('maxWithdrawal').addEventListener('click', function() {
+        document.getElementById('withdrawAmount').value = 1260;
+      });
+      
+      // Set initial method (Bank Transfer)
+      selectWithdrawalMethod('Bank Transfer');
     });
-
+    
+    // QR Code specific validation
+    function validateQRCode() {
+      const qrUpload = document.getElementById('qrUpload');
+      const qrData = document.getElementById('qrData');
+      const errorElement = document.querySelector('.qr-validation-error');
+      
+      const hasUpload = qrUpload.files && qrUpload.files.length > 0;
+      const hasData = qrData.value.trim() !== '';
+      
+      if (!hasUpload && !hasData) {
+        errorElement.style.display = 'block';
+        qrUpload.setCustomValidity('Please provide either QR image or data');
+        qrData.setCustomValidity('Please provide either QR image or data');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        qrUpload.setCustomValidity('');
+        qrData.setCustomValidity('');
+        return true;
+      }
+    }
+    
+    // Handle QR Code specific validation
+    document.getElementById('qrUpload').addEventListener('change', validateQRCode);
+    document.getElementById('qrData').addEventListener('input', validateQRCode);
+    
     // Mobile sidebar logic
     function setupMobileSidebar() {
       const sidebarMenu = document.getElementById('sidebarMenu');
-      const sidebarOverlay = document.querySelector('.sidebar-overlay');
-      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-
+      
       // Show sidebar on mobile menu button click
       mobileMenuBtn.addEventListener('click', () => {
         sidebarMenu.classList.add('show');
         sidebarOverlay.classList.add('show');
       });
-
+      
       // Hide sidebar when overlay is clicked
       sidebarOverlay.addEventListener('click', () => {
         sidebarMenu.classList.remove('show');
         sidebarOverlay.classList.remove('show');
+      });
+      
+      // Toggle sidebar collapse on desktop
+      document.getElementById('sidebarToggle').addEventListener('click', function() {
+        const sidebar = document.getElementById('sidebarMenu');
+        sidebar.classList.toggle('collapsed');
+        this.classList.toggle('collapsed');
+        
+        // Update main content margin
+        const dashboardPages = document.querySelectorAll('.dashboard-page');
+        dashboardPages.forEach(page => {
+          if (sidebar.classList.contains('collapsed')) {
+            page.style.marginLeft = '60px';
+          } else {
+            page.style.marginLeft = 'var(--sidebar-width)';
+          }
+        });
+      });
+    }
+    
+    // Collapsible sections
+    function setupCollapsibleSections() {
+      document.querySelectorAll('#toggleActivity').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const content = document.getElementById('activityContent');
+          content.classList.toggle('collapsed');
+          this.innerHTML = content.classList.contains('collapsed') ? 
+            '<i class="fas fa-chevron-down"></i>' : 
+            '<i class="fas fa-chevron-up"></i>';
+        });
+      });
+      
+      document.querySelectorAll('#toggleCompletedMissions').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const content = document.getElementById('completedMissionsContent');
+          content.classList.toggle('collapsed');
+          this.innerHTML = content.classList.contains('collapsed') ? 
+            '<i class="fas fa-chevron-down"></i>' : 
+            '<i class="fas fa-chevron-up"></i>';
+        });
       });
     }
     
@@ -1846,20 +2655,93 @@
       if (usersData) {
         users.push(...JSON.parse(usersData));
       }
+      
       // Restore logged-in user
       const userData = localStorage.getItem('loggedInUser');
       if (userData) {
         const user = JSON.parse(userData);
         loginUser(user);
       }
-      // Initialize method display
-      document.querySelector('input[name="method"]:checked').dispatchEvent(new Event('change'));
       
       // Setup mobile sidebar
       setupMobileSidebar();
       
-      // Setup sidebar navigation
-      setupSidebarNavigation();
+      // Setup collapsible sections
+      setupCollapsibleSections();
+      
+      // Setup interactive elements
+      document.querySelectorAll('.interactive-element').forEach(el => {
+        el.addEventListener('click', function() {
+          this.classList.add('pulse-once');
+          setTimeout(() => {
+            this.classList.remove('pulse-once');
+          }, 500);
+        });
+      });
+      
+      // Setup period filter buttons
+      document.querySelectorAll('.btn-group button[data-period]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.btn-group button').forEach(b => {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+        });
+      });
+      
+      // Setup refresh button
+      document.getElementById('refreshDashboard').addEventListener('click', function() {
+        const spinner = this.querySelector('.fa-sync-alt');
+        spinner.classList.add('fa-spin');
+        
+        // Simulate data refresh
+        setTimeout(() => {
+          spinner.classList.remove('fa-spin');
+          showNotification('Dashboard data refreshed successfully');
+        }, 800);
+      });
+      
+      // Withdrawal form submission
+      document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
+        const selectedMethod = document.querySelector('.method-card.active');
+        const method = selectedMethod ? selectedMethod.querySelector('h5').textContent : '';
+        
+        // Add loading state
+        const submitBtn = document.getElementById('submitWithdrawal');
+        const spinner = document.createElement('span');
+        spinner.className = 'loading-spinner';
+        submitBtn.innerHTML = '';
+        submitBtn.appendChild(spinner);
+        submitBtn.appendChild(document.createTextNode(' Processing...'));
+        submitBtn.disabled = true;
+        
+        // QR Code validation
+        if (method === 'QR Code') {
+          if (!validateQRCode()) {
+            e.preventDefault();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit Withdrawal Request';
+            showNotification('Please provide either QR image or data', false);
+            return;
+          }
+        }
+        
+        // Form is valid, show success
+        setTimeout(() => {
+          submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Request Submitted!';
+          showNotification('Withdrawal request submitted successfully!');
+          
+          // Reset form after success
+          setTimeout(() => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('withdrawModal'));
+            modal.hide();
+            this.reset();
+            selectWithdrawalMethod('Bank Transfer');
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit Withdrawal Request';
+            submitBtn.disabled = false;
+          }, 1500);
+        }, 800);
+      });
     });
   </script>
 </body>
