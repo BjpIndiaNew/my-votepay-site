@@ -440,19 +440,7 @@
     }
     
     /* Admin panel styling */
-    .admin-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-    
-    .admin-stats {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--primary);
-    }
+ 
     
     /* Account page styling */
     .profile-card {
@@ -686,7 +674,6 @@
         <li><a href="#" class="nav-link" data-page="marketplace"><i class="fas fa-store me-2"></i>Marketplace <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="balance"><i class="fas fa-wallet me-2"></i>Balance</a></li>
         <li><a href="#" class="nav-link" data-page="vip"><i class="fas fa-crown me-2"></i>VIP</a></li>
-        <li><a href="#" class="nav-link text-danger" data-page="admin"><i class="fas fa-user-shield me-2"></i>Admin <span class="badge bg-warning text-dark ms-2">ADMIN ONLY</span> <span class="badge bg-info ms-2">🆕</span></a></li>
         <li><a href="#" class="nav-link" data-page="account"><i class="fas fa-user me-2"></i>My Account</a></li>
       </ul>
       <hr>
@@ -1226,115 +1213,6 @@
       </div>
     </div>
 
-    <!-- Admin Page -->
-    <div id="page-admin" class="dashboard-page" style="display:none; margin-left:300px;">
-      <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-user-shield me-2"></i> Admin Panel</h2>
-        
-        <div class="alert alert-warning">
-          <strong>Admin Access Only:</strong> This section contains sensitive administrative functions.
-        </div>
-        
-        <div class="row">
-          <div class="col-md-3">
-            <div class="admin-card">
-              <div class="text-center">
-                <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                <h4>Users</h4>
-                <div class="admin-stats">1,245</div>
-                <button class="btn btn-outline-primary w-100 mt-3">Manage Users</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-3">
-            <div class="admin-card">
-              <div class="text-center">
-                <i class="fas fa-money-bill-wave fa-3x text-success mb-3"></i>
-                <h4>Transactions</h4>
-                <div class="admin-stats">₹248,950</div>
-                <button class="btn btn-outline-success w-100 mt-3">View Transactions</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-3">
-            <div class="admin-card">
-              <div class="text-center">
-                <i class="fas fa-vote-yea fa-3x text-info mb-3"></i>
-                <h4>Votes</h4>
-                <div class="admin-stats">56,820</div>
-                <button class="btn btn-outline-info w-100 mt-3">Vote Analytics</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-3">
-            <div class="admin-card">
-              <div class="text-center">
-                <i class="fas fa-tasks fa-3x text-warning mb-3"></i>
-                <h4>Missions</h4>
-                <div class="admin-stats">28</div>
-                <button class="btn btn-outline-warning w-100 mt-3">Manage Missions</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Recent Activity</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>User</th>
-                    <th>Action</th>
-                    <th>Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>2025-07-22 14:30</td>
-                    <td>Sarah Johnson</td>
-                    <td>Withdrawal Request</td>
-                    <td>₹1,200 via Bank Transfer</td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-22 13:45</td>
-                    <td>Mike Williams</td>
-                    <td>Vote Purchase</td>
-                    <td>Premium Vote Pack (₹1,200)</td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-22 12:15</td>
-                    <td>Admin</td>
-                    <td>System Update</td>
-                    <td>Added new mission: Community Engagement</td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-22 10:30</td>
-                    <td>Robert Chen</td>
-                    <td>VIP Upgrade</td>
-                    <td>Gold VIP (₹999)</td>
-                  </tr>
-                  <tr>
-                    <td>2025-07-22 09:20</td>
-                    <td>Emma Davis</td>
-                    <td>Referral Bonus</td>
-                    <td>₹100 for referring John Smith</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Account Page -->
     <div id="page-account" class="dashboard-page" style="display:none; margin-left:300px;">
       <div class="container mt-5">
@@ -1355,7 +1233,6 @@
               <button class="btn btn-outline-info w-100">Upgrade to Gold VIP</button>
             </div>
           </div>
-          
           <div class="col-md-8">
             <div class="card mb-4">
               <div class="card-header bg-primary text-white">
@@ -1622,7 +1499,7 @@
         balance: 1260,
         votes: 250,
         level: 2,
-        isAdmin: users.length === 0, // First user is admin
+      
         joinDate: new Date().toISOString()
       };
       
@@ -1711,8 +1588,7 @@
     nav.classList.remove('active');
   });
   document.querySelector('#sidebarMenu .nav-link[data-page="dashboard"]').classList.add('active');
-  const adminMenuItem = document.querySelector('#sidebarMenu .nav-link.text-danger');
-  adminMenuItem.style.display = user.isAdmin ? 'block' : 'none';
+ 
   localStorage.setItem('loggedInUser', JSON.stringify(user));
   setupSidebarNavigation(); // <-- Add this line
 }
